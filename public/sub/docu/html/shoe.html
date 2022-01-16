@@ -1,0 +1,27 @@
+﻿<html>
+<body>
+    <three>
+        <renderer clearColor="0.4 0.0 0.4"></renderer>
+        <group position="0 0 -2">
+            <gltfLoader name="sh" url="../models/shoe.glb">
+                <link target="shoetarget" url="/sub/docu/three/shoe.html" handler="threemlmain" replace="true"/>
+            </gltfLoader>
+            <rotate axis="0 0.001 0" />
+        </group>
+        
+
+        <directionallight intensity="2" position="-1 0 0"></directionallight>
+        <!--<ambientlight intensity='1'></ambientlight>-->
+    </three>
+
+    <script>
+        var threeml;
+        var threemlmain = window.top.threeml;
+    </script>
+    <script type="module">
+        import { ThreeML } from '../../../threeml/threeml.js';
+        threeml = new ThreeML();
+        threeml.parseThree();
+    </script>
+</body>
+</html>

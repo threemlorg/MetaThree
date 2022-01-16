@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Epona</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+			
+		<three>
+			<loader maxtime="10"></loader>
+			<stat></stat>
+			<skybox url="./images/canary_wharf.jpg"></skybox>
+			<!--<orbitcontrols target="0 0 -2"  reversed="true"></orbitcontrols>-->
+			<home></home>
+			<camera mode="scan"></camera>
+			<group position="0 0 0" rotation="0 0 0">
+				<gltfLoader url="./models/office.glb" scale="1">
+				</gltfLoader>
+				<gltfLoader url="./models/officefloor.glb" scale="1">
+					<walk></walk>
+				</gltfLoader>
+				<group name="clock" position="1 1.3 -4.8" scale="0.2" rotation="0 0 0">
+					<planegeometry name="plate" scale="2.2">
+						<meshphongmaterial color="1 1 1" url="./images/clock.jpg"></meshphongmaterial>
+					</planegeometry>
+					<gltfLoader scale="0.1" name="seconds" url="./models/seconds.glb">
+						<synchronise type="seconds"></synchronise>
+					</gltfLoader>
+					<gltfLoader scale="0.1" name="minutes" url="./models/minutes.glb">
+						<synchronise type="minutes"></synchronise>
+					</gltfLoader>
+					<gltfLoader scale="0.1" name="hours" url="./models/hours.glb">
+						<synchronise type="hours"></synchronise>
+					</gltfLoader>
+				</group>
+
+
+
+
+
+				<!--<gltfLoader url="./models/clock.glb" scale="1" position="1 1.3 -5.2" rotation="0 0 0">
+		</gltfLoader>-->
+				<group position="0 0.5 -10.66" rotation="0 0 0" scale="3">
+					<gltfLoader url="./models/tv.glb">
+					</gltfLoader>
+					<boxgeometry scale="0.47 0.28 0.01" position="0 0 0.27">
+						<meshphongmaterial color="0.8" url="./images/screen.png"></meshphongmaterial>
+					</boxgeometry>
+				</group>
+				<gltfLoader url="./models/table.glb" scale="4 4 6" position="-1.5 -0.74 -9" rotation="0 90 0">
+				</gltfLoader>
+				<gltfLoader url="./models/chair.glb" scale="2.7" position="1.3 -0.5 -9" rotation="0 -90 0">
+				</gltfLoader>
+				<gltfLoader url="./models/chair.glb" scale="2.7" position="-1.7 -0.5 -9" rotation="0 70 0">
+				</gltfLoader>
+				<group name="bart" position="1.1 -0.74 4">
+					<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0">
+					</gltfLoader>
+					<gltfLoader url="./models/monitor.glb" scale="2" rotation="0 -90 0" position="2.3 0.85 0">
+					</gltfLoader>
+					<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
+					</gltfLoader>
+					<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
+					</gltfLoader>
+
+					<gltfLoader url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0">
+					</gltfLoader>
+				</group>
+				<gltfLoader url="./models/plant.glb" scale="3" position="2 -0.6 -5">
+				</gltfLoader>
+				<boxGeometry name="eponalogo" position="-3.35 1 -1.6" rotation="0 90 0" scale="0.7 0.7 0.02">
+					<meshphongmaterial color="1 1 1" url="./images/Epona-transparent.png"></meshphongmaterial>
+					<present cameradistance="1.1" class="handle" speed="0.03" handlecolor="gray"></present>
+				</boxGeometry>
+			</group>
+			<directionallight intensity="1.1" position="0 2 2" castshadows="true"></directionallight>
+			<ambientlight color="0.2" intensity="0.3"></ambientlight>
+			<hemispherelight intensity="0.48"></hemispherelight>
+		</three>
+
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

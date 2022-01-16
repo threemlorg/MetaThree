@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Scifi</title>
+    <style>
+        body{
+            overflow:hidden;
+        }
+        .maindiv {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="maindiv" class="maindiv">
+
+    </div>
+    <script type="text/javascript">
+        var threeml;
+        var modelsNo = 12;
+        var images = [];
+        var maindiv = document.getElementById('maindiv');
+        var maxw = maindiv.offsetWidth;
+        var maxh = maindiv.offsetHeight;
+
+        function createImage(imageno) {
+            const img = document.createElement('img');
+            img.style.width = maxw+'px';
+            img.style.height = maxh +'px';
+            img.style.position = 'absolute';
+            img.src = './images/em' + imageno + '.jpg';
+            img.style.display = 'none';
+            maindiv.appendChild(img);
+            return img;
+        }
+        function init() {
+            for (var n = 0; n < modelsNo; n++) {
+                images.push(createImage(n));
+            }
+
+        }
+        var c = 0;
+        function updater() {
+            images[c].style.display = 'none';
+            c++;
+            if (c >= images.length) {
+                c = 0;
+            }
+            images[c].style.display = 'block';
+        }
+        init();
+        window.setInterval(updater, 5000);
+
+
+
+    </script>
+    <script type="module">
+        //import { ThreeML } from '../../threeml/threeml.js';
+        //threeml = new ThreeML();
+        //threeml.parseThree();
+    </script>
+</body>
+</html>

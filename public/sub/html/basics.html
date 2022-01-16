@@ -1,0 +1,244 @@
+﻿
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+        ThreeML
+    </title>
+    <link href="../css/slicebox.css" rel="stylesheet" type="text/css" />
+    <link href="../css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../css/responsive.css" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .inline-button {
+            cursor: pointer;
+            border: solid 0.1pt lightblue;
+            border-radius: 4px;
+            padding: 2px;
+            display: inline;
+            background-color: bisque;
+        }
+
+            .inline-button:hover {
+                background-color: azure;
+            }
+
+        .slidertop-images {
+            position: absolute;
+            left: 20px;
+            z-index: 1001;
+            width: 150px;
+            box-shadow: 5px 5px 5px 5px silver;
+        }
+    </style>
+    <style>
+        .all {
+            color: brown;
+            font-family: 'Courier New';
+            font-weight: bold;
+            border: solid 1pt skyblue;
+            background-color: aliceblue;
+            border-radius: 5px;
+            box-shadow: 10px 10px rgb(226, 215, 215);
+            padding: 5px;
+            margin: 15px;
+            font-size: 14px;
+        }
+        .text {
+            color: brown;
+            font-family: 'Courier New';
+            font-weight: bold;
+        }
+        .tag {
+            color: blue;
+        }
+
+        .att {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="post" action="./" id="form1">
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNav">
+                        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                        </span>
+                    </button>
+                    <a href="#" class="navbar-brand">
+                        <img src="../images/logo.png" />
+                    </a>
+                </div>
+                <div id="myNav" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="javascript:loadFromGroup('main');">Home</a></li>
+                        <li><a href="javascript:window.top.showHelloWorld();">Hello world</a></li>
+                        <li class="active"><a href="">Basics</a></li>
+                        <li><a href="../search/index.aspx" target="_top">Search websites</a></li>
+                        <li><a href="../docu/docu.aspx" target="_top">Code snippets</a></li>
+
+
+
+                        <li><a href="mailto:admin@v-slam.org">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="container">
+            <br />
+            <br />
+            <br />
+            <div class="border">
+            </div>
+            <div class="row">
+
+                <h1>
+                    The principles
+                </h1>
+                <p>
+                    <h2>
+                        Basic page
+                    </h2>
+                    <ul>
+                        <li>
+                            Html en Three tags can be mixed. The usual setup would be to have an initial page that mostly exists of a three segment.
+                            One or more floating frames (htmlPlaneGeometry) can be added to show Html content.
+                        </li>
+                        <li>
+                            For the initial view the 3d space is defined by x, y, z coordinates, where x goes from negative left to positive right,
+                            y goes from negative down to postive up, and z goes from negative front (!) to positive back.
+                        </li>
+                        <li>The camera - your screen - starts at <span class="text">position<span class="att">="0 0 0"</span>.</span></li>
+                        <li>
+                            Position units can roughly be thought of as being in meters (m).
+                        </li>
+                        <li>
+                            The initial page usually loads the threeml modules, as is demonstrated in the 'Hello Word' example. Although a floating frame (htmlPlaneGeometry)
+                            can initiate and use its own instance of threeml, it is better to reference the instance from the top window, especially if you want to access other objects
+                            using one of the specialiced threeml JavaScript methods.
+                        </li>
+                    </ul>
+                    <h2>
+                        3D objects, properties and inner tags
+                    </h2>
+                    <ul>
+                        <li>
+                            3D objects like meshes (cubes, spheres, lights, models etc.) can be initiated by a tag that is often similar to their ThreeJS name. For example,
+                            the tag <span class="tag">&lt;</span><span class="text">boxgeometry</span><span class="tag">&gt;</span>  will put a box in the scene, having default properties. Attributes within the tag, like <span class="text">
+                                position
+                            </span>, <span class="text">
+                                rotation
+                            </span> and <span class="text">
+                                scale
+                            </span>
+                            determine where and how the box should be placed.
+
+                        </li>
+                        <li>
+                            The properties that represent a Vector3D should be specified with a single space between the 3 coordinate numbers. When only 1 number is specified,
+                            the Vector3D will be interpreted as having 3 similar coordinate numbers.
+                        </li>
+                        <li>
+                            Enclosed within the object tag other special purpose tags can be specified. This includes the definition of the material of a
+                            mesh, or behaviors, like the possibility to have the object rotate itself at a certain speed and angle.
+                        </li>
+                    </ul>
+                    <h2>
+                        Group tags
+                    </h2>
+                    <ul>
+                        <li>
+                            Like with ThreeJS, <span class="tag">&lt;</span><span class="text">group</span><span class="tag">&gt;</span> tags can be specied that can contain other objects. Objects within a group have their, position, rotation and scale set relative to
+                            these properties of the group object.
+                        </li>
+                        <li>
+                            For several specific threeml functions, a group object is the 3D equivalent of an iframe in a (2D) Html page. This means for example
+                            that a new page with three tags can be opened, and the specfied objects will be loaded as childs of the group object.
+                        </li>
+                        <li>
+                            Contrary to iframes in 2D, for group objects it is possible to choose whether to replace existing content (child objects) when loading a new page, or just
+                            to add extra content to the group object.
+                        </li>
+                    </ul>
+                </p>
+                <p>
+
+                </p>
+
+                <div class="highlight">
+
+                    <div class="all">
+                        <div class="row">&nbsp;&nbsp;&nbsp; <span class="tag">&lt;</span>html<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>body<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>div id<span class="att">="container"</span><span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>div<span class="tag">&gt;</span></div>
+
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>three<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>spheregeometry name<span class="att">="globe"</span> position<span class="att">="0 0 -2"</span> scale<span class="att">="0.1"</span><span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>meshphongmaterial id<span class="att">="blueish"</span> color<span class="att">="1 1 1"</span> url<span class="att">="./images/earth-topo.png"</span> rotation<span class="att">="0 0 20"</span><span class="tag">&gt;</span><span class="tag">&lt;/</span>meshphongmaterial<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>rotate axis<span class="att">="0 0.002 0"</span><span class="tag">&gt;</span><span class="tag">&lt;/</span>rotate<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>spheregeometry<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>TextGeometry position<span class="att">="0 0.3 -2"</span> text<span class="att">="Hello"</span><span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>meshphongmaterial id<span class="att">="black"</span> color<span class="att">="0 0 0"</span><span class="tag">&gt;</span><span class="tag">&lt;/</span>meshphongmaterial<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>TextGeometry<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>directionallight target<span class="att">="globe"</span> intensity<span class="att">="0.7"</span> position<span class="att">="-2 0 0"</span><span class="tag">&gt;</span><span class="tag">&lt;/</span>directionallight<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>three<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>script<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var threeml;</div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>script<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>script type<span class="att">="module"</span><span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;import { ThreeML } from './threeml/threeml.js';</div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threeml = new ThreeML();</div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threeml.parseThree();</div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>script<span class="tag">&gt;</span></div>
+                        <div class="row"></div>
+
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>body<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>html<span class="tag">&gt;</span></div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <footer id="footer" class="midnight-blue">
+            <div class="container">
+                <div class="row">
+
+                </div>
+            </div>
+            <a href="#" class="back-to-top">
+                <i class="fa fa-2x fa-angle-up"></i>
+            </a>
+        </footer>
+    </form>
+    <script>
+        var threeml = window.top.threeml;
+
+        function loadFromGroup(fm) {
+            threeml.presentFromGroup("screens", fm);
+        }
+  </script>
+    <script type="module">
+
+
+    </script>
+    
+</body>
+</html>

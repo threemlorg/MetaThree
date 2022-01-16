@@ -1,0 +1,37 @@
+﻿<html>
+<head>
+    <style>
+        #container {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <three>
+
+            <htmlPlaneGeometry name="hello" url="../html/helloworld.html" zoom="1" position='-2 1 -3' scale='1' rotation="0 20 0">
+                <present cameradistance="1.3" speed="0.03"></present>
+            </htmlPlaneGeometry>
+
+            <spheregeometry name="globe" position="0 0 -2" scale="0.1" widthSegments="30" heightSegments="30">
+                <meshphongmaterial id="blueish" color="1 1 1" url="../images/earth-topo.png" rotation="0 0 20"></meshphongmaterial>
+                <rotate axis="0 0.002 0"></rotate>
+                <present target="hello"></present>
+            </spheregeometry>
+            <TextGeometry position="0 0.3 -2" text="Hello">
+                <meshphongmaterial id="black" color="0 0 0"></meshphongmaterial>
+            </TextGeometry>
+            <directionallight target="globe" intensity="1.6" position="-2 0 0"></directionallight>
+        </three>
+    </div>
+        <script>
+            var threeml;
+        </script>
+        <script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new ThreeML();
+            threeml.parseThree();
+        </script>
+</body>
+</html>

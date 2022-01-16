@@ -1,0 +1,56 @@
+﻿body {
+    font-family: Verdana;
+    background-color: #67ADAD;
+}
+.tablediv
+{
+    display:table;
+}
+.tablerow
+{
+    display:table-row;
+}
+.tablecell 
+{
+    display: table-cell;
+    padding:10px;
+}
+td
+{
+    padding:5px;
+}
+
+a
+{
+    text-decoration:none;
+    color:black;
+}
+.button {
+    /*border: solid 1pt;
+    border-color: #A6D8D8;*/
+}
+    .button:hover {
+        background-color: #FFF2C4;
+    }
+.centerdiv {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+.menu {
+    background-color: #4D9797;
+    padding: 5px;
+}
+.helptext {
+    color: #FFE998;
+}
+.overviewimage
+{
+    margin:5px;
+    margin-left:0px;
+}
+.overviewimage, img
+{
+    height:300px;
+    
+}

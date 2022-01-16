@@ -1,0 +1,38 @@
+﻿<html>
+<body>
+    <three>
+        <renderer clearColor="0.0 0 0.0"></renderer>
+        <group name='wheel1' position='-3 0 -5' rotation="20 0 0">
+            <rotate axis="0 0.001 0" />
+            <spheregeometry widthSegments="30" heightSegments="30">
+                <meshphongmaterial diffuseColor='1 1 1' url="./images/2k_jupiter.jpg"></meshphongmaterial>
+                <link url="./three/jupiter.html" target="planet" handler="threemlmain"  replace="true"/>
+            </spheregeometry>
+        </group>
+        <group name='wheel2' position='0 0 -5' rotation="20 0 0">
+            <rotate axis="0 0.001 0" />
+            <spheregeometry widthSegments="30" heightSegments="30">
+                <meshphongmaterial diffuseColor='1 1 1' url="./images/2k_mars.jpg"></meshphongmaterial>
+                <link url="./three/mars.html" target="planet" handler="threemlmain" replace="true"/>
+            </spheregeometry>
+        </group>
+        <group name='wheel3' position='3 0 -5' rotation="20 0 0">
+            <rotate axis="0 0.001 0" />
+            <spheregeometry widthSegments="30" heightSegments="30">
+                <meshphongmaterial diffuseColor='1 1 1' url="./images/2k_venus_atmosphere.jpg"></meshphongmaterial>
+                <link url="./three/venus.html" target="planet" handler="threemlmain"  replace="true"/>
+            </spheregeometry>
+        </group>
+        <ambientlight intensity='0.7'></ambientlight>
+    </three>
+        <script>
+            var threeml;
+            var threemlmain = window.top.threeml;
+        </script>
+        <script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new ThreeML();
+            threeml.parseThree();
+        </script>
+</body>
+</html>

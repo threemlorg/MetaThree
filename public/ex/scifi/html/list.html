@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+ 
+    </style>
+</head>
+<body>
+    <div class="objtree"></div>
+    <!--<div class="node">
+        <div class="ntitle">Main</div>
+        <div class="children hide">
+            <div class="node">
+                <div class="ntitle">ListItem 1</div>
+                <div class="children hide">
+                    <div class="ntitle">ListItem a</div>
+                    <div class="ntitle">ListItem b</div>
+                </div>
+            </div>
+            <div class="node">
+                <div class="ntitle">ListItem 2</div>
+            </div>
+            <div class="node">
+                <div class="ntitle">ListItem 3</div>
+            </div>
+        </div>
+    </div>-->
+    <div id="container">
+        </div>
+    <three>
+        <renderer clearColor="1 1 0.0"></renderer>
+        <group name="mygroup" position="0 0 -3">
+            <spheregeometry name="sphere" position="0.7 0.5 -3" scale="0.2">
+                <meshphongmaterial color="1 0 1"></meshphongmaterial>
+                <present fromgroup="mygroup"></present>
+            </spheregeometry>
+            <boxgeometry name="box" position="1.2 0.5 -3" scale="0.2">
+                <meshphongmaterial color="0 0 1"></meshphongmaterial>
+                <present fromgroup="mygroup"></present>
+            </boxgeometry>
+            <conegeometry name="cone" position="1.6 0.5 -3" scale="0.2">
+                <meshphongmaterial color="0 1 1"></meshphongmaterial>
+                <present fromgroup="mygroup"></present>
+            </conegeometry>
+        </group>
+    </three>
+
+        <script>
+            var threeml;
+        </script>
+        <script type="module">
+            import { ThreeML } from '../../../threeml/threeml.js';
+            threeml = new ThreeML();
+            threeml.parseThree();
+            parseScene(threeml.getScene());
+        </script>
+
+
+        <script type="text/javascript">
+            function createTreeCss() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerText = `
+.maintree{
+        position: absolute;
+        top: 30px;
+    }
+.refresh{
+        width:30px;
+        height:30px;
+        display:inline-block;
+        background: url('refresh.svg') no-repeat left;
+        background-size: 30px 30px;
+        cursor: pointer;
+        vertical-align:top;
+    }
+.refresh:hover{
+        background-color: azure;
+    }
+.objtree{
+            display:inline-block;
+    }
+.node {
+        margin-left: 0px;
+    }
+.ntitle {
+    padding-left: 24px;
+    cursor: pointer;
+    background: url('closed.svg') no-repeat left;
+    background-size: 30px 30px;
+    background-position-x: -5px;
+}
+.ntitle.open {
+    background: url('open.svg') no-repeat left;
+    background-size: 30px 30px;
+    background-position-x: -5px;
+}
+.ntitle.none {
+    background: none;
+}
+.ntitle:hover{
+        background-color: azure;
+    }
+.children {
+        margin-left: 10px;
+    }
+.hide {
+        display: none;
+    }`;
+
+                document.head.appendChild(style);
+            }
+            var threediv;
+
+            function parseScene(scene) {
+                createTreeCss();
+                var maintree = divWithClass('maintree');
+                var refresh = divWithClass('refresh');
+                refresh.setAttribute('title', 'Reload objects frim scene')
+                refresh.addEventListener('click', function () {
+                    refreshTree(threeml.getScene());
+                });
+                maintree.appendChild(refresh);
+                threediv = divWithClass('objtree');
+                threediv.appendChild(check(scene));
+                maintree.appendChild(threediv);
+                document.body.appendChild(maintree);
+                
+            }
+            function refreshTree(scene) {
+                if (threediv) {
+                    while (threediv.childNodes.length > 0) {
+                        threediv.removeChild(threediv.childNodes[0]);
+                    }
+                    threediv.appendChild(check(scene));
+                }
+                else {
+                    parseScene(scene);
+                }
+            }
+            function divWithClass(className) {
+                var div = document.createElement('div');
+                div.className = className;
+                return div;
+            }
+            function check(obj) {
+               
+                var name = obj.name ? obj.name + ' (' + obj.type + ')' : obj.type;
+                var node_div = divWithClass( 'node');
+                var title_div = divWithClass('ntitle');
+                title_div.innerText = name;
+                title_div.addEventListener('click', function (event) {
+                    var p = this.parentNode;
+                    for (var i = 0; i < p.children.length; i++) {
+                        var c = p.children[i];
+                        if (c.classList.contains('children')) {
+                            if (c.classList.contains('hide')) {
+                                c.classList.remove('hide');
+                                this.classList.add('open');
+                            }
+                            else {
+                                c.classList.add('hide');
+                                this.classList.remove('open');
+                            }
+                        }
+                        
+                    }
+                });
+                node_div.appendChild(title_div);
+                if (obj.children && obj.children.length > 0) {
+                    var childrendiv = divWithClass('children hide');
+
+                    for (var i = 0; i < obj.children.length; i++) {
+                        childrendiv.appendChild(check(obj.children[i]));
+                    }
+                    node_div.appendChild(childrendiv);
+                }
+                else {
+                    title_div.classList.add('none');
+                }
+                return node_div;
+            }
+
+        </script>
+</body>
+</html>

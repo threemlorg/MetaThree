@@ -1,0 +1,50 @@
+﻿<three>
+    <!--<camera move="lookat"></camera>-->
+    <skybox url="sub/images/moonless_golf.jpg"></skybox>
+    <!--<group name="screens1" position='0 0 -3'>-->
+    <group name="screen1" position='-2.2 0.06 0'>
+        <htmlPlaneGeometry url="https://felixpalmer.github.io/peaks-of-austria/" name="x" zoom="1" scale='1.2' rotation="0 30 0">
+            <present cameradistance="1.2" class="handle" speed="0.03" handlecolor="black"></present>
+        </htmlPlaneGeometry>
+        <planeGeometry name="clickme1" position="1 0.7 0" rotation="0 0 0" scale="0.4 0.2 0.2">
+            <meshphongmaterial url="/sub/images/clickme.png"></meshphongmaterial>
+            <present target="x"></present>
+        </planeGeometry>
+    </group>
+    <group name="screen2"  position='2.2 0.06 0'>
+        <htmlPlaneGeometry url="https://www.spacex.com/" name="y" zoom="1" scale='1.2' rotation="0 -30 0">
+            <present cameradistance="1.2" class="handle" speed="0.03" handlecolor="black"></present>
+        </htmlPlaneGeometry>
+        <planeGeometry name="clickme2" position="1.2 0.7 0" rotation="0 0 0" scale="0.4 0.2 0.2">
+            <meshphongmaterial url="/sub/images/clickme.png"></meshphongmaterial>
+            <present target="y"></present>
+        </planeGeometry>
+    </group>
+    <group name="screen2" position='0 0.06 0'>
+        <planeGeometry name="clickme3" position="1 0.7 0" rotation="0 0 0" scale="0.4 0.2 0.2">
+            <meshphongmaterial url="/sub/images/clickme.png"></meshphongmaterial>
+            <present target="main"></present>
+        </planeGeometry>
+    </group>
+        <TextGeometry name="text1" position="0 1 1" scale="1.5" text="You can still fully interact with the sites that are demonstrated." bevelEnabled="false" height="0.1">
+            <meshphongmaterial id="text" color="1 0 1"></meshphongmaterial>
+        </TextGeometry>
+        <TextGeometry name="text2" position="0 -1 1" scale="1.5" text="For a convenient view, click the magnifier to get them close to you." bevelEnabled="false" height="0.1">
+            <meshphongmaterial id="text" color="1 0 1"></meshphongmaterial>
+        </TextGeometry>
+        <gltfLoader name="arrowright" visible="true" url="sub/models/arrowright.glb" position="3.5 -1.4 -1" rotation="0 10 -10" scale="1">
+            <link url="./sub/html/helloworld.html" target="x" />
+            <link url="./sub/html/basics.html" target="y" />
+        </gltfLoader>
+        <!--<gltfLoader name="magnifier" visible="true" url="sub/models/magnifier.glb" position="-1.15 0.35 0" rotation="0 10 40" scale="1">-->
+            <!--<present target="main"></present>-->
+            <!--<draggable></draggable>
+        </gltfLoader>-->
+        <boxgeometry name="linkedin" position="2.9 1.3 0.1" rotation="0 -20 0" scale="1 0.76 0.01">
+            <meshphongmaterial url="/sub/images/linkedin.png"></meshphongmaterial>
+            <link url="https://www.linkedin.com/pulse/threeml-approaching-3d-web-natural-extension-2d-sites-wonnink/" target="_blank"></link>
+        </boxgeometry>
+        <directionallight name="dirl" target="text1" intensity="1.1" position="0 2 2"></directionallight>
+        <spotlight name="sptll" intensity="0.4" position="2.5 1 1" target="linkedin"></spotlight>
+
+</three>

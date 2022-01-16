@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Epona Furniture</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+			
+            <three>
+                <stat></stat>
+                <renderer clearcolor="#131613"></renderer>
+                <home></home>
+                <group name="c" position="0 -0.4 -3" scale="0.5" rotation="0 30 0">
+                    <group name="ll_target" position="1.15 0 5"></group>
+                    <group name="lr_target" position="-1.15 0 5"></group>
+                    <group name="lrl_target" position="1.15 0 -5"></group>
+                    <group name="lrr_target" position="-1.15 0 -5"></group>
+                    <gltfLoader name="cybertruck" url="./models/cybertruck.glb">
+                    </gltfLoader>
+                    <group name="frontltop">
+                        <gltfLoader name="front_top" url="./models/front_top.glb">
+                        </gltfLoader>
+                    </group>
+                    <group name="frontlleft">
+                        <gltfLoader name="front_left" url="./models/front_left.glb">
+                        </gltfLoader>
+                        <spotlight intensity="15" position="0 1 1" angle="10" target="ll_target"></spotlight>
+                    </group>
+                    <gltfLoader name="front_left_bottom" url="./models/front_left_bottom.glb">
+                    </gltfLoader>
+                    <group name="frontright">
+                        <gltfLoader name="front_right" url="./models/front_right.glb">
+                        </gltfLoader>
+                        <spotlight intensity="15" position="0 1 1" angle="10" target="lr_target"></spotlight>
+
+                    </group>
+                    <gltfLoader name="front_right_bottom" url="./models/front_right_bottom.glb">
+                    </gltfLoader>
+                    <group name="rearleft">
+                        <gltfLoader name="rear_left" url="./models/rear_left.glb">
+                        </gltfLoader>
+                        <spotlight intensity="2" position="0 1 -0.6" angle="15" color="1 0 0" target="lrl_target"></spotlight>
+                    </group>
+                    <gltfLoader name="rear_left_bottom" url="./models/rear_left_bottom.glb">
+                    </gltfLoader>
+                    <group name="rearright">
+                        <gltfLoader name="rear_right" url="./models/rear_right.glb">
+                        </gltfLoader>
+                        <spotlight intensity="2" position="0 1 -0.6" angle="15" color="1 0 0" target="lrr_target"></spotlight>
+                    </group>
+                    <gltfLoader name="rear_right_bottom" url="./models/rear_right_bottom.glb">
+                    </gltfLoader>
+                    <planegeometry rotation="-90 0 0" position="0 0 2" scale="10">
+                        <meshphongmaterial url="./images/road.jpeg" color="0.2" map="10 10"></meshphongmaterial>
+                    </planegeometry>
+                    <rotate axis="0 0.001 0"></rotate>
+                </group>
+                <group>
+                    <actions repeat="true">
+                        <action typeof="transform" visible="false" target="frontltop"></action>
+                        <action typeof="pause" speed="0.1"></action>
+                        <action typeof="transform" visible="true" target="frontltop"></action>
+                        <action typeof="pause" speed="0.01"></action>
+                    </actions>
+                </group>
+                <group>
+                    <actions repeat="false">
+                        <action typeof="transform" visible="false" target="frontright"></action>
+                        <action typeof="transform" visible="false" target="rearright"></action>
+                        <action typeof="pause" speed="0.1"></action>
+                        <action typeof="transform" visible="true" target="frontright"></action>
+                        <action typeof="transform" visible="true" target="rearright"></action>
+                        <action typeof="pause" speed="0.1"></action>
+                    </actions>
+                </group>
+
+                <directionallight position="0.1 2 -0.1" intensity="1" target="c"></directionallight>
+                <directionallight position="-2 1 -3.6" intensity="1" target="c"></directionallight>
+
+            </three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

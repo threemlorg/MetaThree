@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Epona Furniture</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+			
+            <three>
+                <!--<camera mode="scan" maxXangle="3"></camera>-->
+                <orbitcontrols target="0 0 -2" maxPolarAngle="90" minPolarAngle="90"></orbitcontrols>
+                <group name="main">
+                    <textgeometry text="Calatabiano, Sicilie" position="0 -1.4 -4" scale="2">
+                        <meshphongmaterial color="0.3 0 0"></meshphongmaterial>
+                    </textgeometry>
+
+                    <cylindergeometry scale="50" radialSegments="80">
+                        <meshphongmaterial url="./images/calatabiano.jpg" side="backside"></meshphongmaterial>
+                    </cylindergeometry>
+                    <gltfLoader name="arrowleft" visible="true" url="./models/arrowleft.glb" position="-1.5 -1.4 -4" rotation="0 10 10" scale="1">
+                        <link url="pan6.html" target="main" replace="true" />
+                    </gltfLoader>
+                    <gltfLoader name="arrowright" visible="true" url="./models/arrowright.glb" position="1.5 -1.4 -4" rotation="0 -10 -10" scale="1">
+                        <link url="pan1.html" target="main" replace="true" />
+                    </gltfLoader>
+                    <ambientlight intencity="2"></ambientlight>
+                </group>
+            </three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

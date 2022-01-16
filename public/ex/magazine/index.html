@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<title>Magazine</title>
+	<meta charset="utf-8">
+	<link type="text/css" rel="stylesheet" href="layout/main.css">
+	<style>
+		#container {
+			pointer-events: none;
+		}
+	</style>
+
+	<!--------------------------------------------------------------------------->
+
+	<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+	<meta name="apple-mobile-web-app-title" content="CodePen">
+
+	<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+
+	<link rel="mask-icon" type="" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+
+
+	<title>CodePen - Button - Hold to confirm</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&amp;display=swap">
+
+	<style>
+		.button-hold {
+			--color: #F6F8FF;
+			--background: #2B3044;
+			--icon: var(--color);
+			--progress-border: #646B8C;
+			--progress-active: #fff;
+			--progress-success: #5C86FF;
+			--tick-stroke: var(--progress-active);
+			--shadow: rgba(0, 9, 61, 0.2);
+			font-size: 16px;
+			font-weight: 500;
+			line-height: 19px;
+			min-width: 112px;
+			padding: 12px 20px 12px 12px;
+			border: 0;
+			border-radius: 24px;
+			outline: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			cursor: pointer;
+			-webkit-backface-visibility: hidden;
+			-webkit-appearance: none;
+			transition: transform 0.3s, box-shadow 0.3s;
+			box-shadow: 0 var(--shadow-y, 4px) var(--shadow-blur, 12px) var(--shadow);
+			transform: scale(var(--scale, 1)) translateZ(0);
+			color: var(--color);
+			background: var(--background);
+		}
+
+			.button-hold > div {
+				border-radius: 50%;
+				display: inline-block;
+				vertical-align: top;
+				position: relative;
+				background: var(--progress-border);
+			}
+
+				.button-hold > div:before {
+					content: "";
+					width: 16px;
+					height: 16px;
+					left: 2px;
+					top: 2px;
+					z-index: 1;
+					position: absolute;
+					background: var(--background);
+					border-radius: inherit;
+					transform: scale(var(--background-scale, 1));
+					transition: transform 0.32s ease;
+				}
+
+				.button-hold > div svg {
+					display: block;
+				}
+
+					.button-hold > div svg.icon, .button-hold > div svg.tick {
+						position: absolute;
+					}
+
+					.button-hold > div svg.icon {
+						width: 8px;
+						height: 8px;
+						left: 6px;
+						top: 6px;
+						fill: var(--icon);
+						z-index: 1;
+						transition: opacity 0.2s, transform 0.2s;
+						opacity: var(--icon-opacity, 1);
+						transform: translateY(var(--icon-y, 0)) scale(var(--icon-scale, 1));
+					}
+
+					.button-hold > div svg.progress, .button-hold > div svg.tick {
+						fill: none;
+					}
+
+					.button-hold > div svg.progress {
+						width: 20px;
+						height: 20px;
+						transform: rotate(-90deg) scale(var(--progress-scale, 1));
+						transition: transform 0.5s ease;
+					}
+
+						.button-hold > div svg.progress circle {
+							stroke-dashoffset: 1;
+							stroke-dasharray: var(--progress-array, 0) 52;
+							stroke-width: 16;
+							stroke: var(--progress-active);
+							transition: stroke-dasharray var(--duration) linear;
+						}
+
+					.button-hold > div svg.tick {
+						width: 20px;
+						height: 20px;
+						left: 0;
+						top: 0;
+						stroke-width: 3;
+						stroke-linecap: round;
+						stroke-linejoin: round;
+						stroke: var(--tick-stroke);
+						transition: stroke 0.3s ease 0.7s;
+					}
+
+						.button-hold > div svg.tick polyline {
+							stroke-dasharray: 18 18 18;
+							stroke-dashoffset: var(--tick-offset, 18);
+							transition: stroke-dashoffset 0.4s ease 0.7s;
+						}
+
+			.button-hold:focus:not(.process), .button-hold:hover:not(.process) {
+				--shadow-y: 8px;
+				--shadow-blur: 16px;
+			}
+
+			.button-hold:active:not(.success) {
+				--scale: .96;
+				--shadow-y: 4px;
+				--shadow-blur: 8px;
+			}
+
+			.button-hold.process, .button-hold.success {
+				--progress-array: 52;
+				--icon-y: -4px;
+				--icon-scale: .6;
+				--icon-opacity: 0;
+			}
+
+			.button-hold.success {
+				--progress-border: none;
+				--progress-scale: .11;
+				--tick-stroke: var(--progress-success);
+				--background-scale: 0;
+				--tick-offset: 36;
+			}
+
+				.button-hold.success > div svg.progress {
+					-webkit-animation: tick 0.3s linear forwards 0.4s;
+					animation: tick 0.3s linear forwards 0.4s;
+				}
+
+		@-webkit-keyframes tick {
+			100% {
+				transform: rotate(-90deg) translate(0, -5px) scale(var(--progress-scale));
+			}
+		}
+
+		@keyframes tick {
+			100% {
+				transform: rotate(-90deg) translate(0, -5px) scale(var(--progress-scale));
+			}
+		}
+
+		html {
+			box-sizing: border-box;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		* {
+			box-sizing: inherit;
+		}
+
+			*:before, *:after {
+				box-sizing: inherit;
+			}
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            font-family: "Roboto", Arial;
+            justify-content: center;
+            align-items: center;
+            background: #ECEFFC;
+            
+        }
+
+			body .dribbble {
+				position: fixed;
+				display: block;
+				right: 20px;
+				bottom: 20px;
+			}
+
+				body .dribbble img {
+					display: block;
+					height: 28px;
+				}
+
+			body .twitter {
+				position: fixed;
+				display: block;
+				right: 64px;
+				bottom: 14px;
+			}
+
+				body .twitter svg {
+					width: 32px;
+					height: 32px;
+					fill: #1da1f2;
+				}
+	</style>
+
+	<!---------------------------------------------------------------------------->
+
+</head>
+<body>
+	<div id="container">
+
+		<three>
+			<stat></stat>
+			<renderer clearColor="0.0 0.05 0.0"></renderer>
+			<orbitcontrols target="0 0 -16"></orbitcontrols>
+			<home></home>
+			<htmlplanegeometry name="button" position="0 0 -16.3" rotation="-42 0 0" scale="30" width="140" height="90" panelbar="false">
+				<!--
+
+		<div style="padding:20px;background-color:transparent">
+					<button class="button-hold" onclick="clickBtn()">
+						<div>
+							<svg class="icon" viewBox="0 0 16 16">
+								<polygon points="1.3,6.7 2.7,8.1 7,3.8 7,16 9,16 9,3.8 13.3,8.1 14.7,6.7 8,0"></polygon>
+							</svg>
+							<svg class="progress" viewBox="0 0 32 32">
+								<circle r="8" cx="16" cy="16" />
+							</svg>
+							<svg class="tick" viewBox="0 0 24 24">
+								<polyline points="18,7 11,16 6,12" />
+							</svg>
+						</div>
+						Publish
+					</button>
+				<a class="dribbble" href="https://dribbble.com/shots/8445173-Press-button-to-confirm" target="_blank"><img src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg" alt=""></a>
+
+									-->
+			</htmlplanegeometry>
+			<group name="magazine" position="0 -17 -2" rotation="-42 0 0" scale="1 0.7 0.7">
+				<parametricbuffergeometry name="param" xsegs="40" ysegs="40">
+					<meshphongmaterial id="nl" color="1 1 1" url="images/travel.jfif" castsshadow="true"></meshphongmaterial>
+					<softbody>
+						<constraint type="fixed" index="5 16 27 38 49 60 71 82 93 104 115"></constraint>
+						<!--<constraint type="gravity" factor="1"></constraint>-->
+						<constraint type="stretch" factor="1"></constraint>
+						<constraint type="structure" factor="0.1"></constraint>
+						<constraint type="wind" factor="4" scale="1" usearray="true"></constraint>
+						<!--<constraint type="grab"></constraint>-->
+					</softbody>
+				</parametricbuffergeometry>
+
+			</group>
+
+			<directionallight intensity="1.1" position="0 2 2" target="button" castsshadow="true"></directionallight>
+		</three>
+		<!--					<a class="dribbble" href="https://dribbble.com/shots/8445173-Press-button-to-confirm" target="_blank"><img src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg" alt=""></a>
+							<a class="twitter" target="_blank" href="https://twitter.com/aaroniker_me"><svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72"><path d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z"></path></svg></a>
+		-->
+	</div>
+	<script>
+		var threeml;
+        function clickBtn() {
+            alert('I am clicked');
+        }
+	</script>
+	<script type="module">
+		import { ThreeML } from '../../threeml/threeml.js';
+		threeml = new ThreeML();
+		threeml.parseThree();
+	</script>
+	<script nonce="">
+		__processedPen = { "html": "&lt;button class=&quot;button-hold&quot;&gt;\n    &lt;div&gt;\n        &lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 16 16&quot;&gt;\n            &lt;polygon points=&quot;1.3,6.7 2.7,8.1 7,3.8 7,16 9,16 9,3.8 13.3,8.1 14.7,6.7 8,0&quot;&gt;&lt;/polygon&gt;\n        &lt;/svg&gt;\n        &lt;svg class=&quot;progress&quot; viewBox=&quot;0 0 32 32&quot;&gt;\n            &lt;circle r=&quot;8&quot; cx=&quot;16&quot; cy=&quot;16&quot; /&gt;\n        &lt;/svg&gt;\n        &lt;svg class=&quot;tick&quot; viewBox=&quot;0 0 24 24&quot;&gt;\n            &lt;polyline points=&quot;18,7 11,16 6,12&quot; /&gt;\n        &lt;/svg&gt;\n    &lt;/div&gt;\n    Publish\n&lt;/button&gt;\n\n&lt;!-- dribbble --&gt;\n&lt;a class=&quot;dribbble&quot; href=&quot;https://dribbble.com/shots/8445173-Press-button-to-confirm&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg&quot; alt=&quot;&quot;&gt;&lt;/a&gt;\n&lt;a class=&quot;twitter&quot; target=&quot;_blank&quot; href=&quot;https://twitter.com/aaroniker_me&quot;&gt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;72&quot; height=&quot;72&quot; viewBox=&quot;0 0 72 72&quot;&gt;&lt;path d=&quot;M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;", "css": ".button-hold {\n  --color: #F6F8FF;\n  --background: #2B3044;\n  --icon: var(--color);\n  --progress-border: #646B8C;\n  --progress-active: #fff;\n  --progress-success: #5C86FF;\n  --tick-stroke: var(--progress-active);\n  --shadow: rgba(0, 9, 61, 0.2);\n  font-size: 16px;\n  font-weight: 500;\n  line-height: 19px;\n  min-width: 112px;\n  padding: 12px 20px 12px 12px;\n  border: 0;\n  border-radius: 24px;\n  outline: none;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  cursor: pointer;\n  -webkit-backface-visibility: hidden;\n  -webkit-appearance: none;\n  transition: transform 0.3s, box-shadow 0.3s;\n  box-shadow: 0 var(--shadow-y, 4px) var(--shadow-blur, 12px) var(--shadow);\n  transform: scale(var(--scale, 1)) translateZ(0);\n  color: var(--color);\n  background: var(--background);\n}\n.button-hold &gt; div {\n  margin-right: 4px;\n  border-radius: 50%;\n  display: inline-block;\n  vertical-align: top;\n  position: relative;\n  background: var(--progress-border);\n}\n.button-hold &gt; div:before {\n  content: &quot;&quot;;\n  width: 16px;\n  height: 16px;\n  left: 2px;\n  top: 2px;\n  z-index: 1;\n  position: absolute;\n  background: var(--background);\n  border-radius: inherit;\n  transform: scale(var(--background-scale, 1));\n  transition: transform 0.32s ease;\n}\n.button-hold &gt; div svg {\n  display: block;\n}\n.button-hold &gt; div svg.icon, .button-hold &gt; div svg.tick {\n  position: absolute;\n}\n.button-hold &gt; div svg.icon {\n  width: 8px;\n  height: 8px;\n  left: 6px;\n  top: 6px;\n  fill: var(--icon);\n  z-index: 1;\n  transition: opacity 0.2s, transform 0.2s;\n  opacity: var(--icon-opacity, 1);\n  transform: translateY(var(--icon-y, 0)) scale(var(--icon-scale, 1));\n}\n.button-hold &gt; div svg.progress, .button-hold &gt; div svg.tick {\n  fill: none;\n}\n.button-hold &gt; div svg.progress {\n  width: 20px;\n  height: 20px;\n  transform: rotate(-90deg) scale(var(--progress-scale, 1));\n  transition: transform 0.5s ease;\n}\n.button-hold &gt; div svg.progress circle {\n  stroke-dashoffset: 1;\n  stroke-dasharray: var(--progress-array, 0) 52;\n  stroke-width: 16;\n  stroke: var(--progress-active);\n  transition: stroke-dasharray var(--duration) linear;\n}\n.button-hold &gt; div svg.tick {\n  width: 20px;\n  height: 20px;\n  left: 0;\n  top: 0;\n  stroke-width: 3;\n  stroke-linecap: round;\n  stroke-linejoin: round;\n  stroke: var(--tick-stroke);\n  transition: stroke 0.3s ease 0.7s;\n}\n.button-hold &gt; div svg.tick polyline {\n  stroke-dasharray: 18 18 18;\n  stroke-dashoffset: var(--tick-offset, 18);\n  transition: stroke-dashoffset 0.4s ease 0.7s;\n}\n.button-hold:focus:not(.process), .button-hold:hover:not(.process) {\n  --shadow-y: 8px;\n  --shadow-blur: 16px;\n}\n.button-hold:active:not(.success) {\n  --scale: .96;\n  --shadow-y: 4px;\n  --shadow-blur: 8px;\n}\n.button-hold.process, .button-hold.success {\n  --progress-array: 52;\n  --icon-y: -4px;\n  --icon-scale: .6;\n  --icon-opacity: 0;\n}\n.button-hold.success {\n  --progress-border: none;\n  --progress-scale: .11;\n  --tick-stroke: var(--progress-success);\n  --background-scale: 0;\n  --tick-offset: 36;\n}\n.button-hold.success &gt; div svg.progress {\n  -webkit-animation: tick 0.3s linear forwards 0.4s;\n          animation: tick 0.3s linear forwards 0.4s;\n}\n\n@-webkit-keyframes tick {\n  100% {\n    transform: rotate(-90deg) translate(0, -5px) scale(var(--progress-scale));\n  }\n}\n\n@keyframes tick {\n  100% {\n    transform: rotate(-90deg) translate(0, -5px) scale(var(--progress-scale));\n  }\n}\nhtml {\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased;\n}\n\n* {\n  box-sizing: inherit;\n}\n*:before, *:after {\n  box-sizing: inherit;\n}\n\nbody {\n  min-height: 100vh;\n  display: flex;\n  font-family: &quot;Roboto&quot;, Arial;\n  justify-content: center;\n  align-items: center;\n  background: #ECEFFC;\n}\nbody .dribbble {\n  position: fixed;\n  display: block;\n  right: 20px;\n  bottom: 20px;\n}\nbody .dribbble img {\n  display: block;\n  height: 28px;\n}\nbody .twitter {\n  position: fixed;\n  display: block;\n  right: 64px;\n  bottom: 14px;\n}\nbody .twitter svg {\n  width: 32px;\n  height: 32px;\n  fill: #1da1f2;\n}", "js": "// Hold button with mouse / select with tab and hold spacebar\n\nlet duration = 1600,\nsuccess = button =&gt; {\n  //Success function\n  button.classList.add(&#39;success&#39;);\n};\n\ndocument.querySelectorAll(&#39;.button-hold&#39;).forEach(button =&gt; {\n  button.style.setProperty(&#39;--duration&#39;, duration + &#39;ms&#39;);\n  [&#39;mousedown&#39;, &#39;touchstart&#39;, &#39;keypress&#39;].forEach(e =&gt; {\n    button.addEventListener(e, ev =&gt; {\n      if (e != &#39;keypress&#39; || e == &#39;keypress&#39; &amp;&amp; ev.which == 32 &amp;&amp; !button.classList.contains(&#39;process&#39;)) {\n        button.classList.add(&#39;process&#39;);\n        button.timeout = setTimeout(success, duration, button);\n      }\n    });\n  });\n  [&#39;mouseup&#39;, &#39;mouseout&#39;, &#39;touchend&#39;, &#39;keyup&#39;].forEach(e =&gt; {\n    button.addEventListener(e, ev =&gt; {\n      if (e != &#39;keyup&#39; || e == &#39;keyup&#39; &amp;&amp; ev.which == 32) {\n        button.classList.remove(&#39;process&#39;);\n        clearTimeout(button.timeout);\n      }\n    }, false);\n  });\n});" };
+		__preprocessors = {
+			"html": "none",
+			"css": "scss",
+			"js": "none"
+		};
+		__preprocessorNames = {
+			"html": "HTML",
+			"css": "SCSS",
+			"js": "JS"
+		};
+		__editable = false;
+		__embed_prefill = false;
+
+	</script>
+</body>
+</html>

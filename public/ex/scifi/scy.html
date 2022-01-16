@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Scifi</title>
+    <style>
+        body{
+            overflow:hidden;
+        }
+        .maindiv {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="maindiv" class="maindiv">
+
+    </div>
+    <script type="text/javascript">
+        var threeml;
+        var modelsNo = 20;
+        var images = [];
+        var maindiv = document.getElementById('maindiv');
+        var maxw = maindiv.offsetWidth;
+        var maxh = maindiv.offsetHeight;
+
+        function createImage() {
+            var imageno = parseInt(Math.random() * modelsNo+1);
+            const img = document.createElement('img');
+            img.src = './images/sci' + imageno + '.png';
+            var r = Math.random();
+            img.style.width = (r * 500)+'px';
+            img.style.height = (r * 300) +'px';
+            img.style.position = 'absolute';
+            img.style.left = (Math.random() * maxw) + 'px';
+            img.style.top = (Math.random() * maxh) + 'px';
+            img.Vx = 0.5 - Math.random();
+            img.Vy = 0.5 - Math.random();
+            img.scaleStep = Math.random();
+            img.style.cursor = 'pointer';
+            img.addEventListener("click", function () { loadObject(imageno); });
+            maindiv.appendChild(img);
+            return img;
+        }
+        function updateImage(img) {
+            var sc = img.scaleStep * 0.03;
+            var w = parseFloat(img.style.width);
+            var h = parseFloat(img.style.height);
+            var x = img.Vx;
+            var y = img.Vy;
+            var neww = w * (1 + sc);
+            var newh = h * (1 + sc);
+            if (neww < maxw && newh < maxh) {
+                img.style.width = '' + neww + 'px';
+                img.style.height = '' + newh + 'px';
+            }
+            else {
+                img.scaleStep = -img.scaleStep;
+            }
+            var newx = parseFloat(img.style.left) + x * 1;// -(0.5 * neww);
+            var newy = parseFloat(img.style.top) + y * 1;//- (0.5 * newh);
+            var upd = true;
+            if (newx < 100 ) {
+                img.x = -img.x;
+                newx=100;
+            }
+            if ( newx > maxw) {
+                img.x = -img.x;
+                newx = maxw;
+            }
+            if (newy < 100) {
+                img.y = -img.y;
+                newy=100;
+            }
+            if ( newy > maxh) {
+                img.y = -img.y;
+                newy=maxh;
+            }
+            if (upd) {
+                img.style.left = newx + 'px';
+                img.style.top = newy + 'px';
+            }
+
+//            img.style.top += speed * 0.001;
+            if (Math.random() > 0.97) {
+                img.scaleStep = 0.7 - Math.random();
+            }
+
+        }
+        function updater() {
+            for (var n = 0; n < images.length; n++) {
+                updateImage(images[n]);
+            }
+            if (Math.random() > 0.97) {
+                images.push(createImage());
+                if (images.length > 10) {
+                    images[0].style.display = 'none';
+                    maindiv.removeChild(images[0]);
+                    images.splice(0, 1);
+                }
+            }
+       }
+        window.setInterval(updater, 100);
+
+        var threeml = window.top.threeml
+
+        function loadObject(no) {
+            var code = '<gltfLoader visible="true" url="./models/sci'+no+'.glb" position="0 0 0" rotation="50 40 0" scale="1"><rotate axis="0.03 0.01 0.02"></rotate></gltfLoader>';
+            threeml.loadCodeInGroup("models",code, true);
+        }
+    </script>
+    <script type="module">
+        //import { ThreeML } from '../../threeml/threeml.js';
+        //threeml = new ThreeML();
+        //threeml.parseThree();
+    </script>
+</body>
+</html>

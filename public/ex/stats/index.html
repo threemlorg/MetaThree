@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>ThreeML Statistics</title>
+    <style>
+        #menu div{
+            cursor:pointer;
+        }
+        #menu div:hover{
+            background-color:azure;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <div id="menu" style="position:absolute;display:block;background-color:antiquewhite;z-index:100;margin:10px;padding:4px;border-radius:4px;top:40px">
+ 
+                <div onclick="setCamera('world');">World</div>
+                <div onclick="setCamera('europe');">Europe</div>
+                <div onclick="setCamera('us');">North-America</div>
+                <div onclick="setCamera('sa');">South-America</div>
+                <div onclick="setCamera('asia');">Asia</div>
+                <div onclick="setCamera('australia');">Australia</div>
+                <div onclick="setCamera('africa');">Africa</div>
+        </div>
+             <three>
+                <home></home>
+                 <group name="camgroup">
+                    <orbitcontrols target="0 0 -2" reversed="true"></orbitcontrols>
+                 </group>
+                <renderer clearColor="0.2 0.5 0.9"></renderer>
+                 <group name="dummie"></group>
+                  <group name="mapdummie" position="0 0.1 -2.3"></group>
+
+                <TextGeometry name="text2" position="0 0.6 -2" scale="1.5" text="ThreeML searches worldwide." bevelEnabled="false" height="0.1">
+                    <meshphongmaterial id="text" color="1 0.9 1"></meshphongmaterial>
+                </TextGeometry>
+                <group name="world" position="0 0.1 -2.3"  scale="3" rotation="-50 0 0">
+                    <planeGeometry  name="box" 0 position='0 0 0' scale='1 0.773 1' receiveShadow="true">
+                         <meshphongmaterial  color="1 1 1" url="./images/world-physical-map-mercator.jpg" side="doubleside"></meshphongmaterial>
+                        <hover target="dummie"></hover>
+                    </planeGeometry>
+                    <group name="posgroup" position="-0.032 -0.129 0" scale="0.354">
+                     </group>
+                </group>
+            <spotlight position="0.5 1 -1.0" intensity="1.23" target="mapdummie" castshadow="true">
+                <lookat target="mapdummie"></lookat>
+            </spotlight>
+  			<ambientlight name="amb" color="0.2" intensity="0.3">
+                <actions repeat="true">
+                  <action typeof="transform" color="1 0 0"></action>
+                  <action typeof="transform" color="0 1 0"></action>
+                  <action typeof="transform" color="0 0 1"></action>
+                </actions>
+  			</ambientlight>
+          </three>
+        <script>
+            var threeml;
+            var camera;
+            var choices;
+            var jsondata;
+            function getData(){
+                fetch("/api_getstats")
+                .then(response => {
+                    return response.json();
+                })
+                .then(
+                    json => {
+                        jsondata = json;
+                        write3dGraph();
+                    }
+                );
+            }
+            function write3dGraph(){
+                var c = '';
+                var fact = 0.0090;
+                var yfact = 0.877;
+                var barScale = 1;
+                var isfirst = false;
+                var max = getMaxCount();
+                var hfact = 0.35/max;
+                for(var n=0;n<jsondata.length;n++){
+                    var p=jsondata[n];
+                    var plat = p.lat;
+                    var plon = p.lon;
+                    if (isfirst)
+                    {
+                        plat = 0;
+                        plon = 0;
+                    }
+                    
+                    var lat =(plat+5) * fact;
+                    var lon = plon * fact * yfact;
+                    var s = p.visits * hfact;
+                    var s5 = 0.5 * s * barScale;
+                    var sS = s;
+                    var s5S =s5;
+                    var tS= (p.S+0.4) * hfact * barScale*0.5;
+                    var textName = "text_" + p.city.replace(" ", "_");
+                    var text = `${p.city} (${p.country})`.replace("'","''");
+                    var barw = barScale * 0.01;
+                    var textScale = 0.5 * barScale;
+                    var color = "1 0 0";
+                    if(p.d != null)
+                    {
+                        var dd=new Date(p.d);
+                        var td=new Date();
+                        var dif=dateDiff(dd, td);
+                        if(dif < 1)
+                        {
+                            color = "0 1 1";
+                        }
+                        else if( dif < 7)
+                        {
+                            color = "0 0 1";
+                        }
+                    }
+                    if (isfirst)
+                    {
+                        color = "0 0 0";
+                        barw = barScale * 0.03;
+                    }
+                    c +=`<group  position='${lon} ${lat} ${s5S}'>\r\n`;
+                    c += `  <boxGeometry scale='${barw} ${barw} ${sS}' castShadow='true';>\r\n`;
+                    c += `    <meshphongmaterial  color='${color}' ></meshphongmaterial>\r\n`;
+                    c += `<hover action='tooltip' text='${text}' atmouse='true'></hover>`;
+                     c += `    <hover action='scale' factor='1.5'></hover>`;
+                    c += `  </boxGeometry>\r\n`;
+                    c += `</group>\r\n`;
+                    isfirst = false;
+
+                }
+
+                threeml.loadCodeInGroup('posgroup', c, true);
+            }
+            function dateDiff(d1, d2){
+                var time_difference = d2.getTime() - d1.getTime();  
+                 var days_difference = time_difference / (1000 * 60 * 60 * 24);  
+            return days_difference;
+            }
+            function getMaxCount(){
+                var m=0;
+                for(var n=0;n<jsondata.length;n++)
+                {
+                    var d=jsondata[n];
+                    if(m<d.visits){
+                        m=d.visits;
+                    }
+                }
+                return m;
+            }
+            function setCamera(region) {
+                var posx = 0;
+                var posy = 0;
+                var posz = 0;
+                var pos = { 'x': 0, 'y': 0, 'z': 0 }
+                var target = { 'x': 0, 'y': 0, 'z': -2 }
+                var menu = {'x':0.7, 'y':0.4, 'z':-1.1}
+                switch (region) {
+                    case 'world':
+                        posx = 0;
+                        break;
+                    case 'europe':
+                        pos = { 'x': 0, 'y': 0.72, 'z': -1.6 }
+                        menu = { 'x': -0.31, 'y': 0.48, 'z': -2.16 }
+                        target = { 'x': 0, 'y': 0.4, 'z': -2 }
+                        break;
+                    case 'us':
+                        pos = { 'x': -1.7, 'y': 0.67, 'z': -1.1 }
+                        menu = { 'x': -0.73, 'y': 0.61, 'z': -1.47 }
+                        target = { 'x': -1.4, 'y': 0.4, 'z': -1.7 }
+                        break;
+                    case 'sa':
+                        pos = { 'x': -0.76, 'y': -0.34, 'z': -0.83 }
+                        menu = { 'x': -0.31, 'y': 0, 'z': -1.47 }
+                        target = { 'x': -0.6, 'y': -0.4, 'z': -1.7 }
+                        break;
+                    case 'asia':
+                        pos = { 'x': 0.93, 'y': 0.73, 'z': -1.4 }
+                        target = { 'x': 0.6, 'y': 0, 'z': -2.7 }
+                        break;
+                    case 'australia':
+                        pos = { 'x': 1.5, 'y': -0.3, 'z': -1 }
+                        menu = { 'x': 0.7, 'y': 0.2, 'z': -1.1 }
+                        target = { 'x': 0.6, 'y': -0.4, 'z': -2.7 }
+                        break;
+                    case 'africa':
+                        pos = { 'x': 0, 'y': -0.0, 'z': -1.3 }
+                        menu = { 'x': -0.23, 'y': 0.27, 'z': -1.81 }
+                        var target = { 'x': 0, 'y': -0.15, 'z': -2 }
+                        break;
+                }
+                threeml.moveToPosition(camera, pos.x, pos.y, pos.z, 0.003)
+                threeml.moveToPosition(choices, menu.x, menu.y, menu.z, 0.01)
+                //var code ='<orbitcontrols target="'+target.x+' '+target.y+' ' + target.z+'" reversed="true"></orbitcontrols>'
+                threeml.lookAtPosition(target.x, target.y, target.z);
+                //camera.position.set(posx, posy, posz);
+            }
+           
+        </script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new ThreeML();
+            threeml.parseThree();
+            var scene = threeml.getScene();
+            camera = threeml.getCamera();
+            choices = scene.getObjectByName('choices');
+            getData();
+        </script>
+    </form>
+</body>
+</html>

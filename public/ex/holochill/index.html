@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Epona Furniture</title>
+		<meta charset="utf-8">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+            <three>
+                <stat></stat>
+                <loader maxtime="10"></loader>
+                <camera mode="lookat"></camera>
+                <skybox url="stream.jpg"></skybox>
+
+                <group rotation='0 0 0' position='0 -2.5 -3.5'>
+                    <group position='2.43 4.8 -3.28' rotation='0 0 0' scale='5'>
+                        <textgeometry text="HoloChill Nature app for the HoloLens">
+                            <meshphongmaterial id="mat" color="0 0.3 0"></meshphongmaterial>
+                        </textgeometry>
+                        <textgeometry position="0.01 0.01 -0.01" text="HoloChill Nature app for the HoloLens">
+                            <meshphongmaterial id="mat2" color="0 0.1 0"></meshphongmaterial>
+                        </textgeometry>
+                    </group>
+                    <group position='2.627 4.4 -3.29' rotation='0 0 0' scale='2'>
+                        <textgeometry text="When the weather is dreadful, or you just haven’t time">
+                        </textgeometry>
+                        <textgeometry position="0 -0.2 0" text="to go outside, start HoloChill and relax in virtual nature">
+                        </textgeometry>
+                        <textgeometry position="0 -0.4 0" text="near the border of a small pond or in a tropical underwater environment (early preview). ">
+                        </textgeometry>
+                        <textgeometry position="0 -0.6 0" text="No gestures available in the scenes. Just look around what is happening...">
+                        </textgeometry>
+                        <group position='0.01 0.01 -0.01' r>
+                            <textgeometry text="When the weather is dreadful, or you just haven’t time">
+                                <meshphongmaterial id="mat3" color="0.1"></meshphongmaterial>
+                            </textgeometry>
+                            <textgeometry position="0 -0.2 0" text="to go outside, start HoloChill and relax in virtual nature">
+                                <meshphongmaterial id="mat3" color="0.1"></meshphongmaterial>
+                            </textgeometry>
+                            <textgeometry position="0 -0.4 0" text="near the border of a small pond or in a tropical underwater environment (early preview). ">
+                                <meshphongmaterial id="mat3" color="0.1"></meshphongmaterial>
+                            </textgeometry>
+                            <textgeometry position="0 -0.6 0" text="No gestures available in the scenes. Just look around what is happening...">
+                                <meshphongmaterial id="mat3" color="0.1"></meshphongmaterial>
+                            </textgeometry>
+                        </group>
+                    </group>
+                    <boxgeometry scale='2 1 0.1' position='4.38 0.32 -3.59' rotation='0 -30 0'>
+                        <meshphongmaterial url="turtle.png"></meshphongmaterial>
+                        <present cameradistance="1.4" speed="0.07"></present>
+                    </boxgeometry>
+
+                    <boxgeometry scale='1 1 0.1' position='1.58 2.177 -3.59'>
+                        <meshphongmaterial url="jaw.png"></meshphongmaterial>
+                        <present cameradistance="1.4" speed="0.07"></present>
+                    </boxgeometry>
+                    <boxgeometry scale='2 1 0.1' position='0.84 0.8 -3.7'>
+                        <meshphongmaterial url="pool_cricket.png"></meshphongmaterial>
+                        <present cameradistance="1.4" speed="0.07"></present>
+                    </boxgeometry>
+                    <boxgeometry scale='2 1 0.1' position='-0.14 2 -3.59' rotation='0 6 0'>
+                        <meshphongmaterial url="duck.png"></meshphongmaterial>
+                        <present cameradistance="1.4" speed="0.07"></present>
+                    </boxgeometry>
+
+                    <boxgeometry scale='2 1 0.1' position='-2.57 1.7 -3.59' rotation='0 17 0'>
+                        <meshphongmaterial url="pheasant.png"></meshphongmaterial>
+                        <present cameradistance="1.4" speed="0.07"></present>
+                    </boxgeometry>
+
+                    <boxgeometry scale='2 1 0.1' position='-3.57 2.756 -2.65' rotation='0 34 0'>
+                        <meshphongmaterial url="waterbugs.png"></meshphongmaterial>
+                        <present cameradistance="1.4" speed="0.07"></present>
+                    </boxgeometry>
+                    <directionalLight position="-3.4 2.4 -1.4" intensity="4"></directionalLight>
+                    <group name="hololens" position="3 2 -2">
+                        <gltfLoader visible="true" url="./models/hololens.glb" position="0 0 0" scale="2">
+                            <link url="https://www.microsoft.com/en-us/p/holochill/9pd82297jgd4?activetab=pivot:overviewtab" target="_blank" />
+
+                        </gltfLoader>
+                        <rotate axis="0 0.002 0"></rotate>
+                    </group>
+                </group>
+
+
+                <directionalLight intensity='1.5' shadowIntensity='1.0'> </directionalLight>
+
+                <Sound>
+                    <AudioClip url="GoksuMarshes.wav" loop='true' enabled='true' volume='0.2' />
+                </Sound>
+
+                <ambientlight></ambientlight>
+            </three>
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

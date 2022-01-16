@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>SpaceX control room</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<three>
+				<loader maxtime="10"></loader>
+				<stat></stat>
+				<camera mode="fixed"></camera>
+				<renderer clearColor="0 0 0"></renderer>
+				<home></home>
+				<group name="screens">
+					<htmlPlaneGeometry url="https://www.spacex.com/" name="spacex" zoom="1" position='-2.3 0 -3.5' scale='1' rotation="0 40 0">
+						<present cameradistance="1.3" class="handle" speed="0.03" fromgroup="screens"></present>
+					</htmlPlaneGeometry>
+					<htmlPlaneGeometry url="https://www.spacex.com/vehicles/falcon-heavy/" name="falcon-heavy" zoom="1" position='-0.7 0 -4' scale='1' rotation="0 20 0">
+						<present cameradistance="1.3" class="handle" speed="0.03" fromgroup="screens"></present>
+					</htmlPlaneGeometry>
+					<htmlPlaneGeometry url="https://www.spacex.com/vehicles/falcon-9/" name="falcon-9" zoom="1" position='0.9 0 -4.2' scale='1' rotation="0 0 0">
+						<present cameradistance="1.3" class="handle" speed="0.03" fromgroup="screens"></present>
+					</htmlPlaneGeometry>
+
+					<htmlPlaneGeometry url="https://www.spacex.com/vehicles/dragon/" name="dragon" zoom="1" position='2.5 0 -4' scale='1' rotation="0 -20 0">
+						<present cameradistance="1.3" class="handle" speed="0.03" fromgroup="screens"></present>
+					</htmlPlaneGeometry>
+					<htmlPlaneGeometry url="https://www.spacex.com/vehicles/starship/" name="starship" zoom="1" position='4.1 0 -3.5' scale='1' rotation="0 -40 0">
+						<present cameradistance="1.3" class="handle" speed="0.03" fromgroup="screens"></present>
+					</htmlPlaneGeometry>
+					<htmlPlaneGeometry url="https://www.spacex.com/human-spaceflight/" name="NerdleCam" zoom="1" position='5.7 0 -2.5' scale='1' rotation="0 -70 0">
+						<present cameradistance="1.3" class="handle" speed="0.03" fromgroup="screens"></present>
+					</htmlPlaneGeometry>
+				</group>
+				<group position="0.7 -0.3 -1" scale="0.1">
+					<TextGeometry name="t-spacex" position="-0.1 1.5 0" scale="3" text="SpaceX" bevelEnabled="false" height="0.1" visible="false">
+						<meshphongmaterial id="tex1t" color="0.3 0 0.2"></meshphongmaterial>
+					</TextGeometry>
+					<TextGeometry name="t-falcon-heavy" position="1.7 0.5 0" scale="3" text="Falcon-Heavy" bevelEnabled="false" height="0.1" visible="false">
+						<meshphongmaterial id="text2" color="0 0.7 0.1"></meshphongmaterial>
+					</TextGeometry>
+					<TextGeometry name="t-falcon-9" position="1.4 -0.5 0" scale="3" text="Falcon-9" bevelEnabled="false" height="0.1" visible="false">
+						<meshphongmaterial id="text3" color="0.4 0.1 0.1"></meshphongmaterial>
+					</TextGeometry>
+					<TextGeometry name="t-dragon" position="-0.1 -1.0 0" scale="3" text="Dragon" bevelEnabled="false" height="0.1" visible="false">
+						<meshphongmaterial id="text4" color="0.7 0.5 0"></meshphongmaterial>
+					</TextGeometry>
+					<TextGeometry name="t-starship" position="-1.7 -0.5 0" scale="3" text="Starship" bevelEnabled="false" height="0.1" visible="false">
+						<meshphongmaterial id="text5" color="0.5 0.1 0"></meshphongmaterial>
+					</TextGeometry>
+
+					<TextGeometry name="t-labpadre" position="-2 0.7 0" scale="3" text="Human space flight" bevelEnabled="false" height="0.1" visible="false">
+						<meshphongmaterial id="text6" color="0 0.7 0.3"></meshphongmaterial>
+					</TextGeometry>
+
+					<group name="buttons" rotation="90 25 0">
+						<gltfLoader name="button1" url="./models/button1.glb" rotation="0 0 0" position="0.40 0 0">
+							<present target="spacex"></present>
+							<hover target="t-spacex"></hover>
+						</gltfLoader>
+						<gltfLoader name="button2" url="./models/button2.glb" rotation="0 0 0" position="0.40 0 0">
+							<present target="falcon-heavy"></present>
+							<hover target="t-falcon-heavy"></hover>
+						</gltfLoader>
+						<gltfLoader name="button3" url="./models/button3.glb" rotation="0 0 0" position="0.40 0 0">
+							<present target="falcon-9"></present>
+							<hover target="t-falcon-9"></hover>
+						</gltfLoader>
+						<gltfLoader name="button4" url="./models/button4.glb" rotation="0 0 0" position="0.40 0 0">
+							<present target="dragon"></present>
+							<hover target="t-dragon"></hover>
+						</gltfLoader>
+						<gltfLoader name="button5" url="./models/button5.glb" rotation="0 0 0" position="0.40 0 0">
+							<present target="starship"></present>
+							<hover target="t-starship"></hover>
+						</gltfLoader>
+						<gltfLoader name="button6" url="./models/button6.glb" rotation="0 0 0" position="0.40 0 0">
+							<present target="NerdleCam"></present>
+							<hover target="t-labpadre"></hover>
+						</gltfLoader>
+					</group>
+				</group>
+
+
+				<gltfLoader name="shuttle" url="./models/shuttle.glb" rotation="0 30 0" position="0 -0.5 -3" scale="1">
+				</gltfLoader>
+
+				<gltfLoader name="iis" url="./models/iss.glb" rotation="0 30 0" position="-2 0.7 -3" scale="1">
+				</gltfLoader>
+				<gltfLoader name="satelite" url="./models/satelite.glb" rotation="0 30 0" position="2 0.5 -3" scale="1">
+				</gltfLoader>
+				<spheregeometry name="lighthandle" position="0 1.7 -4" scale="0.3" widthSegments="90" heightSegments="90">
+					<meshphongmaterial color="1 1 1" url="./images/moon.png"></meshphongmaterial>
+					<draggable></draggable>
+				</spheregeometry>
+				<directionallight position="-0.2 -0.5 -2" intencity="1" target="lighthandle">
+				</directionallight>
+			</three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

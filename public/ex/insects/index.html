@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Drosophila</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+			
+			<three>
+				<stat></stat>
+				<group position="0 0 -2">
+					<gltfLoader visible="true" url="./models/drosophila.glb" scale="0.3">
+						<rotate axis="0 0.001 0"></rotate>
+					</gltfLoader>
+				</group>
+				<directionallight intensity="1.1" position="0 2 2"></directionallight>
+			</three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

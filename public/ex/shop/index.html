@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Epona Furniture</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+			
+			<three>
+				<loader maxtime="10"></loader>
+				<stat></stat>
+				<ambientlight intensity="0.8"></ambientlight>
+				<home></home>
+				<htmlPlaneGeometry url="productlist.html" name="shop" zoom="1" position='-0.7 0 -2' scale='1' rotation="0 50 0" homebutton="false"></htmlPlaneGeometry>
+			</three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

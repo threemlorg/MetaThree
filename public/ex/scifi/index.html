@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Sci fi</title>
+		<meta charset="utf-8">
+		<style>
+            body {
+                overflow: hidden;
+            }
+            .tml_bar {
+                background-color: #00808047;
+            }
+ 
+
+		</style>
+	</head>
+	<body>
+		<div id="container"> 
+
+            <three>
+                <loader maxtime="15"></loader>
+                <stat></stat>
+                <orbitcontrols target="0 0 -2" reversed="true"></orbitcontrols>
+                <renderer clearColor="0.0 0.05 0.0"></renderer>
+                <home></home>
+                <group name="wall1" position="0 0 -5">
+
+                    <group position='0 2 0' rotation='0 90 135'>
+                        <spotlight rotation='0 0 0' position="3 0 0" intensity='0.1' castShadow='true'>
+                        </spotlight>
+
+                    </group>
+                    <gltfLoader visible="true" url="./models/wall.glb" position="0 0 0" rotation="0 0 0" scale="1">
+                    </gltfLoader>
+                    <group position='-5.3 0.9 0.15' rotation="0 28 0">
+                        <htmlPlaneGeometry url="planets.html" name="planets" scale='1' homebutton="false" handle="#00808047" custombarcolor="true">
+                        </htmlPlaneGeometry>
+                        <group name="planet" position="0 -1 1.4" scale="0.3">
+                            <gltfLoader position="3 -2 -3.77" rotation="0 0 0" url="./models/handle_up.glb">
+                            </gltfLoader>
+                        </group>
+                        <gltfLoader url="./models/device.glb" position="0 -1 1.4" rotation="0 90 0" scale="0.8">
+                        </gltfLoader>
+
+                    </group>
+                    <htmlPlaneGeometry url="io1.html" name="io" position='-3.3 0.8 -0.68' scale='1' rotation="0 18 0" homebutton="false" handle="#00808047" custombarcolor="true">
+                    </htmlPlaneGeometry>
+                    <group name="iopanel" position='-3.1 0.1 -0.4' rotation="-10 20 0">
+                        <gltfLoader url="./models/button1.glb" position="-0.2 -0.2 0">
+                            <link url="io1.html" target="io" />
+                        </gltfLoader>
+                        <gltfLoader url="./models/button2.glb" position="-0.2 0.2 0">
+                            <link url="io2.html" target="io" />
+                        </gltfLoader>
+                        <gltfLoader url="./models/button3.glb" position="0.2 0.2 0">
+                            <link url="io3.html" target="io" />
+                        </gltfLoader>
+                        <gltfLoader url="./models/button4.glb" position="0.2 -0.2 0">
+                            <link url="io4.html" target="io" />
+                        </gltfLoader>
+                    </group>
+                    <htmlPlaneGeometry url="frames.html" name="Frames" position='-1.2 1 -1.1' scale='1' rotation="0 5 0" homebutton="false" handle="#00808047" custombarcolor="true">
+                    </htmlPlaneGeometry>
+                    <htmlPlaneGeometry url="https://www.youtube.com/embed/9kEMzXw7P2A?rel=0&enablejsapi=1&disablekb=1&autoplay=1&controls=0&fs=0&modestbranding=1" name="musix" position='1.2 1 -1.1' scale='1' rotation="0 -5 0" homebutton="false" handle="#00808047" custombarcolor="true">
+                    </htmlPlaneGeometry>
+                    <htmlPlaneGeometry url="em.html" name="em" position='3.3 1 -0.68' scale='1' rotation="0 -18 0" homebutton="false" handle="#00808047" custombarcolor="true">
+                    </htmlPlaneGeometry>
+                    <cylindergeometry scale="1 0.57 1" radialSegments="180" position='5.84 0.87 -0.5'>
+                        <meshphongmaterial url="./images/mars.jpg" color="1 1 1"></meshphongmaterial>
+                        <rotate axis="0 -0.001 0"></rotate>
+                        <present cameradistance="2.1" class="handle" speed="0.03"></present>
+                    </cylindergeometry>
+
+                    <group position="-1 0.2 -0.94" rotation="70 0 -20" scale="0.5">
+                        <gltfLoader url="./models/dev1.glb">
+                            <rotate axis="0 0.01 0"></rotate>
+                        </gltfLoader>
+                        <gltfLoader url="./models/dev2.glb">
+                            <rotate axis="0 -0.015 0"></rotate>
+                        </gltfLoader>
+
+                    </group>
+                </group>
+                <gltfLoader name="wall2" visible="true" url="./models/wall2.glb" position="0 0 -5" rotation="0 0 0" scale="1">
+                </gltfLoader>
+                <group name="ufo" position="0 0 -1.2" rotation="0 0 0">
+                    <gltfLoader visible="true" url="./models/ufo.glb" scale="0.4">
+                    </gltfLoader>
+                    <!--<pointlight position="0 0.3 1"></pointlight>-->
+                    <actions repeat="true">
+
+                        <action typeof="transform" rotation="20 0 0" speed="0.005"></action>
+                        <action typeof="transform" rotation="0 0 0" speed="0.01"></action>
+                        <action typeof="transform" position="-0.3 0.5 -1.5"></action>
+                        <action typeof="transform" position="-0.9 0.5 -1.5" rotation="30 -180 0" speed="0.002"></action>
+                        <action typeof="transform" rotation="0 90 0" speed="0.002"></action>
+                        <action typeof="transform" position="0.2 0.5 -1.5"></action>
+                        <action typeof="transform" position="-0.7 0.5 -1.5" speed="0.005"></action>
+                        <action typeof="transform" position="0.3 0 -1.5"></action>
+                    </actions>
+                </group>
+                <spotlight position="-2 0 1" intensity="15" angle="3" target="ufo" distance="5"></spotlight>
+                <group position="0.8 -0.3 -4" scale="0.5" rotation="0 -30 0">
+                    <pointlight position="0 0.3 0" intensity="2.8" color="#62e371"></pointlight>
+                    <group name="models">
+                    </group>
+                    <gltfLoader visible="true" url="./models/barrel.glb" scale="0.6">
+                    </gltfLoader>
+                    <htmlPlaneGeometry url="scy.html" name="Technology" position='0 -1.3 1.18' scale='1.1' rotation="-27 0 0" homebutton="false" handle="#00808047" custombarcolor="true">
+                    </htmlPlaneGeometry>
+                    <group name="panel" position="0 -0.9 1" scale="0.5">
+                        <group name="led1" position="0 0 0" scale="0.1">
+                            <spheregeometry>
+                                <meshphongmaterial color="1 0 0"></meshphongmaterial>
+                            </spheregeometry>
+                            <spheregeometry>
+                                <meshphongmaterial color="1 0 0" emissive="1 1 1"></meshphongmaterial>
+                                <blink speed="0.002" random="true"></blink>
+                            </spheregeometry>
+                        </group>
+                        <group name="led2" position="0.3 0 0" scale="0.1">
+                            <spheregeometry>
+                                <meshphongmaterial color="0 1 0"></meshphongmaterial>
+                            </spheregeometry>
+                            <spheregeometry>
+                                <meshphongmaterial color="0 1 0" emissive="0 1 0"></meshphongmaterial>
+                                <blink speed="0.002" random="true"></blink>
+                            </spheregeometry>
+                        </group>
+                    </group>
+
+                </group>
+                <gltfLoader url="./models/mesh.glb" position="-6.4 0 -2.5" rotation="90 0 90" scale="1.3">
+                </gltfLoader>
+                <gltfLoader position="0 -1.5 -5" url="./models/floor.glb" scale="0.6">
+                    <!--<walk></walk>-->
+                </gltfLoader>
+                <planegeometry scale="20" position="0 -2 -10" rotation="-90 0 0">
+                    <meshphongmaterial color="0.11 0 0"></meshphongmaterial>
+                </planegeometry>
+
+                <spheregeometry name="moon" position="40 0 100" scale="40" widthSegments="160" heightSegments="160">
+                    <meshphongmaterial color="1 1 1" url="./images/moon.png" normalMap="./images/MoonNormal.png" fog="false"></meshphongmaterial>
+                    <rotate axis="0 0.0001 0" />
+                </spheregeometry>
+                <group position="-10 0 10">
+                    <spheregeometry name="star" scale="0.1">
+                        <meshphongmaterial color="1 1 1" url="./images/earth-topo.png" fog="false"></meshphongmaterial>
+                    </spheregeometry>
+                </group>
+                <directionallight position="-1040 -1730 -1040" intensity="3" target="moon" color="#8e8564">
+                </directionallight>
+                <fog color="0 0.4 0.4" density="0.2"></fog>
+                <spheregeometry name="sphere" position="-1.5 1 -3" rotation="50 40 0" scale="0.1" castShadow='true'>
+                    <meshphongmaterial id="r" color="0.2 0,4 0.7" url="./images/skin.png" side="doubleside"></meshphongmaterial>
+                    <!--<rotate axis="0 0.002 0.001"></rotate>-->
+                    <softbody>
+                        <constraint type="fixed" index="0 " position="0.5 0 0"></constraint>
+                        <constraint type="fixed" index="300" position="-0.5 0 0"></constraint>
+                        <constraint type="fixed" index="400" position="0 0 0.5"></constraint>
+                        <constraint type="gravity" factor="0.5"></constraint>
+                        <constraint type="stretch" factor="1"></constraint>
+                        <constraint type="structure" factor="1"></constraint>
+                        <constraint type="wind" factor="1" scale="0.4"></constraint>
+
+                    </softbody>
+                </spheregeometry>
+                <spheregeometry name="sphere2" position="1.5 -1 -3" rotation="150 40 0" scale="0.1" castShadow='true'>
+                    <meshphongmaterial id="r" color="0.2 0.4 0.7" url="./images/skin.png" side="doubleside" shininess="0" normalmap="/threeml/textures/waternormals.jpg"></meshphongmaterial>
+                    <!--<rotate axis="0 0.002 0.001"></rotate>-->
+                    <softbody>
+                        <constraint type="fixed" index="0 " position="0.5 0 0"></constraint>
+                        <constraint type="fixed" index="300" position="-0.5 0 0"></constraint>
+                        <constraint type="fixed" index="400" position="0 0 0.5"></constraint>
+                        <constraint type="gravity" factor="-0.5"></constraint>
+                        <constraint type="stretch" factor="1"></constraint>
+                        <constraint type="structure" factor="1"></constraint>
+                        <constraint type="wind" factor="1"></constraint>
+                    </softbody>
+                </spheregeometry>
+            </three>
+			</div>
+			<script>
+				var threeml;
+			</script>
+			<script type="module">
+				import { ThreeML } from '../../threeml/threeml.js';
+				threeml = new ThreeML();
+				threeml.parseThree();
+			</script>
+	</body>
+</html>

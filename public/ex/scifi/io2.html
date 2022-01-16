@@ -1,0 +1,28 @@
+﻿<html>
+<body>
+    <three>
+        <renderer clearColor="0.0 0 0.0"></renderer>
+        <group name="lt" position='0.2 0 -1'>
+            <gltfLoader name="satelite" url="./models/satelite.glb" rotation="-90 30 0" scale="2">
+                <rotate axis="0 0.003 0"></rotate>
+
+            </gltfLoader>
+        </group>
+        <spheregeometry name="io" position="0 0 -4" scale="1.9" widthSegments="160" heightSegments="160">
+            <meshphongmaterial id="blueish" color="1 1 1" url="./images/jup1vss2.png" rotation="0 0 20"></meshphongmaterial>
+            <rotate axis="0 0.0002 0"></rotate>
+            <link url="io3.html" target="_self" />
+        </spheregeometry>
+
+        <ambientlight target="lt" intensity="1" position="-2 0 0"></ambientlight>
+    </three>
+        <script>
+            var threeml;
+        </script>
+        <script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new ThreeML();
+            threeml.parseThree();
+        </script>
+</body>
+</html>

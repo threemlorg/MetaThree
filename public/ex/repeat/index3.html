@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Repeat</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+			
+            <three>
+                <renderer clearColor="0.2 0.2 0.2"></renderer>
+                <scene checkzoom="false"></scene>
+                <skybox url="./images/vignaioli_night.png"></skybox>
+				<group name="butterflygroup" rotation="20 0 0" position="0 0 -2" scale="2">
+					<gltfLoader name="butterfly" url="./models/butterfly.glb">
+						<actions repeat="true">
+							<action type="transform" rotation="0 15 0"></action>
+							<action type="transform" rotation="0 -10 0"></action>
+							<action type="transform" rotation="0 -15 0"></action>
+							<action type="transform" rotation="0 5 0"></action>
+						</actions>
+					</gltfLoader>
+				</group>
+				<ambientlight></ambientlight>
+                <directionallight intensity="0.8" target="butterflygroup"></directionallight>
+            </three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '/threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

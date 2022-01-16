@@ -1,0 +1,189 @@
+﻿
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+       Hello World
+    </title>
+    <link href="../css/slicebox.css" rel="stylesheet" type="text/css" />
+    <link href="../css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../css/responsive.css" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .inline-button {
+            cursor: pointer;
+            border: solid 0.1pt lightblue;
+            border-radius: 4px;
+            padding: 2px;
+            display: inline;
+            background-color: bisque;
+        }
+
+            .inline-button:hover {
+                background-color: azure;
+            }
+
+        .slidertop-images {
+            position: absolute;
+            left: 20px;
+            z-index: 1001;
+            width: 150px;
+            box-shadow: 5px 5px 5px 5px silver;
+        }
+    </style>
+    <style>
+        .all {
+            color: brown;
+            font-family: 'Courier New';
+            font-weight: bold;
+            border: solid 1pt skyblue;
+            background-color: aliceblue;
+            border-radius: 5px;
+            box-shadow: 10px 10px rgb(226, 215, 215);
+            padding: 5px;
+            margin: 15px;
+            font-size: 14px;
+        }
+
+        .tag {
+            color: blue;
+        }
+
+        .att {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="post" action="./" id="form1">
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNav">
+                        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                        </span>
+                    </button>
+                    <a href="#" class="navbar-brand">
+                        <img src="../images/logo.png" />
+                    </a>
+                </div>
+                <div id="myNav" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="javascript:loadFromGroup('main');">Home</a></li>
+                        <li class="active"><a href="">Hello world</a></li>
+                        <li><a href="javascript:window.top.showBasics();">Basics</a></li>
+                        <li><a href="../search/index.aspx" target="_top">Search websites</a></li>
+                        <li><a href="../docu/docu.aspx" target="_top">Code snippets</a></li>
+
+
+
+                        <li><a href="mailto:admin@v-slam.org">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="container">
+            <br />
+            <br />
+            <br />
+            <div class="border">
+            </div>
+            <div class="row">
+
+                <h1>
+                    Hello World!
+                </h1>
+                <p>
+                    <img src="../images/helloworld.png" style="width: 600px;  box-shadow: 5px 5px 5px 5px;margin:20px;" />
+                </p>
+                <p></p>
+                <p>
+                    The code below shows a basic ThreeML implementation. As can be seen the code contains both standard Html tags as those specific to ThreeML.
+                </p>
+                <p>
+                    Every 3D object are specified within the <span class="tag">&lt;</span>three<span class="tag">&gt;</span> tags:
+                </p>
+                <div class="highlight">
+
+                    <div class="all">
+                        <div class="row">&nbsp;&nbsp;&nbsp; <span class="tag">&lt;</span>html<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>body<span class="tag">&gt;</span></div>
+
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>three<span class="tag">&gt;</span></div>
+                        <div class="row">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>spheregeometry name<span class="att">="globe"</span> position<span class="att">="0 0 -2"</span> scale<span class="att">="0.1"</span>
+                            widthSegments<span class="att">="30"</span>
+                            heightSegments<span class="att">="30"</span><span class="tag">&gt;</span>
+                        </div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>meshphongmaterial id<span class="att">="blueish"</span> color<span class="att">="1 1 1"</span> url<span class="att">="./images/earth-topo.png"</span> rotation<span class="att">="0 0 20"</span><span class="tag">&gt;</span><span class="tag">&lt;/</span>meshphongmaterial<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>rotate axis<span class="att">="0 0.002 0"</span><span class="tag">&gt;</span><span class="tag">&lt;/</span>rotate<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>spheregeometry<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>TextGeometry position<span class="att">="0 0.3 -2"</span> text<span class="att">="Hello"</span><span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>meshphongmaterial id<span class="att">="black"</span> color<span class="att">="0 0 0"</span><span class="tag">&gt;</span><span class="tag">&lt;/</span>meshphongmaterial<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>TextGeometry<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>directionallight target<span class="att">="globe"</span> intensity<span class="att">="1.6"</span> position<span class="att">="-2 0 0"</span><span class="tag">&gt;</span><span class="tag">&lt;/</span>directionallight<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>three<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>script<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var threeml;</div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>script<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>script type<span class="att">="module"</span><span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;import { ThreeML } from './threeml/threeml.js';</div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threeml = new ThreeML();</div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threeml.parseThree();</div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>script<span class="tag">&gt;</span></div>
+                        <div class="row"></div>
+
+                        <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;</span>body<span class="tag">&gt;</span></div>
+                        <div class="row">&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/</span>html<span class="tag">&gt;</span></div>
+                    </div>
+                </div>
+                <p>
+
+                    A General JavaScript part defines the global 'threeml' variable. Although not strictly necessary for this page this is often handy for a little more advanced implementation. In a separate JavaScript part with type='module' the threeml module is loaded, and the variable is set to an instance of threeml.
+                    Then the parseThree() function is called, which will look for <span class="tag">&lt;</span>three<span class="tag">&gt;</span> tags in the DOM, and start interpreting the inner tags.
+                </p>
+                <p>
+                    The Hello World page can be opened <a href="../three/helloworld.html" target="_blank"><span class="inline-button">here</span></a>.
+                </p>
+
+            </div>
+        </div>
+        <footer id="footer" class="midnight-blue">
+            <div class="container">
+                <div class="row">
+
+                </div>
+            </div>
+            <a href="#" class="back-to-top">
+                <i class="fa fa-2x fa-angle-up"></i>
+            </a>
+        </footer>
+    </form>
+    <script>
+        var threeml= window.top.threeml
+        function loadFromGroup(fm) {
+            threeml.presentFromGroup("screens", fm);
+        }
+    </script>
+    <script type="module">
+
+
+
+    </script>
+    
+</body>
+</html>

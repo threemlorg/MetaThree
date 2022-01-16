@@ -1,0 +1,86 @@
+﻿<html>
+<head>
+    <style>
+        .item{
+            text-align:center;
+            padding:20%;
+            background-color:lightblue;
+            font-size:200pt;
+            width:800px;
+            height:400px;
+            display:inline-block;
+            top:0px;
+        }
+        .item:hover{
+            background-color:aquamarine;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <three>
+            <stat></stat>
+            <renderer clearColor="#329ec0"></renderer>
+            <!--<skybox url="/ex/grass/images/lilienstein.jpg"></skybox>-->
+            <orbitcontrols target="0 0 -4" reversed="true"></orbitcontrols>
+            <home></home>
+            <group name="carousel" position="0 0 -4" rotation="20 0 0">
+                <group position="0 0 -2">
+                    <gltfLoader position="0 0 0" url="./models/sci19.glb" rotation="0 120 0" scale="1.2">
+                    </gltfLoader>
+                </group>
+                <htmlplanegeometry position="1.4 0 -1.4" rotation="0 135 0" width="1200" height="800" panelbar="false">
+                    <!--
+            <div class="item">Item 1</div
+            -->
+                </htmlplanegeometry>
+                <htmlplanegeometry position="2 0 0" rotation="0 90 0" width="1200" height="800" panelbar="false">
+                    <!--
+            <div class="item">Item 2</div
+            -->
+                </htmlplanegeometry>
+                <htmlplanegeometry position="1.4 0 1.4" rotation="0 45 0" width="1200" height="800" panelbar="false">
+                    <!--
+            <div class="item">Item 3</div
+            -->
+                </htmlplanegeometry>
+                <htmlplanegeometry position="0 0 2" rotation="0 0 0" width="1200" height="800" panelbar="false">
+                    <!--
+            <div class="item">Item 4</div
+            -->
+                </htmlplanegeometry>
+                <htmlplanegeometry position="-1.4 0 1.4" rotation="0 -45 0" width="1200" height="800" panelbar="false">
+                    <!--
+            <div class="item">Item 5</div
+            -->
+                </htmlplanegeometry>
+                <htmlplanegeometry position="-2 0 0" rotation="0 -90 0" width="1200" height="800" panelbar="false">
+                    <!--
+            <div class="item">Item 6</div
+            -->
+
+                </htmlplanegeometry>
+                <htmlplanegeometry position="-1.4 0 -1.4" rotation="0 -135 0" width="1200" height="800" panelbar="false">
+                    <!--
+            <div class="item">Item 7</div
+            -->
+                </htmlplanegeometry>
+
+                <rotate axis="0 0.001 0"></rotate>
+            </group>
+            <directionallight intensity="1" target="carousel">
+            </directionallight>
+            <ambientlight></ambientlight>
+        </three>
+    </div>
+    <script>
+      var threeml;
+    </script>
+    <script type="module">
+      import { ThreeML } from '/threeml/threeml.js'
+      threeml = new ThreeML();
+      threeml.parseThree();
+    </script>
+</body>
+</html>

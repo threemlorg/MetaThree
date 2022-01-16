@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Snippets</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link type="text/css" href="../css/main.css" rel="stylesheet"  />
+    <script type="text/javascript"  src="../js/jquery.js"  ></script>
+    <style>
+        .table{
+            display:table;
+            width:100%;
+        }
+        .headerrow,
+        .tablerow
+        {
+            display:table-row;
+        }
+        .headercell,
+        .tablecell
+        {
+            border:solid 1pt;
+            display:table-cell;
+            padding:6px;
+            background-color:aliceblue;
+            cursor:pointer;
+       }
+        .tablerow.selected .tablecell{
+            background-color:gainsboro;
+        }
+        .headercell
+        {
+            background-color:azure;
+        }
+        .code{
+            color:indianred;
+            font-family:monospace;
+        }
+        .source{
+            display:none;
+        }
+        .exampleimg{
+            width:200px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNav">
+                        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                        </span>
+                    </button>
+                    <a href="#" class="navbar-brand">
+                        <img src="../images/logo.png" />
+                    </a>
+                </div>
+                <div id="myNav" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/main.html" target="_top">Home</a></li>
+                        <li class="active"><a>Search websites</a></li>
+                        <li><a href="../docu/docu.html" target="_top">Code snippets</a></li>
+                        <li><a href="mailto:admin@v-slam.org">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div>
+
+            <div class="table" style="margin-top:100px;width:100%">
+                <div class="headerrow">
+                     
+                    <div class="headercell">
+                        <div style="vertical-align:middle;width:10vw;display:inline-block">Search:</div>
+                        <input id="searchbox"  type="search" alt="search" onkeypress="return checkkey(event)"/> 
+                        <img id="searchbutton" CssClass="searchimage"   runat="server" src="./images/hololens_icon.png" Width="80px" ToolTip="Search" onsearch="search()"  />
+                    <input type="button" id="btnPrevious"  onclick="btnPrevious_Click" text="&lt; Previous" />
+                    <input type="button" id="btnNext"  onclick="btnNext_Click" text="Next &gt;" />
+                    </div>
+
+                </div>
+                <div id="websitestable" style="overflow:scroll;width:100%;height:80vh">
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var jsonData; 
+            var threeml;
+
+            $('.tablerow').click(function () {
+                $('.tablerow').removeClass('selected');
+                $(this).addClass('selected');
+               
+            })
+            document.onreadystatechange = () => {
+                if (document.readyState === 'complete') {
+                    clearWait();
+                    readWebsites();
+                }
+            };
+            function clearWait() {
+                threeml.clearGoupChildren("wait");
+            }
+            function checkkey(event){
+                if (event.keyCode == 13) {
+                    search();
+                   // return true;
+                } else {
+                   // return false;
+                }
+            }
+            function search(){
+               var searchfield=document.getElementById('searchbox');
+              readWebsites(searchfield.value);
+            }
+
+
+
+ function readWebsites(s){
+   
+  var apiurl="/api_getwebsites";
+  if(s && s.length>0){
+    apiurl+="?s="+s;
+  }
+  fetch(apiurl)
+                .then(response => {
+                    return response.json();
+                })
+                .then(
+                    json => {
+                        jsonData = json;
+        
+                    showWebsites();
+                    });
+    };
+  
+ 
+            function showWebsites(){
+                var websites=jsonData;
+                var html='';
+
+                for(var i=0;i<websites.length;i++){
+                    var w=websites[i];
+                    html+=addWebsite(w);
+                }
+                var d=$('#websitestable');
+                d.html(html);
+            }
+            function addWebsite(w){
+                var h='';
+               h += ' <div class="tablerow" data-id="" onclick="window.open(\'';
+               h += w.url;
+               h += '\', \'_top\')">';
+                h += '             <div class="tablecell" style="vertical-align:middle;width:10vw"><img class="exampleimg" src="';
+                    h+=w.imageurl;
+                h += '" /></div>';
+                h += '            <div class="tablecell" style="width:90vw">';
+                    h += w.name;
+                h += '<div></div><div>';
+                    h += w.description;
+                h += '</div></div>';
+                h += '       </div>';
+                return h;
+            }
+        </script>
+            <script type="module">
+                
+                threeml = window.top.threeml
+
+
+            </script>
+ 
+    </form>
+</body>
+</html>

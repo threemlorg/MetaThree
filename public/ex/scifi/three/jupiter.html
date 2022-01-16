@@ -1,0 +1,28 @@
+﻿<html>
+<body>
+    <three>
+        <line position="0 0.6 0" rotation="95 20 0" scale="3">
+            <linebasicmaterial color="1 0 0"></linebasicmaterial>
+            <blink speed="0.02" random="true"></blink>
+        </line>
+        <line position="0.5 0.0 0" rotation="0 -90 0" scale="3">
+            <linebasicmaterial color="1 0 0"></linebasicmaterial>
+            <blink speed="0.02" random="true"></blink>
+        </line>
+        <line position="0 0.0 -0.5" rotation="-5 30 0" scale="3">
+            <linebasicmaterial color="1 0 0"></linebasicmaterial>
+            <blink speed="0.02" random="true"></blink>
+        </line>
+
+        <spheregeometry name="jupiter" position="0 0 0" scale="3.0" widthSegments="160" heightSegments="160">
+            <meshphongmaterial color="1 1 1" url="./images/2k_jupiter.jpg" normalMap="./images/JupiterNormal.png"></meshphongmaterial>
+            <rotate axis="0 0.001 0" />
+        </spheregeometry>
+        <gltfLoader position="3 -2 -3.77" rotation="0 0 0" url="./models/handle_down.glb">
+            <link url="./three/handle.html" target="planet" replace="true" />
+        </gltfLoader>
+        <directionallight target="jupiter" intensity="2" position="-2 0 0"></directionallight>
+    </three>
+  
+</body>
+</html>

@@ -1,0 +1,166 @@
+﻿<html>
+<head>
+    <style>
+        #container {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <three>
+            <loader maxtime="10"></loader>
+            <stat></stat>
+            <camera mode="fixed"></camera>
+            <home></home>
+            <AmbientLight intensity="0.5"></AmbientLight>
+            <skybox url="/ex/market/images/teatro_massimo.jpg"></skybox>
+            <group name="flag" position="10 6.5 -24" rotation="0 -30 -60" scale="0.05">
+                <parametricbuffergeometry name="param">
+                    <meshphongmaterial id="nl" color="1 1 1" url="/sub/images/flag_nl.jpeg" side="doubleside"></meshphongmaterial>
+                    <softbody>
+                        <constraint type="fixed" index="0 11 22 33 44 55 66 77 88 99 110"></constraint>
+                        <constraint type="gravity" factor="1"></constraint>
+                        <constraint type="stretch" factor="5"></constraint>
+                        <constraint type="structure" factor="1"></constraint>
+                        <constraint type="wind" factor="4" scale="0.1"></constraint>
+                        <!--<constraint type="grab" factor="1" scale="1"></constraint>-->
+                    </softbody>
+                </parametricbuffergeometry>
+                <boxgeometry scale="0.5 20 0.5" position="-4 2.2 0">
+                    <meshphongmaterial color="0 0 0"></meshphongmaterial>
+                </boxgeometry>
+            </group>
+            <group name="market" position="0 1.46 -4.5" rotation="0 60 0" scale="1">
+                <gltfLoader url="/ex/market/models/tent.glb" scale="1" castshadow="true">
+                    <softbody>
+                        <constraint type="fixed" index="22 21 23 24 25 26 27 28 29 30 31 32 12 33 34 35 36 37 38 39 40 41 85 84 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 106 105 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 169 168 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188"></constraint>
+                        <constraint type="gravity" factor="0.1"></constraint>
+                        <constraint type="stretch" factor="3"></constraint>
+                        <constraint type="wind" factor="0.4" scale="0.5" usearray="true"></constraint>
+                        <constraint type="structure" factor="3"></constraint>
+                        <!--<constraint type="grab" factor="0.11" scale="0.1"></constraint>-->
+                    </softbody>
+                </gltfLoader>
+                <gltfLoader url="/ex/market/models/tentholder.glb" scale="1" receiveshadow="true"></gltfLoader>
+                <gltfLoader url="/ex/market/models/shadow.glb" position="0 -3.5 -0.5" scale="3 1 1"></gltfLoader>
+                <gltfLoader name="books" url="/sub/docu/models/books.glb" position="0 -2.17 0" rotation="0 20 0">
+                </gltfLoader>
+                <group name="objectgroup">
+                    <htmlPlaneGeometry url="https://www.epona.com" name="epona" position='-1 -2.26 -0.13' scale="1" rotation="-90 0 20">
+                        <present cameradistance="1.1" class="handle" speed="0.02" fromgroup="objectgroup"></present>
+                    </htmlPlaneGeometry>
+                    <htmlPlaneGeometry url="https://www.youtube.com/embed/gEJ2QtFsV2A" name="dms" position='-2.86 -2.26 -0.13' scale="1" rotation="-90 0 -60">
+                        <present cameradistance="1.1" class="handle" speed="0.02" fromgroup="objectgroup"></present>
+                    </htmlPlaneGeometry>
+
+                    <htmlPlaneGeometry url="https://www.youtube.com/embed/mGBTFg6-jHo" name="contact" position='2 -1.85 0.21' scale="1" rotation="-30 -5 0">
+                        <present cameradistance="1.1" class="handle" speed="0.03" fromgroup="objectgroup"></present>
+                    </htmlPlaneGeometry>
+                    <htmlPlaneGeometry url="https://www.youtube.com/embed/RGDPDEF97K4" name="kms" position='3.78 -1.83 1.15' scale="1" rotation="0 -90 0">
+                        <present cameradistance="1.1" class="handle" speed="0.04" fromgroup="objectgroup"></present>
+                    </htmlPlaneGeometry>
+                </group>
+                <group position="-2.3 -1.91 -1.15">
+                    <parametricbuffergeometry name="kmsflag" position="-0.45 0 0" scale="0.01 0.05 0.05">
+                        <meshphongmaterial color="1 1 1" url="/ex/market/images/kms.png" side="doubleside"></meshphongmaterial>
+                        <softbody>
+                            <constraint type="fixed" index="110 111 112 113 114 115 116 117 118 119 120"></constraint>
+                            <constraint type="gravity" factor="1"></constraint>
+                            <constraint type="stretch" factor="5"></constraint>
+                            <constraint type="structure" factor="1"></constraint>
+                            <constraint type="wind" factor="1" scale="1"></constraint>
+                        </softbody>
+                        <present target="kms"></present>
+                    </parametricbuffergeometry>
+                    <parametricbuffergeometry name="webflag" position="-0.3 0 0" scale="0.01 0.05 0.05">
+                        <meshphongmaterial color="1 1 1" url="/ex/market/images/eponaweb.png" side="doubleside"></meshphongmaterial>
+                        <softbody>
+                            <constraint type="fixed" index="110 111 112 113 114 115 116 117 118 119 120"></constraint>
+                            <constraint type="gravity" factor="1"></constraint>
+                            <constraint type="stretch" factor="5"></constraint>
+                            <constraint type="structure" factor="1"></constraint>
+                            <constraint type="wind" factor="1" scale="1"></constraint>
+                        </softbody>
+                        <present target="epona"></present>
+                    </parametricbuffergeometry>
+                    <parametricbuffergeometry name="mccflag" position="-0.15 0 0" scale="0.01 0.05 0.05">
+                        <meshphongmaterial color="1 1 1" url="/ex/market/images/MMCevent.png" side="doubleside"></meshphongmaterial>
+                        <softbody>
+                            <constraint type="fixed" index="110 111 112 113 114 115 116 117 118 119 120"></constraint>
+                            <constraint type="gravity" factor="1"></constraint>
+                            <constraint type="stretch" factor="5"></constraint>
+                            <constraint type="structure" factor="1"></constraint>
+                            <constraint type="wind" factor="1" scale="1"></constraint>
+                        </softbody>
+                        <present target="contact"></present>
+                    </parametricbuffergeometry>
+                    <parametricbuffergeometry name="dmsflag" position="0 0 0" scale="0.01 0.05 0.05">
+                        <meshphongmaterial color="1 1 1" url="/ex/market/images/dms.png" side="doubleside"></meshphongmaterial>
+                        <softbody>
+                            <constraint type="fixed" index="110 111 112 113 114 115 116 117 118 119 120"></constraint>
+                            <constraint type="gravity" factor="1"></constraint>
+                            <constraint type="stretch" factor="5"></constraint>
+                            <constraint type="structure" factor="1"></constraint>
+                            <constraint type="wind" factor="1" scale="1"></constraint>
+                        </softbody>
+                        <present target="dms"></present>
+                    </parametricbuffergeometry>
+                    <gltfLoader name="arrow" visible="true" url="./models/arrow.glb" position="0.2 0.25 0.47" rotation="0 183 30" scale="1">
+                        <pulse speed="0.001" maxFactor="1.1"></pulse>
+                    </gltfLoader>
+                </group>
+
+            </group>
+
+
+
+            <group name="market2" position="4.56 1.46 -6.5" rotation="0 -30 0" scale="1">
+                <gltfLoader url="/ex/market/models/tent.glb" scale="1">
+                    <softbody>
+                        <constraint type="fixed" index="22 21 23 24 25 26 27 28 29 30 31 32 12 33 34 35 36 37 38 39 40 41 85 84 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 106 105 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 169 168 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188"></constraint>
+                        <constraint type="gravity" factor="0.1"></constraint>
+                        <constraint type="stretch" factor="3"></constraint>
+                        <constraint type="wind" factor="0.4" scale="0.5" usearray="true"></constraint>
+                        <constraint type="structure" factor="3"></constraint>
+                        <!--<constraint type="grab" factor="0.11" scale="0.1"></constraint>-->
+                    </softbody>
+                </gltfLoader>
+                <gltfLoader url="/ex/market/models/tentholder.glb" scale="1"></gltfLoader>
+                <gltfLoader url="/ex/market/models/shadow.glb" position="-0.5 -3.5 0" scale="3 1 1"></gltfLoader>
+                <parametricbuffergeometry name="param" position="0.2 -1.92 0" scale="0.05" receiveshadow="true">
+                    <meshphongmaterial id="r" color="1 1 1" url="/ex/office/images/Epona-transparent.png" side="doubleside"></meshphongmaterial>
+                    <softbody>
+                        <constraint type="fixed" index="110 111 112 113 114 115 116 117 118 119 120"></constraint>
+                        <constraint type="gravity" factor="1"></constraint>
+                        <constraint type="stretch" factor="1"></constraint>
+                        <constraint type="structure" factor="1"></constraint>
+                        <constraint type="wind" factor="1" scale="1"></constraint>
+                    </softbody>
+                </parametricbuffergeometry>
+            </group>
+
+
+
+            <directionallight position="10 10 0" target="market2" intensity="1.5" castshadow="true">
+                <actions repeat="true">
+                    <action type="pause" speed="0.01"></action>
+                    <action type="transform" intensity="1" speed="0.001"></action>
+                    <action type="pause" speed="0.01"></action>
+                    <action type="transform" intensity="2" speed="0.003"></action>
+                </actions>
+
+            </directionallight>
+        </three>
+    </div>
+    <script>
+      var threeml;
+    </script>
+    <script type="module">
+      //Remember to have the threeml folder copied here!
+      import { ThreeML } from '/threeml/threeml.js'
+      threeml = new ThreeML();
+      threeml.parseThree();
+    </script>
+</body>
+</html>

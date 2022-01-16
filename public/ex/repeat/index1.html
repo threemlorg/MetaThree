@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Repeat</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+			
+			<three>
+				<renderer clearColor="0.5 0.2 0.5"></renderer>
+				<scene checkzoom="false"></scene>
+				<skybox url="./images/dikhololo_night.png"></skybox>
+				<ambientlight intensity="0.8"></ambientlight>
+				<htmlPlaneGeometry url="./index2.html" name="shop" zoom="1" position='0 0 -1.2' scale='1' rotation="0 -10 0">
+					<actions repeat="true">
+						<action type="transform" rotation="0 10 0" position="1 1 -4" speed="0.004"></action>
+						<action type="transform" rotation="0 5 0" position="-1 0 -2" speed="0.004"></action>
+						<action type="transform" rotation="0 5 0" position="1 0 -2" speed="0.004"></action>
+						<action type="transform" rotation="0 -10 0" position="0 0 -1.2" speed="0.004"></action>
+					</actions>
+
+				</htmlPlaneGeometry>
+			</three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '/threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

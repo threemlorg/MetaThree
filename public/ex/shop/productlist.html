@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <title>Epona Furniture</title>
+  <link href="layout/main.css" rel="stylesheet" type="text/css" />
+  
+</head>
+<body>
+
+
+
+    <table style="background-color:white;border:solid">
+        <tr id="headerRow">
+            <th style="width: auto" />
+            <th id="mainColumn">
+                <img src="images/logo.png" id="logo" class="logo" style="width:200px">
+                <div id="languageToggle" class="interactive2D">
+                    English        &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+                    <a>Nederlands</a>
+                </div>
+                ;
+            </th>
+            <th />
+        </tr>
+        <tr id="mainRow">
+            <td />
+            <td class="mainContentCell">
+                <div class="mainContent">
+                    <h1>Shop</h1>
+                    Visit our shop 24 hours a day! Delivered from a storage nearby, thereby having it in your house within 24 hours!
+
+                    <h1>Products</h1>
+
+                    <div class="projectItem">
+                        <div class="projectLeft">
+                            <a href="javascript:threeml.showFromGroup('furniture', 'bed');">
+                                <img src="./images/bed.png" style="width:300px" />
+                            </a>
+                        </div>
+                        <div class="projectRight">
+                            <div class="projectTitle top">
+                                <h2>Wrought-Iron Bed</h2>
+                            </div>
+                            <div class="projectDescription center">
+                                A classic bed with room to spare for one person, or very cousy for two.
+                            </div>
+                            <div class="projectKeywords bottom">
+                                Bedroom, classic
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="projectItem">
+                        <div class="projectLeft">
+                            <a href="javascript:threeml.showFromGroup('furniture','chair');">
+                                <img src="./images/chair.png" style="width:300px" />
+                            </a>
+                        </div>
+                        <div class="projectRight">
+                            <div class="projectTitle top">
+                                <h2>Modern Club Chair</h2>
+                            </div>
+                            <div class="projectDescription center">
+                                Modern club chair that will immediately improve your experience in the livingroom.
+                            </div>
+                            <div class="projectKeywords bottom">
+                                Livingroom, modern
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="projectItem">
+                        <div class="projectLeft">
+                            <a href="javascript:threeml.showFromGroup('furniture','officechair');">
+                                <img src="./images/officechair.png" style="width:300px" />
+                            </a>
+                        </div>
+                        <div class="projectRight">
+                            <div class="projectTitle top">
+                                <h2>Office Chair</h2>
+                            </div>
+                            <div class="projectDescription center">
+                                No desk should do without this easy-to-move office chair.
+                            </div>
+                            <div class="projectKeywords bottom">
+                                Office, modern
+                            </div>
+                        </div>
+                    </div>
+                    <div class="projectItem">
+                        <div class="projectLeft">
+                            <a href="javascript:threeml.showFromGroup('furniture','desk');">
+                                <img src="./images/desk.png" style="width:300px" />
+                            </a>
+                        </div>
+                        <div class="projectRight">
+                            <div class="projectTitle top">
+                                <h2>Desk</h2>
+                            </div>
+                            <div class="projectDescription center">
+                                Working from home made easy using this desk. The drawers are handy to store all the equipment you need. 
+                            </div>
+                            <div class="projectKeywords bottom">
+                                Office, modern
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottomSpacer"></div>
+                </div>
+
+            </td>
+            <td />
+        </tr>
+        <tr id="footerRow">
+            <td />
+            <td>
+                <div class="footerCenter">
+                    <a href=""><img src="./images/facebook.png" class="footerImageSpaced interactive2D" /></a>
+                    <a href=""><img src="./images/linkedin.png" class="footerImageSpaced interactive2D" /></a>
+                    <a href=""><img src="./images/twitter.png" class="interactive2D" /></a>
+                    <div class="copyright">&copy; 2021, Epona Furniture</div>
+                </div>
+            </td>
+            <td />
+        </tr>
+    </table>
+    <script>
+        var threeml;
+    </script>
+    <script type="module">
+
+        threeml = window.top.threeml
+        threeml.parseThree(window.document);
+
+
+    </script>
+    <three>
+        <group name="furniture" position="2 -1 -6">
+            <group name="bed">
+                <group>
+                    <gltfLoader visible="true" url="./models/bed.glb" rotation="0 -40 -2" scale="5" position="1 0 -1">
+                    </gltfLoader>
+                    <gltfLoader name="floor" url="./models/floor.glb" position="0 -0.7 0" rotation="0 0 0" scale="2"></gltfLoader>
+                    <rotate axis="0 0.002 0"></rotate>
+                </group>
+                <htmlPlaneGeometry url="bed.html" name="bedplane" zoom="1" position='1.8 0 -1.99' scale='8' rotation="0 0 0" scrolling="false" width="876" heigth="400" panelbar="false"></htmlPlaneGeometry>
+            </group>
+            <group name="chair" visible="false">
+                <group>
+                    <gltfLoader url="./models/chair.glb" rotation="0 -40 0" scale="3" position="0 -0.06 0">
+                    </gltfLoader>
+                    <gltfLoader name="floor" url="./models/floor.glb" position="0 -0.7 0" rotation="0 0 0" scale="2"></gltfLoader>
+                    <rotate axis="0 0.002 0"></rotate>
+                </group>
+                <htmlPlaneGeometry url="chair.html" name="chairplane" zoom="1" position='1.8 0 -2' scale='8' rotation="0 0 0" scrolling="false" width="876" heigth="400" panelbar="false"></htmlPlaneGeometry>
+            </group>
+            <group name="officechair" visible="false">
+                <group>
+                    <gltfLoader url="./models/officechair.glb" rotation="0 -40 0" scale="3" position="0 0.1 0">
+                    </gltfLoader>
+                    <gltfLoader name="floor" url="./models/floor.glb" position="0 -0.7 0" rotation="0 0 0" scale="2"></gltfLoader>
+                    <rotate axis="0 0.002 0"></rotate>
+                </group>
+                <htmlPlaneGeometry url="officechair.html" name="officechairplane" zoom="1" position='1.8 0 -2' scale='8' rotation="0 0 0" scrolling="false" width="876" heigth="400" panelbar="false"></htmlPlaneGeometry>
+            </group>
+            <group name="desk" visible="false">
+                <group>
+                    <gltfLoader url="./models/desk.glb" rotation="0 -40 0" scale="4" position="0 -0.2 0">
+                    </gltfLoader>
+                    <gltfLoader name="floor" url="./models/floor.glb" position="0 -0.7 0" rotation="0 0 0" scale="2"></gltfLoader>
+                    <rotate axis="0 0.002 0"></rotate>
+                </group>
+                <htmlPlaneGeometry url="desk.html" name="deskplane" zoom="1" position='1.8 0 -2' scale='8' rotation="0 0 0" scrolling="false" width="876" heigth="400" panelbar="false"></htmlPlaneGeometry>
+            </group>
+
+        </group>
+        <gltfLoader name="floor" url="./models/flower.glb" position="-0.9 -0.3 -1.3" rotation="0 30 0" scale="0.5"></gltfLoader>
+        <SpotLight position="-7 4 8" castShadow="true" intensity="1"></SpotLight>
+    </three>
+
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+﻿<three>
+    <textgeometry text="Garden Bruchem, the Netherlands, winter" position="0 -1.4 -4" scale="1.5">
+        <meshphongmaterial color="0.3 0.7 0"></meshphongmaterial>
+    </textgeometry>
+    <cylindergeometry scale="50" radialSegments="80">
+        <meshphongmaterial url="./images/garden_winter.jpg" side="backside"></meshphongmaterial>
+    </cylindergeometry>
+    <gltfLoader name="arrowleft" visible="true" url="./models/arrowleft.glb" position="-1.5 -1.4 -4" rotation="0 10 10" scale="1">
+        <link url="pan5.html" target="main" replace="true" />
+    </gltfLoader>
+    <gltfLoader name="arrowright" visible="true" url="./models/arrowright.glb" position="1.5 -1.4 -4" rotation="0 -10 -10" scale="1">
+        <link url="./pan0.html" target="main" replace="true" />
+    </gltfLoader>
+    <ambientlight intencity="2"></ambientlight>
+</three>

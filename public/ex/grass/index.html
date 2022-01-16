@@ -1,0 +1,50 @@
+﻿<html>
+<head>
+    <style>
+        #container {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <three>
+            <stat></stat>
+            <loader maxtime="10"></loader>
+            <skybox url="/ex/grass/images/lilienstein.jpg"></skybox>
+            <home></home>
+            <rain position="0 0 -2" scale="3 1 1" dropletscale="1.7" speed="1.2" raincount="15000" color="#6666ff"></rain>
+            <fog color="0.4 0.4 0.4" density="0.1"></fog>
+            <group name="grass" position="0 -3 -4" rotation="-15 0 0" scale="0.42">
+                <gltfLoader position="0 0 0" url="/ex/grass/models/grass.glb" rotation="0 0 0" scale="0.6">
+                    <softbody>
+                        <constraint type="fixed" index="2 3 7 15 16 20 32 28 29 33 45 41 42 58 54 55 59 71 67 68 72"></constraint>
+                        <constraint type="gravity" factor="-0.5"></constraint>
+                        <constraint type="normal"></constraint>
+                        <constraint type="stretch" factor="0.1"></constraint>
+                        <constraint type="wind" factor="10" scale="0.5"></constraint>
+                        <constraint type="structure" factor="1"></constraint>
+                    </softbody>
+                    <repeat number="100" maxposition="30 0 30" maxrotation="0 180 0" minscale="0.3" maxscale="1.5"></repeat>
+                </gltfLoader>
+            </group>
+            <directionallight color="0 0 0" intensity="1" target="grass">
+                <actions repeat="true">
+                    <action type="pause" speed="30"></action>
+                    <action type="transform" intensity="1"></action>
+                    <action type="transform" color="1 1 1"></action>
+                    <action type="transform" intensity="2"></action>
+                </actions>
+            </directionallight>
+        </three>
+    </div>
+    <script>
+      var threeml;
+    </script>
+    <script type="module">
+      import { ThreeML } from '/threeml/threeml.js'
+      threeml = new ThreeML();
+      threeml.parseThree();
+    </script>
+</body>
+</html>
