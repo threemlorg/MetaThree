@@ -21,8 +21,12 @@ liveData.on("user-connected",(username)=>{
  console.log(`Receiver ${username} connected..`) // Logging when user is connected
 });
 //API
-app.get('/api_getwebsites', (req, res) => {
+app.get('/api_getscenepart', (req, res) => {
   console.log(`HERE NOW ..`);
+  dal.getScenePart(req, res);
+});
+
+app.get('/api_getwebsites', (req, res) => {
   dal.getWebsites(req, res);
 });
 

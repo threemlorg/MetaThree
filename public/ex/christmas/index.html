@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Chrismas</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="container" >
+			
+            <three>
+                <MobileMessage></MobileMessage>
+                <stat></stat>
+                <loader maxtime="30"></loader>
+                <home></home>
+                <scene checkzoom='false'></scene>
+                <renderer clearcolor="#FFFFFF"></renderer>
+                <skybox url="./images/moonless_golf.jpg"></skybox>
+
+                <!--<home></home>-->
+                <orbitcontrols target="-0.3 0 -5" reversed="true" enableZoom="false"></orbitcontrols>
+                <group name="houseTotal" position="0 -0.3 -6" rotation="0 40 0">
+                    <gltfLoader name="house" scale="0.3" url="./models/house.glb" receiveshadow="true">
+                    </gltfLoader>
+                    <group name="custom" position="3.2 -0.5 0" rotation="0 -90 0" scale="2">
+
+                    </group>
+                    <group position="-0.85 0 -1.17">
+                        <group name="chrismas" scale="1" rotation="0 0 40">
+                            <gltfLoader scale="0.1" name="branch" url="./models/chrismas.glb">
+                                <!--<rotate axis="0.001 0 0"></rotate>-->
+                            </gltfLoader>
+                            <pointlight intensity="0.5">
+                                <actions repeat="true">
+                                    <action type="transform" position="0.2 0 0"></action>
+                                    <action type="transform" position="0.2 0.1 0"></action>
+                                    <action type="transform" position="0 -0,1 0.4"></action>
+                                    <action type="transform" position="0 0 0"></action>
+                                </actions>
+                            </pointlight>
+                        </group>
+                        <group position="0.22 -0.3 0" scale="0.8" rotation="0 55 0">
+                            <gltfLoader scale="0.1" name="ballhanger" position="0 0.56 0" rotation="90 0 0" url="./models/ballhanger.glb">
+                            </gltfLoader>
+                            <spheregeometry name="sphere" scale="0.2" widthSegments="100" heightSegments="100">
+                                <meshphongmaterial color="1 1 1" url="/threeml/images/water.jpg"></meshphongmaterial>
+                                <rotate></rotate>
+                                <present target="kerst"></present>
+                            </spheregeometry>
+                        </group>
+                    </group>
+                    <gltfLoader name="sock" position="-0.7 1.25 -2.5" url="./models/sock.glb">
+                        <present target="geluk"></present>
+                    </gltfLoader>
+                    <group name="clock" position="1.5 0.8 -2" rotation="0 0 0">
+
+                        <group scale="0.2">
+                            <group position="0 -0.5 -1">
+                                <gltfLoader scale="1.5" name="clockmodel" url="./models/clock.glb" castshadow="true">
+                                </gltfLoader>
+                                <gltfLoader scale="1.5" name="weight" url="./models/weight.glb" position="0.5 0 0" castshadow="true">
+                                </gltfLoader>
+                                <gltfLoader scale="1.5" name="weigh2t" url="./models/weight.glb" position="-0.5 -0.5 0" castshadow="true">
+                                </gltfLoader>
+                                <gltfLoader scale="1.5" name="klepel" url="./models/klepel.glb" castshadow="false">
+                                    <actions repeat="true">
+                                        <action type="transform" rotation="0 0 5" speed="0.005"></action>
+                                        <action type="transform" rotation="0 0 -5" speed="0.005"></action>
+                                    </actions>
+                                </gltfLoader>
+                            </group>
+                            <gltfLoader scale="0.1" name="seconds" url="./models/seconds.glb">
+                                <synchronise type="seconds"></synchronise>
+                            </gltfLoader>
+                            <gltfLoader scale="1.8" name="minutes" url="./models/minutes.glb">
+                                <synchronise type="minutes"></synchronise>
+                            </gltfLoader>
+                            <gltfLoader scale="1.3" name="hours" url="./models/minutes.glb">
+                                <synchronise type="hours"></synchronise>
+                            </gltfLoader>
+                        </group>
+                        <pointlight position="0 0.4 0.4" intensity="1" decay="2" distance="1"></pointlight>
+                    </group>
+
+                    <group name="globe" position="2.6 -0.6 -2">
+                        <spheregeometry name="globe" position="0 0 0" scale="0.2" rotation="10 0 0" widthSegments="30" heightSegments="30">
+                            <meshphongmaterial id="blueish" color="1 1 1" url="./images/earth-topo.png"></meshphongmaterial>
+                            <actions repeat="true">
+                                <action typeof="click"></action>
+                                <action typeof="transform" rotation="0 90 0"></action>
+                                <action typeof="click"></action>
+                                <action typeof="transform" rotation="0 180 0"></action>
+                                <action typeof="click"></action>
+                                <action typeof="transform" rotation="0 260 0"></action>
+                                <action typeof="click"></action>
+                                <action typeof="transform" rotation="0 0 0"></action>
+                            </actions>
+                        </spheregeometry>
+                        <gltfLoader scale="0.25" rotation="0 -90 0" position="0 -0.45 0" name="globeholder" url="./models/globeholder.glb">
+                        </gltfLoader>
+                        <gltfLoader scale="0.34" rotation="0 -90 0" position="0 -0.45 0.11" name="table" url="./models/table.glb">
+                        </gltfLoader>
+
+                    </group>
+                    <group name="cardgroup" position="2.4 -1.48 -0.3">
+                        <gltfLoader scale="0.14" rotation="0 -60 0" name="card" url="./models/card.glb">
+                            <event type="click">
+                                <!--
+                                            loadInCustomGroup();
+                    -->
+                            </event>
+                            <media volume="0.1" url='./media/We-wish-you-a-merry-christmas-music-box.mp3' loop="false"></media>
+
+                            <hover target="cardlight"></hover>
+                        </gltfLoader>
+                        <pointlight name="cardlight" position="0 0.4 0" intensity="5" decay="2" distance="1" visible="false"></pointlight>
+                    </group>
+
+                    <gltfLoader position="2 -0.7 2" rotation="0 150 0" scale="2.4" name="chair" url="./models/chair.glb">
+                        <present target="zoek"></present>
+                    </gltfLoader>
+                    <gltfLoader position="1.8 -1.3 1" rotation="0 150 0" scale="1" name="book" url="./models/book.glb">
+                        <present target="geluk"></present>
+                    </gltfLoader>
+                    <group name="doggroup" position="1 -1.3 1.55" rotation="0 -80 0">
+                        <group name="tail">
+                            <gltfLoader scale="0.11" name="tailmodel" url="./models/tail.glb">
+                            </gltfLoader>
+                        </group>
+                        <gltfLoader scale="0.11" name="jack" url="./models/jack.glb">
+                            <actions repeat="true">
+                                <action type="transform" rotation="50 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="0 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="50 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="0 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="50 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="0 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="50 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="0 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="40 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="0 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="30 0 0" target="tail" speed="0.2"></action>
+                                <action type="transform" rotation="0 0 0" target="tail" speed="0.2"></action>
+                                <action type="click"></action>
+                            </actions>
+                        </gltfLoader>
+                        <gltfLoader scale="0.11" name="basket" url="./models/basket.glb">
+                        </gltfLoader>
+                    </group>
+                    <group position="-2.68 -1.3 0.46" rotation="0 -100 0">
+                        <gltfLoader scale="1" name="candles" url="./models/candles.glb">
+                        </gltfLoader>
+                        <pointlight position="0 0.4 0" color="#e1cd74" intensity="10" decay="3" distance="1">
+                            <actions repeat="true">
+                                <action type="transform" intensity="5" speed="0.1"></action>
+                                <action type="transform" intensity="10" speed="0.2"></action>
+                                <action type="transform" intensity="8" speed="0.01"></action>
+                                <action type="transform" intensity="12" speed="0.01"></action>
+                                <action type="transform" intensity="5" speed="0.02"></action>
+                                <action type="transform" intensity="12" speed="0.01"></action>
+                            </actions>
+                        </pointlight>
+                    </group>
+                    <group name="tvgroup" position="-2.68 -0.96 1.4" rotation="0 100 0">
+                        <gltfLoader scale="0.15" name="tv" url="./models/tv.glb">
+                        </gltfLoader>
+                        <group name="program" url="/api_getscenepart?g=program1">
+                        </group>
+                    </group>
+                    <directionallight position="2 1 -1" intensity="0.12" target="clock" castshadow="true"></directionallight>
+                     <group name="reflectorgroup" position="-1.8 0.85 -1.5">
+                        <circlegeometry scale="0.12" position="0 0 -0.01" rotation="0 180 0">
+                            <meshphongmaterial color="0.3 0.6 0" side="doubleside"></meshphongmaterial>
+                        </circlegeometry>
+                        <reflector type="circle" scale="0.1">
+
+                        </reflector>
+                        <actions repeat="true">
+                            <action type="transform" rotation="20 0 0"></action>
+                            <action type="transform" rotation="20 -30 0"></action>
+                            <action type="transform" speed="0.001" rotation="20 50 0"></action>
+                        </actions>
+                    </group>
+                    <htmlPlaneGeometry url="https://www.youtube.com/embed/ncjuqj0WN6s" name="kerst" position='0.2 -0.26 -2.3' scale="0.2" rotation="0 0 20">
+                        <present cameradistance="1.1" class="handle" speed="0.02" fromgroup="objectgroup"></present>
+                    </htmlPlaneGeometry>
+                    <htmlPlaneGeometry url="https://www.youtube.com/embed/YQ3qgIMURgI" name="zoek" position='0.3 0.7 -2.3' scale="0.3" rotation="0 0 -10">
+                        <present cameradistance="1.1" class="handle" speed="0.02" fromgroup="objectgroup"></present>
+                    </htmlPlaneGeometry>
+                    <htmlPlaneGeometry url="https://www.youtube.com/embed/Kb8emjhZGiY" name="geluk" position='-0.6 0.4 -2.3' scale="0.2.5" rotation="0 0 5">
+                        <present cameradistance="1.1" class="handle" speed="0.02" fromgroup="objectgroup"></present>
+                    </htmlPlaneGeometry>
+                    <group name="frontwall" position='0 0.4 2.15' rotation="0 180 0">
+                        <boxgeometry tooltip='Wilma' scale='0.30 0.5 0.01'>
+                            <meshphongmaterial url='./images/wilma3.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='1'></present>
+                        </boxgeometry>
+                        <boxgeometry tooltip='AJ' scale='0.3 0.4 0.01' position="-0.4 0 0">
+                            <meshphongmaterial url='./images/AJ.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='1'></present>
+                        </boxgeometry>
+
+                    </group>
+                    <ambientlight intensity="0.02"></ambientlight>
+                    <group name="bellgroup" position='-2.8 0.4 2.6' rotation="0 180 0">
+                        <pointlight name="flashlight" visible="false" position="0 0 -0.3" intensity="3" decay="3" distance="1"></pointlight>
+                        <gltfLoader scale="0.5" name="bell" url="./models/bell.glb">
+                            <actions>
+                                <action type="click"></action>
+                                <action type="pause" speed="0.04"></action>
+                                <action type="code">
+                                    <!--
+                                                moveCamera();
+                        -->
+                                </action>
+                                <action type="pause" speed="0.04"></action>
+                            </actions>
+                            <hover action="scale" factor="1.07"></hover>
+                            <hover target="flashlight"></hover>
+                            <media volume="0.1" url='./media/Single-strike-church-bell-sound-effect.mp3' loop="false"></media>
+
+                        </gltfLoader>
+                    </group>
+                    <gltfLoader position="2.5 -1.4 2" scale="0.8" name="bush" url="./models/bush.glb">
+                    </gltfLoader>
+                    <pointlight position="-1.5 0 0" intensity="1" decay="1" distance="2"></pointlight>
+                    <pointlight position="1 0 0" intensity="1" decay="1" distance="2"></pointlight>
+                    <pointlight position="0 0 -1" intensity="1" decay="1" distance="2"></pointlight>
+                    <pointlight position="0 0 1" intensity="1" decay="1" distance="2"></pointlight>
+                </group>
+                <!--<spotlight castshadow="true" position="0.4 0. 0"></spotlight>-->
+                <!--<directionallight position="0.1 2 -0.1" intensity="1" target="chrismas"></directionallight>-->
+
+            </three>
+
+		</div>
+		<script>
+			var threeml;
+            var camera;
+            function getUrlVars() {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var ii = 0; ii < hashes.length; ii++) {
+                    hash = hashes[ii].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0].toLowerCase()] = hash[1];
+                }
+                return vars;
+            };
+            function getUrlVar(name) {
+                return getUrlVars()[name.toLowerCase()];
+            };
+            var cameraMoveInitiated = false;
+            function moveCamera() {
+                if (!cameraMoveInitiated) {
+                    var pos = { 'x': -1, 'y': 0, 'z': -5 }
+                    var target = { 'x': -0.3, 'y': 0, 'z': -6 }
+                    threeml.moveToPosition(camera, pos.x, pos.y, pos.z, 0.003)
+                    threeml.lookAtPosition(target.x, target.y, target.z);
+                    cameraMoveInitiated = true;
+                }
+
+            }
+
+            function loadInCustomGroup() {
+                var g = getUrlVar('g');
+                if (g) {
+                    threeml.loadInGroup('custom', '/api/scenepart/index.aspx?g=' + g)
+                }
+                else {
+                    var t = '<TextGeometry text="Merry Christmas" style="display:none"><meshphongmaterial color="1 0 1"></meshphongmaterial></TextGeometry>';
+                    threeml.loadCodeInGroup('custom', t)
+                }
+            }
+
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+            camera = threeml.getCamera();
+
+		</script>
+	</body>
+</html>
