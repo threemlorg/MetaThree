@@ -10,6 +10,7 @@ The server has several API's to support usage statistics, present websites etc. 
 Requirements
 - A local copy of the code
 - A recent version of NodeJS (https://nodejs.org/en/)
+
 Handy
 - VSCode (https://code.visualstudio.com/)
 - DB Browser for SqLite (https://sqlitebrowser.org/)
