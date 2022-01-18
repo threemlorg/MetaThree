@@ -75,9 +75,9 @@
                     <div class="headercell">
                         <div style="vertical-align:middle;width:10vw;display:inline-block">Search:</div>
                         <input id="searchbox"  type="search" alt="search" onkeypress="return checkkey(event)"/> 
-                        <img id="searchbutton" CssClass="searchimage"   runat="server" src="./images/hololens_icon.png" Width="80px" ToolTip="Search" onsearch="search()"  />
-                    <input type="button" id="btnPrevious"  onclick="btnPrevious_Click" text="&lt; Previous" />
-                    <input type="button" id="btnNext"  onclick="btnNext_Click" text="Next &gt;" />
+                        <img id="searchbutton" CssClass="searchimage"   runat="server" src="./images/hololens_icon.png" Width="80px" ToolTip="Search" onclick="search()"  />
+                    <!--<input type="button" id="btnPrevious"  onclick="btnPrevious_Click" value="&lt; Previous" />
+                    <input type="button" id="btnNext"  onclick="btnNext_Click" value="Next &gt;" />-->
                     </div>
 
                 </div>
@@ -165,6 +165,7 @@
                 h += '       </div>';
                 return h;
             }
+
         </script>
             <script type="module">
                 

@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>ThreeJS</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="container" >
+			
+			<three>
+				<stat></stat>
+				<loader></loader>
+				<renderer clearcolor="#131613"></renderer>
+				<skybox url="./images/space.jpg"></skybox>
+				<!--<orbitcontrols target="0 0 -3" reversed="true" enablepan="false" enablezoom="false"></orbitcontrols>-->
+				<group name="main" position="0 0 -3" rotation="0 -10 0">
+					<TextGeometry text="ThreeJS development" style="display:none" position="-0.2 1 0" scale="2">
+						<meshphongmaterial color="0 1 0" specular="#ff7e7e"></meshphongmaterial>
+					</TextGeometry>
+					<group name='threescreens' position='-1.15 0.34 1.1' rotation="0 90 0">
+						<htmlPlaneGeometry url="https://threejs.org/examples/#webgl_animation_keyframes" name="keyframes" position='0 0 0' scale="0.3">
+							<present cameradistance="0.7" class="handle" speed="0.02" fromgroup="threescreens"></present>
+						</htmlPlaneGeometry>
+						<htmlPlaneGeometry url="https://threejs.org/examples/#webgl_postprocessing_nodes" name="nodes" position='-0.1 0.3 0' scale="0.2" rotation="0 0 10">
+							<present cameradistance="0.7" class="handle" speed="0.02" fromgroup="threescreens"></present>
+						</htmlPlaneGeometry>
+						<htmlPlaneGeometry url="https://threejs.org/examples/#webgl_animation_skinning_blending" name="skinning" position='-0.1 -0.2 0' scale="0.2" rotation="0 0 -5">
+							<present cameradistance="0.7" class="handle" speed="0.02" fromgroup="threescreens"></present>
+						</htmlPlaneGeometry>
+					</group>
+					<group name="leaves" position="-0.2 -1 0">
+						<pointlight name="pl1" position="0 0 0.3" intensity="3" decay="2" distance="1"></pointlight>
+						<gltfLoader scale="1" name="leaf1" url="./models/button1.glb">
+							<present class="handle" speed="0.02" target="keyframes"></present>
+							<hover action="scale" factor="1.2"></hover>
+							<hover action="tooltip" text="Animation keyframes" atmouse="true"></hover>
+						</gltfLoader>
+						<gltfLoader scale="1" name="leaf2" url="./models/button1.glb" position="-0.4 0 0" rotation="0 0 0">
+							<present class="handle" speed="0.02" target="nodes"></present>
+							<hover action="scale" factor="1.2"></hover>
+							<hover action="tooltip" text="Postprocessing nodes" atmouse="true"></hover>
+						</gltfLoader>
+						<gltfLoader scale="1" name="leaf3" url="./models/button1.glb" position="0.4 0 0" rotation="0 0 0">
+							<present class="handle" speed="0.02" target="skinning"></present>
+							<hover action="scale" factor="1.2"></hover>
+							<hover action="tooltip" text="Skinning blending" atmouse="true"></hover>
+						</gltfLoader>
+
+					</group>
+				</group>
+				<directionallight intensity="1.1" position="0 2 2"></directionallight>
+			</three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

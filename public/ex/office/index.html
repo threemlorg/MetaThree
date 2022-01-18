@@ -3,15 +3,7 @@
 	<head>
 		<title>Epona</title>
 		<meta charset="utf-8">
-		<link type="text/css" rel="stylesheet" href="layout/main.css">
-		<style>
 
-            #container {
-                pointer-events: none;
-				background-color:white;
-            }
-
-		</style>
 	</head>
 	<body>
 			
@@ -21,17 +13,22 @@
 			<skybox url="./images/canary_wharf.jpg"></skybox>
 			<!--<orbitcontrols target="0 0 -2"  reversed="true"></orbitcontrols>-->
 			<home></home>
-			<camera mode="scan"></camera>
+			<!--<camera mode="scan"></camera>-->
+			<orbitcontrols target="0 0 -2" reversed="true" enableZoom="false" enablePan="false"></orbitcontrols>
+
 			<group position="0 0 0" rotation="0 0 0">
-				<gltfLoader url="./models/office.glb" scale="1">
-				</gltfLoader>
-				<gltfLoader url="./models/officefloor.glb" scale="1">
-					<walk></walk>
-				</gltfLoader>
-				<group name="clock" position="1 1.3 -4.8" scale="0.2" rotation="0 0 0">
-					<planegeometry name="plate" scale="2.2">
-						<meshphongmaterial color="1 1 1" url="./images/clock.jpg"></meshphongmaterial>
+				<group name="officegroup" position="0 0.03 0" scale="1.3 1 1.5">
+					<gltfLoader url="./models/office.glb">
+					</gltfLoader>
+					<planegeometry scale="100" position="0 -1.23 0" rotation="-90 0 0" receiveshadow="true">
+						<meshphongmaterial url="./images/floor.jpg" map="100 100"></meshphongmaterial>
 					</planegeometry>
+				</group>
+				<group name="clock" position="1.2 1.3 -7.4" scale="0.2" rotation="0 0 0">
+					<circlegeometry name="plate" scale="1">
+						<meshphongmaterial color="1 1 1" url="./images/clock.jpg"></meshphongmaterial>
+						<hover action="tooltip" text="Is it that late?" atmouse="true"></hover>
+					</circlegeometry>
 					<gltfLoader scale="0.1" name="seconds" url="./models/seconds.glb">
 						<synchronise type="seconds"></synchronise>
 					</gltfLoader>
@@ -42,47 +39,420 @@
 						<synchronise type="hours"></synchronise>
 					</gltfLoader>
 				</group>
+				<group name="picture2" position="2.2 1.2 -7.4">
+					<group>
+						<boxGeometry scale="0.8 0.8 0.01">
+							<meshphongmaterial url="images/rotterdam.png"></meshphongmaterial>
+						</boxGeometry>
 
+					</group>
+				</group>
 
 
 
 
 				<!--<gltfLoader url="./models/clock.glb" scale="1" position="1 1.3 -5.2" rotation="0 0 0">
 		</gltfLoader>-->
-				<group position="0 0.5 -10.66" rotation="0 0 0" scale="3">
-					<gltfLoader url="./models/tv.glb">
+				<group name="meetingroom" position="0 0.5 -15.3">
+					<group name="tv" rotation="0 0 0" scale="3">
+						<gltfLoader url="./models/tv.glb">
+						</gltfLoader>
+						<boxgeometry scale="0.47 0.28 0.01" position="0 0 0.27">
+							<meshphongmaterial color="0.8" url="./images/screen.png"></meshphongmaterial>
+						</boxgeometry>
+					</group>
+					<gltfLoader name="desk" url="./models/table.glb" scale="8 4 12" position="-3.1 -1.24 2.7" rotation="0 90 0" castshadow="true" receiveshadow="true">
 					</gltfLoader>
-					<boxgeometry scale="0.47 0.28 0.01" position="0 0 0.27">
-						<meshphongmaterial color="0.8" url="./images/screen.png"></meshphongmaterial>
-					</boxgeometry>
+					<gltfLoader url="./models/chair.glb" scale="2.7" position="1.6 -1 1.4" rotation="0 -90 0">
+					</gltfLoader>
+					<gltfLoader url="./models/chair.glb" scale="2.7" position="-1.7 -1 1.4" rotation="0 70 0">
+					</gltfLoader>
+					<gltfLoader url="./models/chair.glb" scale="2.7" position="1.7 -1 2.8" rotation="0 -80 0">
+					</gltfLoader>
+					<gltfLoader url="./models/chair.glb" scale="2.7" position="-1.7 -1 2.8" rotation="0 74 0">
+					</gltfLoader>
 				</group>
-				<gltfLoader url="./models/table.glb" scale="4 4 6" position="-1.5 -0.74 -9" rotation="0 90 0">
-				</gltfLoader>
-				<gltfLoader url="./models/chair.glb" scale="2.7" position="1.3 -0.5 -9" rotation="0 -90 0">
-				</gltfLoader>
-				<gltfLoader url="./models/chair.glb" scale="2.7" position="-1.7 -0.5 -9" rotation="0 70 0">
-				</gltfLoader>
-				<group name="bart" position="1.1 -0.74 4">
-					<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0">
+				<group name="bart" position="1.6 -0.74 5.5">
+					<gltfLoader name="deskphone" url="./models/deskphone.glb" scale="0.7" position="1.7 0.53 -0.74" rotation="0 -102 0">
 					</gltfLoader>
-					<gltfLoader url="./models/monitor.glb" scale="2" rotation="0 -90 0" position="2.3 0.85 0">
+					<group name="tablegroup" rotation="0 90 0">
+						<gltfLoader name="table1b" url="./models/table.glb" scale="4 4 6" castshadow="true" receiveshadow="true">
+						</gltfLoader>
+						<gltfLoader name="printer" url="./models/printer.glb" scale="1" position="-1.1 0.63 0.32">
+						</gltfLoader>
+					</group>
+					<gltfLoader name="table2b" url="./models/table.glb" position="1.1 0 0.22" scale="4 4 6" rotation="0 0 0" castshadow="true" receiveshadow="true">
 					</gltfLoader>
+					<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
+						<gltfLoader url="./models/monitor.glb" scale="2"></gltfLoader>
+						<group name="programparentgroup" position="0 0.09 0.535" scale="0.9 0.5 0.01">
+							<group name="programgroup">
+								<boxgeometry name="program">
+									<meshphongmaterial url="./images/windows.png"></meshphongmaterial>
+									<hover action="tooltip" text="Program running" atmouse="true"></hover>
+								</boxgeometry>
+							</group>
+						</group>
+					</group>
 					<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
 					</gltfLoader>
 					<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
 					</gltfLoader>
 
-					<gltfLoader url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0">
+					<gltfLoader url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0" castshadow="true" receiveshadow="true">
+					</gltfLoader>
+					<group name="lockergroup" scale="0.3" position="1.46 -0.1 -0.4" rotation="0 -90 0">
+						<gltfLoader url="./models/locker.glb">
+						</gltfLoader>
+						<gltfLoader url="./models/drawer1.glb">
+						</gltfLoader>
+						<gltfLoader url="./models/drawer2.glb">
+						</gltfLoader>
+					</group>
+					<group name="trashbingroup" position="-0.3 -0.3 2.28" scale="1">
+						<gltfLoader url="./models/trashbin.glb">
+						</gltfLoader>
+						<gltfLoader url="./models/wrapped.glb" position="0 -0.1 0"></gltfLoader>
+						<gltfLoader url="./models/wrapped.glb" position="0.1 -0.1 0.03" scale="1.3">
+						</gltfLoader>
+					</group>
+
+				</group>
+
+				<group name="cupboard1group" position="0.1 -1.20 7.7" rotation="0 90 0" scale="1.7">
+					<gltfLoader name="cupboard1" url="./models/cupboard.glb">
+					</gltfLoader>
+					<gltfLoader name="leftdoor1" url="./models/leftdoor.glb" position="0.17 0 0.43">
+						<hover action="tooltip" text="This seems to be locked" atmouse="true"></hover>
+					</gltfLoader>
+					<gltfLoader name="rightdoor1" url="./models/rightdoor.glb" position="0.17 0 -0.43">
+						<hover action="tooltip" text="Nothing to find here" atmouse="true"></hover>
 					</gltfLoader>
 				</group>
-				<gltfLoader url="./models/plant.glb" scale="3" position="2 -0.6 -5">
-				</gltfLoader>
-				<boxGeometry name="eponalogo" position="-3.35 1 -1.6" rotation="0 90 0" scale="0.7 0.7 0.02">
+
+
+				<group name="gidion" position="3 -0.74 1.25" rotation="0 90 0">
+					<gltfLoader name="deskphone" url="./models/deskphone.glb" scale="0.7" position="1.7 0.53 0" rotation="0 -102 0">
+					</gltfLoader>
+					<gltfLoader name="mock" url="./models/mock.glb" scale="0.4" position="1.1 0.47 -0.6" rotation="0 0 0">
+						<actions repeat="true">
+							<action type="click"></action>
+							<action type="transform" position="1.0 0.7 -0.6" rotation="17 -21 36" speed="0.01"></action>
+							<action type="click"></action>
+							<action type="transform" position="1.1 0.47 -0.6" rotation="0 0 0" speed="0.04" "></action>
+						</actions>
+					</gltfLoader>
+					<gltfLoader name="table1" url="./models/table.glb" scale="4 4 6" rotation="0 0 0" position="-0.4 0 -0.8" castshadow="true" receiveshadow="true">
+					</gltfLoader>
+					<gltfLoader name="table2" url="./models/table.glb" scale="4 4 6" rotation="0 90 0" position="-0.36 0 0.25" castshadow="true" receiveshadow="true">
+					</gltfLoader>
+					<gltfLoader name="paper" url="./models/paper.glb" scale="1" rotation="0 30 0" position="-0.36 0.5 0.74">
+					</gltfLoader>
+					<group name="burostuff" position="-0.4 0 0" rotation="0 -30 0">
+						<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
+							<gltfLoader url="./models/monitor.glb" scale="2"></gltfLoader>
+							<group name="programparentgroup" position="0 0.09 0.535" scale="0.9 0.5 0.01">
+								<group name="programgroup">
+									<boxgeometry name="program">
+										<meshphongmaterial url="./images/ubuntuunlock.png"></meshphongmaterial>
+										<hover action="tooltip" text="Program running" atmouse="true"></hover>
+									</boxgeometry>
+								</group>
+							</group>
+						</group>
+
+						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
+						</gltfLoader>
+						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
+						</gltfLoader>
+					</group>
+					<gltfLoader url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0" castshadow="true" receiveshadow="true">
+						<actions repeat="true">
+							<action type="click"></action>
+							<action type="transform" position="-0.7 0.2 -0.7" speed="0.03"></action>
+							<action type="click"></action>
+							<action type="transform" position="-0.1 0.2 0" speed="0.03"></action>
+						</actions>
+					</gltfLoader>
+					<group name="lockergroup" scale="0.3" position="-0.4 -0.1 0.6" rotation="0 180 0">
+						<gltfLoader url="./models/locker.glb">
+						</gltfLoader>
+						<gltfLoader url="./models/drawer1.glb">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="0 0 1.23" speed="0.06"></action>
+								<action type="click"></action>
+								<action type="transform" position="0 0 0" speed="0.06"></action>
+							</actions>
+						</gltfLoader>
+						<gltfLoader url="./models/drawer2.glb">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="0 0 1.23" speed="0.06"></action>
+								<action type="click"></action>
+								<action type="transform" position="0 0 0" speed="0.06"></action>
+							</actions>
+						</gltfLoader>
+					</group>
+				</group>
+				<group name="middlegroup" position="3.2 -0.74 -5.15">
+					<group name="middle1" position="0 0 4.15" rotation="0 90 0">
+						<gltfLoader name="deskphone" url="./models/deskphone.glb" scale="0.7" position="1.7 0.53 0.74" rotation="0 -102 0">
+						</gltfLoader>
+						<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0" castshadow="true" receiveshadow="true">
+						</gltfLoader>
+						<gltfLoader url="./models/monitor.glb" scale="2" rotation="0 -90 0" position="2.3 0.85 0" castshadow="true">
+						</gltfLoader>
+						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
+						</gltfLoader>
+						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
+						</gltfLoader>
+
+						<gltfLoader name="chair1" url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0" castshadow="true" receiveshadow="true">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="-0.1 0.2 0" rotation="0 130 0" speed="0.03"></action>
+								<action type="click"></action>
+								<action type="transform" position="-0.1 0.2 0" rotation="0 70 0" speed="0.03"></action>
+							</actions>
+						</gltfLoader>
+						<group name="lockergroup" scale="0.3" position="1.41 -0.1 -0.41" rotation="0 -90 0">
+							<gltfLoader url="./models/locker.glb">
+							</gltfLoader>
+							<gltfLoader url="./models/drawer1.glb">
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="transform" position="0 0 1.23" speed="0.06"></action>
+									<action type="click"></action>
+									<action type="transform" position="0 0 0" speed="0.06"></action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader url="./models/drawer2.glb">
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="transform" position="0 0 1.23" speed="0.06"></action>
+									<action type="click"></action>
+									<action type="transform" position="0 0 0" speed="0.06"></action>
+								</actions>
+							</gltfLoader>
+						</group>
+					</group>
+					<group name="middle2" position="0 0 0" rotation="0 -90 0">
+						<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0" castshadow="true" receiveshadow="true">
+						</gltfLoader>
+						<gltfLoader url="./models/monitor.glb" scale="2" rotation="0 -90 0" position="2.3 0.85 0">
+						</gltfLoader>
+						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
+						</gltfLoader>
+						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
+						</gltfLoader>
+
+						<gltfLoader url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0" castshadow="true" receiveshadow="true">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="-0.1 0.2 0" rotation="0 30 0" speed="0.03"></action>
+								<action type="click"></action>
+								<action type="transform" position="-0.1 0.2 0" rotation="0 70 0" speed="0.03"></action>
+							</actions>
+						</gltfLoader>
+						<group name="lockergroup" scale="0.3" position="1.41 -0.1 -0.41" rotation="0 -90 0">
+							<gltfLoader url="./models/locker.glb">
+							</gltfLoader>
+							<gltfLoader url="./models/drawer1.glb">
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="transform" position="0 0 1.23" speed="0.06"></action>
+									<action type="click"></action>
+									<action type="transform" position="0 0 0" speed="0.06"></action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader url="./models/drawer2.glb">
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="transform" position="0 0 1.23" speed="0.06"></action>
+									<action type="click"></action>
+									<action type="transform" position="0 0 0" speed="0.06"></action>
+								</actions>
+							</gltfLoader>
+						</group>
+					</group>
+					<group name="trashbingroup" position="0.7 -0.3 0.46" scale="1">
+						<gltfLoader url="./models/trashbin.glb">
+						</gltfLoader>
+						<gltfLoader url="./models/wrapped.glb" position="0 -0.1 0"></gltfLoader>
+						<gltfLoader url="./models/wrapped.glb" position="0.1 -0.1 0.03" scale="1.3">
+						</gltfLoader>
+					</group>
+
+				</group>
+				<group name="henk" position="1.6 -0.74 -5.5" rotation="0 90 0">
+					<gltfLoader name="deskphone" url="./models/deskphone.glb" scale="0.7" position="1.7 0.53 0" rotation="0 -102 0">
+					</gltfLoader>
+
+					<gltfLoader name="table1b" url="./models/table.glb" scale="4 4 6" position="0 0 0.2" rotation="0 90 0" castshadow="true" receiveshadow="true">
+					</gltfLoader>
+					<gltfLoader name="table2b" url="./models/table.glb" position="1.1 0 0.22" scale="4 4 6" rotation="0 0 0" castshadow="true" receiveshadow="true">
+					</gltfLoader>
+					<group name="deskstuff" position="0 0 0.85" rotation="0 -25 0">
+						<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
+							<gltfLoader url="./models/monitor.glb" scale="2"></gltfLoader>
+							<group name="programparentgroup" position="0 0.09 0.535" scale="0.9 0.5 0.01">
+								<group name="programgroup">
+									<boxgeometry name="program">
+										<meshphongmaterial url="./images/ubuntu.png"></meshphongmaterial>
+										<hover action="tooltip" text="Program running" atmouse="true"></hover>
+									</boxgeometry>
+								</group>
+							</group>
+						</group>
+						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
+						</gltfLoader>
+						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
+						</gltfLoader>
+					</group>
+					<gltfLoader name="chair" url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0" castshadow="true" receiveshadow="true">
+						<actions repeat="true">
+							<action type="click"></action>
+							<action type="transform" position="-0.5 0.2 0" rotation="0 30 0" speed="0.03"></action>
+							<action type="click"></action>
+							<action type="transform" position="-0.1 0.2 0" rotation="0 70 0" speed="0.03"></action>
+						</actions>
+					</gltfLoader>
+					<gltfLoader name="plant" url="./models/plant.glb" scale="1" position="0.4 0.7 1.8">
+					</gltfLoader>
+					<gltfLoader name="plant" url="./models/plant.glb" scale="1" position="0.7 0.7 1.8">
+					</gltfLoader>
+					<group name="lockergroup" scale="0.3" position="1.41 -0.1 -0.18" rotation="0 -90 0">
+						<gltfLoader url="./models/locker.glb">
+						</gltfLoader>
+						<gltfLoader url="./models/drawer1.glb">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="0 0 1.23" speed="0.06"></action>
+								<action type="click"></action>
+								<action type="transform" position="0 0 0" speed="0.06"></action>
+							</actions>
+						</gltfLoader>
+						<gltfLoader url="./models/drawer2.glb">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="0 0 1.23" speed="0.06"></action>
+								<action type="click"></action>
+								<action type="transform" position="0 0 0" speed="0.06"></action>
+							</actions>
+						</gltfLoader>
+					</group>
+				</group>
+				<group name="leftgroup" position="-3.2 -0.74 -6.7">
+					<group name="middle1" position="0 0 4.15" rotation="0 90 0">
+						<gltfLoader name="deskphone" url="./models/deskphone.glb" scale="0.7" position="2.25 0.53 0.74" rotation="0 -102 0">
+						</gltfLoader>
+						<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0" castshadow="true" receiveshadow="true">
+						</gltfLoader>
+						<gltfLoader url="./models/monitor.glb" scale="2" rotation="0 -90 0" position="2.3 0.85 0">
+						</gltfLoader>
+						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
+						</gltfLoader>
+						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
+						</gltfLoader>
+
+						<gltfLoader url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0" castshadow="true" receiveshadow="true">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="-0.1 0.2 0" rotation="0 30 0" speed="0.03"></action>
+								<action type="click"></action>
+								<action type="transform" position="-0.1 0.2 0" rotation="0 70 0" speed="0.03"></action>
+							</actions>
+						</gltfLoader>
+						<group name="lockergroup" scale="0.3" position="1.41 -0.1 -0.41" rotation="0 -90 0">
+							<gltfLoader url="./models/locker.glb">
+							</gltfLoader>
+							<gltfLoader url="./models/drawer1.glb">
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="transform" position="0 0 1.23" speed="0.06"></action>
+									<action type="click"></action>
+									<action type="transform" position="0 0 0" speed="0.06"></action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader url="./models/drawer2.glb">
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="transform" position="0 0 1.23" speed="0.06"></action>
+									<action type="click"></action>
+									<action type="transform" position="0 0 0" speed="0.06"></action>
+								</actions>
+							</gltfLoader>
+						</group>
+					</group>
+					<group name="middle2" position="0 0 0" rotation="0 -90 0">
+						<gltfLoader name="mock" url="./models/mock.glb" scale="0.4" position="1.5 0.47 -0.6" rotation="0 0 0">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="1.4 0.7 -0.6" rotation="17 -21 36" speed="0.01"></action>
+								<action type="click"></action>
+								<action type="transform" position="1.5 0.47 -0.6" rotation="0 0 0" speed="0.04" "></action>
+							</actions>
+						</gltfLoader>
+						<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0" castshadow="true" receiveshadow="true">
+						</gltfLoader>
+						<gltfLoader url="./models/monitor.glb" scale="2" rotation="0 -90 0" position="2.3 0.85 0">
+						</gltfLoader>
+						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
+						</gltfLoader>
+						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
+						</gltfLoader>
+
+						<gltfLoader url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0" castshadow="true" receiveshadow="true">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="-0.1 0.2 0" rotation="0 130 0" speed="0.03"></action>
+								<action type="click"></action>
+								<action type="transform" position="-0.1 0.2 0" rotation="0 70 0" speed="0.03"></action>
+							</actions>
+						</gltfLoader>
+						<group name="lockergroup" scale="0.3" position="1.41 -0.1 -0.41" rotation="0 -90 0">
+							<gltfLoader url="./models/locker.glb">
+							</gltfLoader>
+							<gltfLoader url="./models/drawer1.glb">
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="transform" position="0 0 1.23" speed="0.06"></action>
+									<action type="click"></action>
+									<action type="transform" position="0 0 0" speed="0.06"></action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader url="./models/drawer2.glb">
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="transform" position="0 0 1.23" speed="0.06"></action>
+									<action type="click"></action>
+									<action type="transform" position="0 0 0" speed="0.06"></action>
+								</actions>
+							</gltfLoader>
+						</group>
+					</group>
+					<group name="trashbingroup" position="-0.88 -0.3 0.46" scale="1">
+						<gltfLoader url="./models/trashbin.glb">
+						</gltfLoader>
+						<gltfLoader url="./models/wrapped.glb" position="0 -0.1 0"></gltfLoader>
+						<gltfLoader url="./models/wrapped.glb" position="0.1 -0.1 0.03" scale="1.3">
+						</gltfLoader>
+					</group>
+				</group>
+				<boxGeometry name="eponalogo" position="-4.4 1 -2.7" rotation="0 90 0" scale="0.7 0.7 0.02">
 					<meshphongmaterial color="1 1 1" url="./images/Epona-transparent.png"></meshphongmaterial>
 					<present cameradistance="1.1" class="handle" speed="0.03" handlecolor="gray"></present>
 				</boxGeometry>
 			</group>
-			<directionallight intensity="1.1" position="0 2 2" castshadows="true"></directionallight>
+			<group name="dynamicpart" urlvar="g" url="/api_getscenepart"></group>
+
+
+
+
+
+			<spotlight position="7 4 -6" target="middle1" castshadow="true"></spotlight>
+			<!--<directionallight intensity="1.1" position="0 2 2" castshadows="true" target="middlegroup"></directionallight>-->
 			<ambientlight color="0.2" intensity="0.3"></ambientlight>
 			<hemispherelight intensity="0.48"></hemispherelight>
 		</three>

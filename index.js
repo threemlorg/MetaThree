@@ -36,6 +36,9 @@ app.get('/api_stat', (req, res) => {
 app.get('/api_getstats', (req, res) => {
   dal.getStats(res);
 });
+app.get('/api_getsnippets', (req, res) => {
+  dal.getSnippets(res);
+});
 // Get request on home page
 app.get('/', (req, res) => {
     res.writeHead(302, {

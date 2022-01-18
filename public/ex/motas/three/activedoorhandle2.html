@@ -1,0 +1,16 @@
+﻿<gltfLoader name="doorhandle" url="./models/doorhandle.glb">
+    <hover action="tooltip" text="It seems unlocked now ..." atmouse="true"></hover>
+    <media volume="0.1" url='./media/DOORCreak_Creaking door (ID 0302)_BSB.mp3' loop="false"></media>
+    <actions repeat="true">
+        <action type="click"></action>
+        <action type="transform" rotation="0 60 0" target="doorgroup"></action>
+        <action type="camera" position="-1 0 -2" lookat="-0.8 0 -2.2" speed="0.004"></action>
+    </actions>
+</gltfLoader>
+<gltfLoader name="roomkey4" url="./models/roomkey.glb" scale="1" position="0.62 0.83 0.07" rotation="90 90 0">
+    <actions>
+        <action type="pause" speed="0.06"></action>
+        <action type="transform"  rotation="90 180 0" speed="0.01"></action>
+    </actions>
+</gltfLoader>
+

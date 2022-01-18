@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+   	<title>ThreeML - the new web 3D</title>
+	<meta charset="utf-8" />
+
+	<!--<link type="text/css" rel="stylesheet" href="layout/main.css">-->
+	<style>
+		body {
+			overflow: hidden;
+		}
+
+		#container {
+			pointer-events: none;
+			background-color: white;
+		}
+        .tml_bar{
+            background-color:black;
+        }
+	</style>
+	<script type="text/javascript">
+        var ua = window.navigator.userAgent;
+        var isIE = /MSIE|Trident/.test(ua);
+        if (isIE) { location.replace('noIE.html'); }
+
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+		<div id="container">
+
+			<three>
+				<waitobject url="./threeml/models/clock.glb" scale="0.1"><pulse speed="0.02" maxFactor="1.4"></pulse></waitobject>
+				<group name="screens" position="0 0 -4">
+					<htmlPlaneGeometry url="sub/html/main.html" name="main" zoom="1" position='0 0.06 0' scale='1.2' rotation="0 0 0">
+						<present cameradistance="1.1" class="handle" speed="0.03" handlecolor="black" atStart="true"></present>
+					</htmlPlaneGeometry>
+				</group>
+
+                <group name="mygroup" position="0.6 0 -1">
+                    <gltfLoader name="serviceable" url="./sub/models/3dserving.glb" rotation="0 40 0" position="-1.1 -0.2 0.3" scale="0.02">
+                        <link url="/sub/search/index.html"></link>
+                    </gltfLoader>
+
+                    <!--<spotlight position="-0.2 -0.5 0" intensity="6" target="serviceable"></spotlight>-->
+                    <ambientlight position="-0.2 -0.5 -1.8" intensity="0.4"></ambientlight>
+                </group>
+
+
+			</three>
+
+		</div>
+		<script>
+            var threeml;
+            function showHelloWorld() {
+                threeml.loadInTarget('x', './sub/html/helloworld.html');
+                loadFromGroup('x');
+            }
+            function showBasics() {
+                threeml.loadInTarget('y', './sub/html/basics.html');
+                loadFromGroup('y');
+            }
+            function loadFromGroup(fm) {
+                threeml.presentFromGroup("screens", fm);
+            }
+        </script>
+		<script type="module">
+            import { ThreeML } from './threeml/threeml.js?<%=Guid.NewGuid().ToString()%>';
+            threeml = new ThreeML();
+			threeml.parseThree();
+        </script>
+    </form>
+</body>
+</html>

@@ -1,0 +1,14 @@
+﻿
+<group name="flag" scale="0.03">
+    <parametricbuffergeometry name="param" scale="4 2 2" castshadow="true">
+        <meshphongmaterial url="./images/flag.jpg"></meshphongmaterial>
+        <softbody>
+            <constraint type="fixed" index="110"></constraint>
+            <constraint type="gravity" factor="1"></constraint>
+            <constraint type="stretch" factor="3"></constraint>
+            <constraint type="structure" factor="1"></constraint>
+        </softbody>
+        <hover action="tooltip" text="What a strange flag" atmouse="true"></hover>
+    </parametricbuffergeometry>
+</group>
+

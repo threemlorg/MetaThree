@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>ThreeML on SharePoint</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+			
+			<three>
+				<camera mode="fixed"></camera>
+				<stat></stat>
+				<home></home>
+				<renderer clearColor="0.4 0.7 0.8"></renderer>
+				<htmlPlaneGeometry url="https://www.youtube.com/embed/X9-XVemBhSM" name="sp" zoom="1" position='0.9 0 -4.2' scale='1' rotation="0 0 0">
+					<present cameradistance="1.3" class="handle" speed="0.03" atStart="true"></present>
+				</htmlPlaneGeometry>
+
+			</three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

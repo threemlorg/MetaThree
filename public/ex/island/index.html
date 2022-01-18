@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Island</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="container" >
+			
+			<three>
+				<stat></stat>
+				<loader></loader>
+				<renderer clearcolor="#131613"></renderer>
+				<skybox url="./images/clouds.jpeg"></skybox>
+				<!--<camera mode="scan"></camera>-->
+				<orbitcontrols target="0 -1 -5" reversed="true" maxPolarAngle="90"></orbitcontrols>
+				<home></home>
+
+				<group name="islandgroup" position="0 -3 -5">
+					<gltfLoader name="island" url="./models/island.glb" rotation="0 0 0" scale="0.02" castshadow="true" receiveshadow="true">
+						<!--<walk></walk>-->
+					</gltfLoader>
+					<water name="water" position="0 0.3 0" waveScale="0.01" steepness="3" speed="0.1" color="#9999FF"></water>
+				</group>
+				<ambientlight></ambientlight>
+				<spotlight position="10 10 10" intensity="1" target="islandgroup" castshadow="true"></spotlight>
+				<directionallight position="-2 1 -3.6" intensity="1" target="islandgroup"></directionallight>
+
+			</three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

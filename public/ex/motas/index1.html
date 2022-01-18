@@ -1,0 +1,644 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>A tribute to MOTAS</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			
+			<three>
+				<stat></stat>
+				<loader></loader>
+				<renderer clearcolor="#131613"></renderer>
+				<skybox url="./images/space.jpg"></skybox>
+				<orbitcontrols target="0 0 -1" reversed="true" enablepan="false" enablezoom="false"></orbitcontrols>
+				<!--<orbitcontrols target="0 0 -1" reversed="true"></orbitcontrols>-->
+				<home></home>
+				<group name="x" parent="camera" position="0 0 -1">
+					<group name="centergroup" position="0 0 0" scale="0.5">
+					</group>
+					<group name="cornergroup" position="-0.7 0.4 0" scale="0.2">
+						<group name="cornergroup1">
+						</group>
+						<group name="cornergroup2" position="0.4 0 0" scale="1">
+						</group>
+						<group name="cornergroup3" position="0.8 0 0" scale="1">
+						</group>
+						<group name="cornergroup4" position="1.2 0 0" scale="1">
+						</group>
+					</group>
+
+				</group>
+				<group name="roomgroup" position="0 -1 -1" scale="1">
+					<boxgeometry name="outside" position="2.27 1 -7" scale="0.7 0.7 0.02">
+						<meshphongmaterial url="./images/motas.png"></meshphongmaterial>
+						<hover action="tooltip" text="He, I can go outside!" atmouse="true"></hover>
+						<link url="./three/tribute.html" target="roomgroup" replace="true" />
+					</boxgeometry>
+					<group name="room1">
+
+
+						<gltfLoader name="room" url="./models/room.glb" rotation="0 0 0" receiveshadow="true">
+						</gltfLoader>
+						<group name="doorgroup" position="-1.18 0.02 -1.53" rotation="0 0 0">
+							<gltfLoader name="door" url="./models/door.glb">
+								<hover action="tooltip" text="The door seems to be locked from the outside." atmouse="true"></hover>
+							</gltfLoader>
+							<group name="doorhandlegroup">
+								<gltfLoader name="doorhandle" url="./models/doorhandle.glb">
+									<hover action="tooltip" text="No, cannot be opened" atmouse="true"></hover>
+									<!--<actions repeat="true">
+										<action type="click"></action>
+										<action type="transform" rotation="0 60 0" target="doorgroup"></action>
+										<action type="camera" position="-1 0 -2" lookat="-0.8 0 -2.2" speed="0.004"></action>
+
+									</actions>-->
+								</gltfLoader>
+							</group>
+						</group>
+
+
+						<gltfLoader position="1.4 0.47 1.5" rotation="0 150 0" scale="1.8" name="chair" url="./models/chair.glb" castshadow="true">
+							<hover action="tooltip" text="Can I do something with this chair?" atmouse="true"></hover>
+						</gltfLoader>
+						<gltfLoader position="-1.5 0.47 -1.6" rotation="0 -10 0" scale="1.8" name="chair2" url="./models/chair.glb" castshadow="true">
+							<hover action="tooltip" text="Another chair" atmouse="true"></hover>
+						</gltfLoader>
+
+						<group name="bedgroup" position="1.5 0 -0.4" rotation="0 0 0" scale="1">
+							<gltfLoader name="bed" url="./models/bed.glb" castshadow="true" recieveshadow="true">
+								<hover action="tooltip" text="Maybe I should ly down for a bit." atmouse="true"></hover>
+							</gltfLoader>
+							<group name="pillowgroup">
+								<gltfLoader name="pillow" url="./models/pillow.glb" castshadow="true">
+									<hover action="tooltip" text="A pillow" atmouse="true"></hover>
+									<link url="./three/pillowup.html" target="pillowgroup" replace="true" />
+								</gltfLoader>
+							</group>
+							<gltfLoader position="-0.13 0.47 -0.66" rotation="90 0 0" scale="1" name="key" url="./models/key.glb">
+								<hover action="tooltip" text="A key. I wonder where that is for?" atmouse="true"></hover>
+								<link url="./three/keyincorner.html" target="cornergroup1" replace="true" />
+								<hover action="scale" factor="1.2"></hover>
+								<actions>
+									<action type="click"></action>
+									<action type="transform" visible="false"></action>
+								</actions>
+							</gltfLoader>
+						</group>
+						<group name="cupboards" position="-1.9 0 0">
+							<group name="cupboard1group" position="0 0 -0.44" rotation="0 0 0">
+								<gltfLoader name="cupboard1" url="./models/cupboard.glb" castshadow="true">
+								</gltfLoader>
+								<gltfLoader name="leftdoor1" url="./models/leftdoor.glb" position="0.17 0 0.43">
+									<hover action="tooltip" text="This seems to be locked" atmouse="true"></hover>
+
+								</gltfLoader>
+								<gltfLoader name="rightdoor1" url="./models/rightdoor.glb" position="0.17 0 -0.43">
+									<hover action="tooltip" text="Nothing to find here" atmouse="true"></hover>
+								</gltfLoader>
+							</group>
+							<group name="cupboard2group" position="0 0 0.45" rotation="0 0 0">
+								<gltfLoader name="cupboard2" url="./models/cupboard.glb" castshadow="true" receiveshadow="true">
+								</gltfLoader>
+								<group name="doorsgroup2">
+									<gltfLoader name="leftdoor2" url="./models/leftdoor.glb" position="0.17 0 0.43" castshadow="true">
+										<hover action="tooltip" text="If I only could find a key" atmouse="true"></hover>
+									</gltfLoader>
+
+									<gltfLoader name="rightdoor2" url="./models/rightdoor.glb" position="0.17 0 -0.43" castshadow="true">
+										<hover action="tooltip" text="Not working" atmouse="true"></hover>
+									</gltfLoader>
+								</group>
+								<group name="cupboardactiongroep">
+
+								</group>
+								<gltfLoader name="box" url="./models/box.glb" position="-0.06 0 0.02" scale="0.82" castshadow="true">
+									<hover action="tooltip" text="Is there something in this box?" atmouse="true"></hover>
+									<link url="./three/toolincorner.html" target="cornergroup2" />
+								</gltfLoader>
+							</group>
+						</group>
+						<group name='photo1group' rotation='0 0 3' position='0.4 1.2 -1.53' scale='0.5 0.7 0.001'>
+							<boxGeometry name='photo1' castshadow="true">
+								<meshphongmaterial id="poster" url="images/poster.jpg"></meshphongmaterial>
+								<hover action="tooltip" text="A poster" atmouse="true"></hover>
+							</boxGeometry>
+							<group name="photo1actiongroup"></group>
+							<group name="roomkeygroup" scale="1.3" position="0 0 0.35">
+
+							</group>
+						</group>
+						<group name='painting' position='2.03 1.2 0' rotation='0 90 0'>
+							<boxGeometry scale='0.8 0.9 0.001'>
+								<meshphongmaterial id="elephant" url="images/elephant.jpeg"></meshphongmaterial>
+								<hover action="tooltip" text="Nice painting" atmouse="true"></hover>
+							</boxGeometry>
+							<group name="pingroup">
+
+							</group>
+						</group>
+						<htmlPlaneGeometry url="https://www.youtube.com/embed/Z6Or6rJ_yq0" name="musix" position='-1.4 1.21 1.55' scale='0.3' rotation="0 180 0" homebutton="false" handle="#00808047" custombarcolor="true">
+						</htmlPlaneGeometry>
+					</group>
+					<group name="room2" position="0 0 -3">
+						<gltfLoader name="carpet1" url="./models/carpet1.glb" position="0 0.01 0" rotation="0 0 0" scale="0.5">
+							<hover action="tooltip" text="Walk?" atmouse="true"></hover>
+							<actions>
+								<action type="click"></action>
+								<action type="camera" position="0 0 -3.5" lookat="0 0 -4" speed="0.004"></action>
+							</actions>
+						</gltfLoader>
+
+						<group name="lockpanelgroup" position="0.45 1.2 -1.78">
+							<group name="guescode" position="0 0.12 0" scale="0.7"></group>
+							<gltfLoader name="lockpanel" url="./models/lockpanel.glb">
+								<hover action="tooltip" text="Some kind of locking" atmouse="true"></hover>
+							</gltfLoader>
+							<gltfLoader name="lockbutton1" url="./models/lockbutton1.glb">
+								<hover action="tooltip" text="1" atmouse="true"></hover>
+								<actions repeat="true">
+									<action type="click"></action>
+									<media volume="0.1" url='./media/CMPTKey_Raspberry mouse single click (ID 1735)_BSB.mp3' loop="false"></media>
+									<action type="code">
+										<!--
+										addToCode('1');
+		-->
+									</action>
+								</actions>
+
+							</gltfLoader>
+							<gltfLoader name="lockbutton2" url="./models/lockbutton2.glb">
+								<hover action="tooltip" text="2" atmouse="true"></hover>
+								<media volume="0.1" url='./media/CMPTKey_Raspberry mouse single click (ID 1735)_BSB.mp3' loop="false"></media>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="code">
+										<!--
+											addToCode('2');
+			-->
+									</action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader name="lockbutton3" url="./models/lockbutton3.glb">
+								<hover action="tooltip" text="3" atmouse="true"></hover>
+								<media volume="0.1" url='./media/CMPTKey_Raspberry mouse single click (ID 1735)_BSB.mp3' loop="false"></media>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="code">
+										<!--
+											addToCode('3');
+			-->
+									</action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader name="lockbutton4" url="./models/lockbutton4.glb">
+								<hover action="tooltip" text="4" atmouse="true"></hover>
+								<media volume="0.1" url='./media/CMPTKey_Raspberry mouse single click (ID 1735)_BSB.mp3' loop="false"></media>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="code">
+										<!--
+											addToCode('4');
+			-->
+									</action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader name="lockbutton5" url="./models/lockbutton5.glb">
+								<hover action="tooltip" text="5" atmouse="true"></hover>
+								<media volume="0.1" url='./media/CMPTKey_Raspberry mouse single click (ID 1735)_BSB.mp3' loop="false"></media>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="code">
+										<!--
+											addToCode('5');
+			-->
+									</action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader name="lockbutton6" url="./models/lockbutton6.glb">
+								<hover action="tooltip" text="6" atmouse="true"></hover>
+								<media volume="0.1" url='./media/CMPTKey_Raspberry mouse single click (ID 1735)_BSB.mp3' loop="false"></media>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="code">
+										<!--
+											addToCode('6');
+			-->
+									</action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader name="lockbutton7" url="./models/lockbutton7.glb">
+								<hover action="tooltip" text="7" atmouse="true"></hover>
+								<media volume="0.1" url='./media/CMPTKey_Raspberry mouse single click (ID 1735)_BSB.mp3' loop="false"></media>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="code">
+										<!--
+											addToCode('7');
+			-->
+									</action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader name="lockbutton8" url="./models/lockbutton8.glb">
+								<hover action="tooltip" text="8" atmouse="true"></hover>
+								<media volume="0.1" url='./media/CMPTKey_Raspberry mouse single click (ID 1735)_BSB.mp3' loop="false"></media>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="code">
+										<!--
+											addToCode('8');
+			-->
+									</action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader name="lockbutton9" url="./models/lockbutton9.glb">
+								<hover action="tooltip" text="9" atmouse="true"></hover>
+								<media volume="0.1" url='./media/CMPTKey_Raspberry mouse single click (ID 1735)_BSB.mp3' loop="false"></media>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="code">
+										<!--
+											addToCode('9');
+			-->
+									</action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader name="lockbuttonEnter" url="./models/lockbuttonEnter.glb">
+								<hover action="tooltip" text="Enter" atmouse="true"></hover>
+								<media volume="0.1" url='./media/CMPTKey_Raspberry mouse single click (ID 1735)_BSB.mp3' loop="false"></media>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="code">
+										<!--
+											checkGuessCode();
+			-->
+									</action>
+								</actions>
+							</gltfLoader>
+
+						</group>
+						<boxgeometry name="lockpanelfloor" position="0.45 0 -1.78" scale="1 0.03 1">
+							<meshphongmaterial alphatest="0.98" opacity="0.9"></meshphongmaterial>
+							<hover action="tooltip" text="Maybe I can go there ..." atmouse="true"></hover>
+							<actions>
+								<action type="click"></action>
+								<action type="camera" position="0.45 0 -4.8" lookat="0.45 0 -5" speed="0.004"></action>
+							</actions>
+						</boxgeometry>
+						<gltfLoader name="sofa" url="./models/sofa.glb" position="-1.9 0.28 -1.4" rotation="0 75 0" scale="1.5" castshadow="true">
+							<hover action="tooltip" text="Maybe somebody left something here?" atmouse="true"></hover>
+						</gltfLoader>
+						<gltfLoader name="plant2" url="./models/plant2.glb" position="-1 0.5 -1.4" rotation="0 75 0" scale="2" castshadow="true">
+							<hover action="tooltip" text="The plant looks ok." atmouse="true"></hover>
+
+						</gltfLoader>
+						<group name="clock" position="-1.3 1.3 -1.7" scale="0.2" rotation="0 0 0">
+							<circlegeometry name="plate" scale="1">
+								<meshphongmaterial color="1 1 1" url="./images/clock.jpg"></meshphongmaterial>
+								<hover action="tooltip" text="Is it that late?" atmouse="true"></hover>
+							</circlegeometry>
+							<gltfLoader scale="0.1" name="seconds" url="./models/seconds.glb">
+								<synchronise type="seconds"></synchronise>
+							</gltfLoader>
+							<gltfLoader scale="0.1" name="minutes" url="./models/minutes.glb">
+								<synchronise type="minutes"></synchronise>
+							</gltfLoader>
+							<gltfLoader scale="0.1" name="hours" url="./models/hours.glb">
+								<synchronise type="hours"></synchronise>
+							</gltfLoader>
+						</group>
+						<group name="doorgroup2" position="0.72 0.02 -1.8" rotation="0 0 0">
+							<gltfLoader name="door2" url="./models/door.glb">
+								<hover action="tooltip" text="Mphhh, another door" atmouse="true"></hover>
+							</gltfLoader>
+							<group name="doorhandlegroup2">
+								<gltfLoader name="doorhandle7" url="./models/doorhandle.glb">
+									<hover action="tooltip" text="No, cannot be opened" atmouse="true"></hover>
+								</gltfLoader>
+							</group>
+						</group>
+						<group name="doorgroup3" position="-2.1 0.02 0.84" rotation="0 90 0">
+							<gltfLoader name="door3" url="./models/door.glb">
+								<hover action="tooltip" text="There must be another room." atmouse="true"></hover>
+							</gltfLoader>
+							<group name="doorhandlegroup3">
+								<gltfLoader name="doorhandle8" url="./models/doorhandle.glb">
+									<hover action="tooltip" text="This one seems not locked" atmouse="true"></hover>
+									<media volume="0.1" url='./media/DOORCreak_Creaking door (ID 0302)_BSB.mp3' loop="false"></media>
+									<actions repeat="true">
+										<action type="click"></action>
+										<action type="transform" rotation="0 -10 0" target="doorgroup3"></action>
+										<action type="click"></action>
+										<action type="transform" rotation="0 90 0" target="doorgroup3"></action>
+									</actions>
+
+								</gltfLoader>
+							</group>
+						</group>
+						<group name="picture2">
+							<group>
+								<boxGeometry scale="0.8 0.8 0.01" position="2.05 1.16 -1.1" rotation="0 90 0">
+									<meshphongmaterial url="images/building.jpg"></meshphongmaterial>
+									<hover action="tooltip" text="What a strange construction ..." atmouse="true"></hover>
+								</boxGeometry>
+
+							</group>
+						</group>
+						<group name="bookcupboardgroup" position="1.85 0.7 0.4" scale="0.8" rotation="0 -90 0">
+							<group name="bookcupboard1" position="-0.48 0 0">
+								<gltfLoader url="./models/bookcupboard.glb" castshadow="true" receiveshadow="true">
+									<hover action="tooltip" text="Maybe I can find something here?" atmouse="true"></hover>
+								</gltfLoader>
+								<gltfLoader name="books" url="./models/books.glb" position="0 0.38 0" rotation="0 -90 0" scale="0.7" castshadow="true">
+									<hover action="tooltip" text="Some books. Anything interesting?" atmouse="true"></hover>
+								</gltfLoader>
+								<group>
+									<gltfLoader url="./models/drawer.glb" castshadow="true">
+										<media volume="0.1" url='./media/DRWRWood_Wooden drawer opening (ID 1499)_BSB.mp3' loop="false" solo="true"></media>
+										<actions repeat="true">
+											<action type="click"></action>
+											<action type="transform" position="0 0 0.4" speed="0.08"></action>
+											<action type="click"></action>
+											<action type="transform" position="0 0 0" speed="0.08"></action>
+										</actions>
+									</gltfLoader>
+								</group>
+								<group position="0 -0.275 0">
+									<group name="drawerholder">
+										<gltfLoader name="drawer2" url="./models/drawer.glb" castshadow="true">
+											<media volume="0.1" url='./media/DRWRWood_Wooden drawer opening (ID 1499)_BSB.mp3' loop="false" solo="true"></media>
+											<actions repeat="true">
+												<action type="click"></action>
+												<action type="transform" position="0 0 0.4" target="drawerholder" speed="0.08"></action>
+												<action type="click"></action>
+												<action type="transform" position="0 0 0" target="drawerholder" speed="0.08"></action>
+											</actions>
+										</gltfLoader>
+										<gltfLoader name="card" url="./models/card.glb" position="0 -0.27 0.12" rotation="0 -0.2 0" scale="0.1">
+											<hover action="tooltip" text="Why a card here?" atmouse="true"></hover>
+										</gltfLoader>
+									</group>
+								</group>
+								<group position="0 -0.55 0">
+									<gltfLoader url="./models/drawer.glb" castshadow="true">
+										<media volume="0.1" url='./media/DRWRWood_Wooden drawer opening (ID 1499)_BSB.mp3' loop="false" solo="true"></media>
+										<actions repeat="true">
+											<action type="click"></action>
+											<action type="transform" position="0 0 0.4" speed="0.08"></action>
+											<action type="click"></action>
+											<action type="transform" position="0 0 0" speed="0.08"></action>
+										</actions>
+									</gltfLoader>
+								</group>
+							</group>
+
+							<group name="bookcupboard2" position="0.48 0 0">
+								<gltfLoader url="./models/bookcupboard.glb" castshadow="true">
+
+								</gltfLoader>
+								<gltfLoader name="usbstick" url="./models/usbstickdamaged.glb" position="0.43 0.87 0.11" rotation="0 -0.2 0" scale="2">
+									<hover action="tooltip" text="Mmmm ?" atmouse="true"></hover>
+									<link url="./three/usbstickincorner.html" target="cornergroup1" replace="true" />
+									<hover action="scale" factor="1.2"></hover>
+									<actions>
+										<action type="click"></action>
+										<action type="transform" visible="false"></action>
+									</actions>
+
+								</gltfLoader>
+
+								<group>
+									<gltfLoader url="./models/drawer.glb" castshadow="true">
+										<media volume="0.1" url='./media/DRWRWood_Wooden drawer opening (ID 1499)_BSB.mp3' loop="false" solo="true"></media>
+										<actions repeat="true">
+											<action type="click"></action>
+											<action type="transform" position="0 0 0.4" speed="0.08"></action>
+											<action type="click"></action>
+											<action type="transform" position="0 0 0" speed="0.08"></action>
+										</actions>
+									</gltfLoader>
+								</group>
+								<group position="0 -0.275 0">
+									<media volume="0.1" url='./media/DRWRWood_Wooden drawer opening (ID 1499)_BSB.mp3' loop="false" solo="true"></media>
+									<gltfLoader url="./models/drawer.glb" castshadow="true">
+										<actions repeat="true">
+											<action type="click"></action>
+											<action type="transform" position="0 0 0.4" speed="0.08"></action>
+											<action type="click"></action>
+											<action type="transform" position="0 0 0" speed="0.08"></action>
+										</actions>
+									</gltfLoader>
+								</group>
+								<group position="0 -0.55 0">
+									<media volume="0.1" url='./media/DRWRWood_Wooden drawer opening (ID 1499)_BSB.mp3' loop="false" solo="true"></media>
+									<gltfLoader url="./models/drawer.glb" castshadow="true">
+										<actions repeat="true">
+											<action type="click"></action>
+											<action type="transform" position="0 0 0.4" speed="0.08"></action>
+											<action type="click"></action>
+											<action type="transform" position="0 0 0" speed="0.08"></action>
+										</actions>
+									</gltfLoader>
+								</group>
+							</group>
+						</group>
+
+						<group name="trashbingroup" position="0.7 0.17 1.16" scale="1">
+							<gltfLoader url="./models/trashbin.glb" castshadow="true">
+								<hover action="tooltip" text="Maybe I can find something here?" atmouse="true"></hover>
+								<link url="./three/paperincorner.html" target="cornergroup4" />
+							</gltfLoader>
+							<gltfLoader url="./models/wrapped.glb" position="0 -0.1 0"></gltfLoader>
+							<gltfLoader url="./models/wrapped.glb" position="0.1 -0.1 0.03" scale="1.3">
+							</gltfLoader>
+						</group>
+					</group>
+					<group name="room3" position="-4 0 -3">
+						<gltfLoader name="carpet2" url="./models/carpet2.glb" position="0 0.01 0" rotation="0 0 0" scale="1">
+							<hover action="tooltip" text="Walk?" atmouse="true"></hover>
+							<actions>
+								<action type="click"></action>
+								<action type="camera" position="-4 0 -3.5" lookat="-4 0 -4.3" speed="0.004"></action>
+							</actions>
+						</gltfLoader>
+
+						<gltfLoader name="heater" url="./models/heater.glb" position="0.7 0.4 -1.32" scale="0.5">
+							<hover action="tooltip" text="Is that a heater?" atmouse="true"></hover>
+						</gltfLoader>
+
+						<group name="desk" position="0 0.4 0.64" scale="0.63" rotation="0 90 0">
+							<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0" castshadow="true" receiveshadow="true">
+							</gltfLoader>
+							<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
+								<gltfLoader name="monitor" url="./models/monitor.glb" scale="2" castshadow="true">
+								</gltfLoader>
+								<group name="programparentgroup" position="0 0.09 0.535" scale="0.9 0.5 0.01">
+									<group name="programgroup">
+
+									</group>
+									<group name="thecode" position="0 0 0.5" scale="1">
+									</group>
+								</group>
+								<group name="powerswitchgroup" position="0.3 -0.2 0.55" scale="0.05 0.05 0.01" url="./three/powerswitchon.html">
+								</group>
+								<group name="usbportgroupparent" position="-0.22 0.03 0.48">
+									<group name="usbportgroup" scale="0.06 0.06 0.01" url="./three/usbportstandard.html">
+									</group>
+								</group>
+							</group>
+
+							<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0" castshadow="true">
+								<hover action="tooltip" text="A bit dirty" atmouse="true"></hover>
+							</gltfLoader>
+							<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6" castshadow="true">
+								<hover action="tooltip" text="I had exacty the same mouse a few years ago!" atmouse="true"></hover>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="transform" rotation="0 66 0" position="1.33 0.5 0.7" speed="0.01"></action>
+									<action type="transform" rotation="0 50 0" position="1.2 0.5 0.65" speed="0.004"></action>
+									<action type="transform" rotation="0 80 0" position="1.27 0.5 0.57" speed="0.009"></action>
+									<action type="transform" rotation="0 66 0" position="1.3 0.5 0.6" speed="0.01"></action>
+								</actions>
+
+							</gltfLoader>
+
+							<gltfLoader url="./models/officechair.glb" scale="2.7" position="-0.1 0.2 -0.2" rotation="0 70 0" castshadow="true">
+								<hover action="tooltip" text="Maybe sit down?" atmouse="true"></hover>
+							</gltfLoader>
+						</group>
+						<group name="flaggroupparent" position="-0.5 0.85 -1.8">
+							<group name="flaggroup">
+								<group name="flag" scale="0.03">
+									<parametricbuffergeometry name="param" scale="4 2 2" castshadow="true">
+										<meshphongmaterial url="./images/flag.jpg"></meshphongmaterial>
+										<softbody>
+											<constraint type="fixed" index="110 120"></constraint>
+											<constraint type="gravity" factor="3"></constraint>
+											<constraint type="stretch" factor="3"></constraint>
+											<constraint type="structure" factor="15"></constraint>
+										</softbody>
+										<hover action="tooltip" text="What a strange flag" atmouse="true"></hover>
+									</parametricbuffergeometry>
+								</group>
+								<gltfLoader name="needle" url="./models/needle.glb" scale="0.3" position="0.6 0.9 0" rotation="72 0 0">
+									<hover action="tooltip" text="Fixed with needles?" atmouse="true"></hover>
+									<hover action="scale" factor="1.2"></hover>
+									<link url="./three/needleincorner.html" target="cornergroup2" replace="true" />
+									<link url="./three/usbstickincorneractive.html" target="cornergroup1" replace="true" />
+									<link url="./three/flaglose.html" target="flaggroup" replace="true" />
+								</gltfLoader>
+							</group>
+							<gltfLoader name="leftneedle" url="./models/needle.glb" scale="0.3" position="-0.6 0.9 0" rotation="72 0 0">
+								<hover action="tooltip" text="I cannot get this one lose" atmouse="true"></hover>
+								<hover action="scale" factor="1.2"></hover>
+							</gltfLoader>
+						</group>
+
+
+						<gltfLoader position="1.3 0.47 1.5" rotation="0 150 0" scale="1.8" name="chair1" url="./models/chair.glb" castshadow="true">
+							<hover action="tooltip" text="Maybe when I move this?" atmouse="true"></hover>
+						</gltfLoader>
+						<gltfLoader position="1.85 0.47 -0.8" rotation="0 -130 0" scale="1.8" name="chair2" url="./models/chair.glb" castshadow="true">
+							<hover action="tooltip" text="No, no, no ..." atmouse="true"></hover>
+						</gltfLoader>
+						<gltfLoader position="-1.22 0.47 0.5" rotation="0 25 0" scale="1.8" name="chair3" url="./models/chair.glb" castshadow="true">
+							<hover action="tooltip" text="Surely many chairs in this room" atmouse="true"></hover>
+						</gltfLoader>
+						<group name="trashbingroup" position="1.65 0.19 -1.57" scale="1" castshadow="true">
+							<gltfLoader url="./models/trashbin.glb">
+								<hover action="tooltip" text="Time to clean up" atmouse="true"></hover>
+							</gltfLoader>
+							<gltfLoader url="./models/wrapped.glb" position="0 -0.1 0"></gltfLoader>
+							<gltfLoader url="./models/wrapped.glb" position="0-0.4 -0.2 -1" scale="1.5"></gltfLoader>
+							<gltfLoader url="./models/wrapped.glb" position="0.1 -0.1 0.03" scale="1.3"></gltfLoader>
+						</group>
+
+						<group name="picture3" position="-1.42 1.16 0" rotation="0 90 0">
+							<group>
+								<boxGeometry scale="0.8 0.6 0.01">
+									<meshphongmaterial url="images/IMG_8591kl.jpg"></meshphongmaterial>
+									<hover action="tooltip" text="Where can that be?" atmouse="true"></hover>
+								</boxGeometry>
+
+							</group>
+						</group>
+						<group name="hatchgroup" scale="0.5" position="1.2 1.98 0.9" rotation="0 0 0">
+							<gltfLoader name="hatch" url="./models/hatch.glb">
+								<hover action="tooltip" text="He, can I go there?" atmouse="true"></hover>
+								<actions repeat="true">
+									<action type="click"></action>
+									<action type="transform" rotation="0 0 6"></action>
+									<action type="click"></action>
+									<action type="transform" rotation="0 0 0"></action>
+								</actions>
+							</gltfLoader>
+							<gltfLoader name="hatchframe" url="./models/hatchframe.glb">
+								<hover action="tooltip" text="He, can I go there?" atmouse="true"></hover>
+							</gltfLoader>
+
+						</group>
+						<pointlight position="-1.3 1.6 0.5" intensity="0.6"></pointlight>
+					</group>
+					<spotlight position="0 4 0" target="doorgroup" castshadow="true"></spotlight>
+					<directionallight target="cupboard2group" intencity="0.5"></directionallight>
+					<ambientlight intensity="0.6"></ambientlight>
+
+</three>
+
+		</div>
+		<script>
+			var threeml;
+			var code='';
+			var guescode = '';
+			function addToCode(digit) {
+				if (guescode.length < 6) {
+					guescode += digit;
+					writeGuessCode()
+				}
+			}
+			function writeGuessCode() {
+                var c = guescode.length == 0 ? '' : '<TextGeometry text="' + guescode + '"><meshphongmaterial color="0 1 0.3"></meshphongmaterial></TextGeometry>';
+                threeml.loadCodeInGroup('guescode', c, true);
+			}
+			function checkGuessCode() {
+                if (guescode == code && guescode.length==6) {
+                    unlockdoor()
+                }
+				guescode = '';
+				writeGuessCode();
+			}
+			function unlockdoor() {
+                threeml.loadInGroup('doorhandlegroup2', './three/unlockdoorroom2.html', true);
+			}
+			function getDigit() {
+				while (true) {
+					var d = Math.floor(Math.random() * 10);
+					if (d > 0 && d < 10) {
+						return ''+d;
+                    }
+				}
+            }
+			function getNewCode() {
+                code = getDigit() + getDigit() + getDigit() + getDigit() + getDigit() + getDigit();
+
+				var c = '<TextGeometry text="'+code+'"><meshphongmaterial color="1 0 1"></meshphongmaterial></TextGeometry>';
+                threeml.loadCodeInGroup('thecode', c, true);
+            }
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

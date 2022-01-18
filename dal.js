@@ -34,7 +34,6 @@ exports.initDB= function(){
 exports.getScenePart=function(req, res){
   var guid;
   var q=url.parse(req.url, true).query;
- 
   if(q){
     guid=q.g;
   }
@@ -43,11 +42,8 @@ exports.getScenePart=function(req, res){
       console.error(err.message);
     }
     else {
-   
         let sql = `SELECT Code code
         FROM Scenepart Where  Guid = '${guid}' `;
-    
-
        console.log(sql);
         db.all(sql, [], (err, rows) => {
         if (err) {
@@ -56,12 +52,10 @@ exports.getScenePart=function(req, res){
         if(rows.length>0){
           let row=rows[0];
           res.end(row.code);
-        }
-        
+        }   
       });
     }
-    });
-
+  });
 }
 
 
@@ -69,7 +63,6 @@ exports.getScenePart=function(req, res){
 exports.getWebsites=function(req, res){
   var filter;
   var q=url.parse(req.url, true).query;
- 
   if(q){
     filter=q.s;
   }
@@ -112,13 +105,31 @@ exports.getStats=function(res){
           throw err;
         }
         res.end( JSON.stringify(rows));
-
-      
-      
       });
     }
   });
 }
+
+exports.getSnippets=function(res){
+  let db = new sqlite3.Database(dbName,sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    else {
+    let sql = `SELECT Description description, Example example, ImageUrl imageurl
+    from Snippet`;
+       console.log(sql);
+        db.all(sql, [], (err, rows) => {
+        if (err) {
+          throw err;
+        }
+        res.end( JSON.stringify(rows));
+      });
+    }
+  });
+}
+
+
 
 //Whois
 

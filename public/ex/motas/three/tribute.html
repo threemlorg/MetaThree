@@ -1,0 +1,21 @@
+﻿<!--<skybox url="./images/satara_night.jpg"></skybox>-->
+<group name="tribute" position="0 0 -4">
+    <boxgeometry name="outside" position="-1 1 -3" scale="3 2 0.02">
+        <meshphongmaterial url="./images/motas.png"></meshphongmaterial>
+    </boxgeometry>
+    <TextGeometry name="text2" position="0 0 -2" scale="3" text="Mystery Of Time And Space" bevelEnabled="false" height="0.1">
+        <meshphongmaterial id="text" color="#6f751b"></meshphongmaterial>
+    </TextGeometry>
+    <TextGeometry name="text3" position="0 -0.2 -2" scale="3" text="A tribute" bevelEnabled="false" height="0.1">
+        <meshphongmaterial id="text" color="#6f751b"></meshphongmaterial>
+    </TextGeometry>
+    <sprite  position="2 1 -3" scale="2 2 0">
+        <DynamicTextureMaterial text="I remember having spend many hours on the sometimes quite difficult challenges. Unfortunately the game has been taken offline, only the introduction page still exists on the web.
+                            AJW" fontSize="20" fontcolor="green" backgroundcolor="lightblue"></DynamicTextureMaterial>
+        <actions repeat="true">
+            <action type="transform" rotation="0 -10 0" speed="0.002"></action>
+            <action type="transform" rotation="0 0 0" speed="0.002"></action>
+        </actions>
+    </sprite>
+</group>
+<directionallight target="tribute"></directionallight>

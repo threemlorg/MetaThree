@@ -264,7 +264,7 @@
             function loadInCustomGroup() {
                 var g = getUrlVar('g');
                 if (g) {
-                    threeml.loadInGroup('custom', '/api/scenepart/index.aspx?g=' + g)
+                    threeml.loadInGroup('custom', '/api_getscenepart?g=' + g)
                 }
                 else {
                     var t = '<TextGeometry text="Merry Christmas" style="display:none"><meshphongmaterial color="1 0 1"></meshphongmaterial></TextGeometry>';
