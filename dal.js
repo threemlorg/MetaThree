@@ -89,16 +89,22 @@ sql+=' Order by ID DESC '
   });
 }
 
-exports.getStats=function(res){
+exports.getStats=function(req, res){
+  var round=0;
+  var q=url.parse(req.url, true).query;
+  if(q && !isNaN(q.s)){
+    round=Number(q.s);
+  }
   let db = new sqlite3.Database(dbName,sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message);
     }
     else {
    
-    let sql = `SELECT sum(Visits) visits, max(latitude) lat, max(longitude) lon, 
+    let sql = `SELECT sum(Visits) visits, max(latitude) lat, max(longitude) lon,
     max(City) city, max(Region) region, max(Country) country, max(strftime('%Y-%m-%dT%H:%M:%fZ',Updated)) d
-        FROM callingIP WHERE (Blocked is NULL OR Blocked <>1) GROUP BY IP`;
+        FROM callingIP WHERE (Blocked is NULL OR Blocked <>1) AND IP!='86.86.183.64' AND IP!='31.20.43.236' AND IP is not NULL 
+		AND Latitude is not NULL  AND Longitude is not NULL GROUP BY ROUND(latitude, ${round}), ROUND(longitude,  ${round})`;
        console.log(sql);
         db.all(sql, [], (err, rows) => {
         if (err) {

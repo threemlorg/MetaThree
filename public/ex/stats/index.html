@@ -98,7 +98,9 @@
                     var sS = s;
                     var s5S =s5;
                     var tS= (p.S+0.4) * hfact * barScale*0.5;
-                    var textName = "text_" + p.city.replace(" ", "_");
+                    var textName = p.city?"text_" + p.city.replace(" ", "_"):'';
+                    
+
                     var text = `${p.city} (${p.country})`.replace("'","''");
                     var barw = barScale * 0.01;
                     var textScale = 0.5 * barScale;

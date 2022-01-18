@@ -34,7 +34,7 @@ app.get('/api_stat', (req, res) => {
   dal.checkRequest(req);
 });
 app.get('/api_getstats', (req, res) => {
-  dal.getStats(res);
+  dal.getStats(req, res);
 });
 app.get('/api_getsnippets', (req, res) => {
   dal.getSnippets(res);

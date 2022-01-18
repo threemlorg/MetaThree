@@ -32,3 +32,4 @@ obj
 *.scss.ts
 # Custom folders
 exp
+data/threeml copy.db
