@@ -1,7 +1,7 @@
 # MetaThree
 Metathree contains both the ThreeML client script, as well as a NodeJS based ThreeML server. The project can be checked at http://www.threeml.org.
 
-The clientscript makes use of ThreeJS, and makes it possible to use metatags to setup a 3D scene. Many frequently used logic can be added just by specifying tags with attributes.
+The clientscript references ThreeJS, and makes it possible to use meta tags to setup a 3D scene. Many frequently used logic can be added just by specifying tags with attributes.
 Still the ThreeJS objects are accessible for adding extra logic by script if required.
 
 The server has several API's to support usage statistics, present websites etc. It uses an SQLite database for storage.
