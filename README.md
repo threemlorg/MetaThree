@@ -17,6 +17,7 @@ Handy
 
 Run the project
 - Go to the project root folder
+- One time install the dependencies (specified in package.json): npm i
 - When working with VSCode, type: Code . (include the dot)
 - type in command window: Node index.js
 - Click the run button in VSCode, or goto a browser and navigate to: http://localhost:8080
