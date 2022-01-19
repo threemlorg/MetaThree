@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://threeml.org/threeml/versions/1.0.0.3/threeml.xsd" targetNamespace="http://threeml.org/threeml/versions/1.0.0.3/threeml.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="three">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Group">
+          <xs:annotation>
+            <xs:documentation>Example scene to illustrate X3D nodes and fields (XML elements and attributes)</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+              <xs:element name="camera">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="position"/>
+                      <xs:attribute type="xs:string" name="mode"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="skybox">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="url"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Planegeometry">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="walk"/>
+                    <xs:element name="meshphongmaterial">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="color"/>
+                            <xs:attribute type="xs:string" name="textureScale"/>
+                            <xs:attribute type="xs:string" name="url"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="position"/>
+                  <xs:attribute type="xs:string" name="scale"/>
+                  <xs:attribute type="xs:string" name="rotation"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="gltfLoader" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="visible" use="optional"/>
+                      <xs:attribute type="xs:string" name="url" use="optional"/>
+                      <xs:attribute type="xs:string" name="position" use="optional"/>
+                      <xs:attribute type="xs:byte" name="scale" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="group">
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element name="gltfLoader" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="media">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:float" name="volume"/>
+                                  <xs:attribute type="xs:string" name="url"/>
+                                  <xs:attribute type="xs:string" name="loop"/>
+                                  <xs:attribute type="xs:string" name="volumetric"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="link">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="url"/>
+                                  <xs:attribute type="xs:string" name="target"/>
+                                  <xs:attribute type="xs:string" name="replace"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="url"/>
+                        <xs:attribute type="xs:byte" name="scale"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="group" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="gltfLoader">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="url"/>
+                                  <xs:attribute type="xs:float" name="scale"/>
+                                  <xs:attribute type="xs:string" name="position"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="name"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="position" use="optional"/>
+                  <xs:attribute type="xs:string" name="rotation" use="optional"/>
+                  <xs:attribute type="xs:string" name="name" use="optional"/>
+                  <xs:attribute type="xs:string" name="visible" use="optional"/>
+                  <xs:attribute type="xs:string" name="url" use="optional"/>
+                  <xs:attribute type="xs:byte" name="scale" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="htmlPlaneGeometry">
+                <xs:annotation>
+                  <xs:documentation>Start room 1</xs:documentation>
+                </xs:annotation>
+                <xs:complexType mixed="true">
+                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                    <xs:element name="boxgeometry">
+                      <xs:annotation>
+                        <xs:documentation>
+                          <![CDATA[<PointLight intensity='0.9' color='1 0.8 0.5' location='14.44 0.89 0.75' radius='5'>  </PointLight><PointLight intensity='0.9' color='0.64 0.65 0.5' location='10.37 0.47 0.75' radius='5'>  </PointLight>
+
+        <PointLight intensity='0.9' color='0.64 0.65 0.5' location='7.91 0.57 0.75' radius='5'>  </PointLight><PointLight intensity='0.9' color='1 0.8 0.5' location='4.85 1.19 10.2' radius='5'>  </PointLight><PointLight intensity='0.9' color='0.64 0.65 0.5' location='9.04 0.87 9.4' radius='5'>  </PointLight>
+
+        <PointLight intensity='0.9' color='0.64 0.65 0.5' location='11.71 0.57 9.69' radius='5'>  </PointLight><PointLight intensity='0.9' color='1 0.8 0.5' location='0.22 1.44 10.01' radius='5'>  </PointLight><PointLight intensity='0.9' color='0.64 0.65 0.5' location='-1.36 0.72 9.48' radius='5'>  </PointLight>
+
+        <PointLight intensity='0.9' color='0.64 0.65 0.5' location='-5.46 0.95 9.26' radius='5'>  </PointLight>]]>
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="meshphongmaterial">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="url" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="media" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>&lt;present speed="0.04" cameradistance='2'>&lt;/present></xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="present" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:float" name="speed" use="optional"/>
+                                  <xs:attribute type="xs:float" name="cameradistance" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="tooltip" use="optional"/>
+                        <xs:attribute type="xs:string" name="position" use="optional"/>
+                        <xs:attribute type="xs:string" name="scale" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="PointLight">
+                      <xs:complexType mixed="true">
+                        <xs:sequence>
+                          <xs:element name="meshphongmaterial" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="url" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="present" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:float" name="speed" use="optional"/>
+                                  <xs:attribute type="xs:float" name="cameradistance" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:float" name="intensity" use="optional"/>
+                        <xs:attribute type="xs:string" name="color" use="optional"/>
+                        <xs:attribute type="xs:string" name="location" use="optional"/>
+                        <xs:attribute type="xs:byte" name="radius" use="optional"/>
+                        <xs:attribute type="xs:string" name="tooltip" use="optional"/>
+                        <xs:attribute type="xs:string" name="position" use="optional"/>
+                        <xs:attribute type="xs:string" name="scale" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="group">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="boxgeometry">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="meshphongmaterial">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:string" name="url" use="optional"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute type="xs:string" name="scale" use="optional"/>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="group" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:choice maxOccurs="unbounded" minOccurs="0">
+                                <xs:element name="Cylindergeometry">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="meshphongmaterial">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:string" name="USE" use="optional"/>
+                                              <xs:attribute type="xs:string" name="color" use="optional"/>
+                                              <xs:attribute type="xs:string" name="url" use="optional"/>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="present" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:float" name="speed" use="optional"/>
+                                              <xs:attribute type="xs:float" name="cameradistance" use="optional"/>
+                                              <xs:attribute type="xs:byte" name="presentationangle" use="optional"/>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:string" name="name" use="optional"/>
+                                    <xs:attribute type="xs:string" name="position" use="optional"/>
+                                    <xs:attribute type="xs:string" name="scale" use="optional"/>
+                                    <xs:attribute type="xs:string" name="rotation" use="optional"/>
+                                    <xs:attribute type="xs:string" name="tooltip" use="optional"/>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="boxgeometry">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="meshphongmaterial">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:string" name="url" use="optional"/>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:string" name="name" use="optional"/>
+                                    <xs:attribute type="xs:string" name="position" use="optional"/>
+                                    <xs:attribute type="xs:string" name="scale" use="optional"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:choice>
+                              <xs:attribute type="xs:string" name="position" use="optional"/>
+                              <xs:attribute type="xs:string" name="name" use="optional"/>
+                              <xs:attribute type="xs:string" name="rotation" use="optional"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="name" use="optional"/>
+                        <xs:attribute type="xs:string" name="position" use="optional"/>
+                        <xs:attribute type="xs:string" name="rotation" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Cylindergeometry">
+                      <xs:complexType>
+                        <xs:choice maxOccurs="unbounded" minOccurs="0">
+                          <xs:element name="meshphongmaterial">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="url" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="link">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="url" use="optional"/>
+                                  <xs:attribute type="xs:string" name="target" use="optional"/>
+                                  <xs:attribute type="xs:string" name="href" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:choice>
+                        <xs:attribute type="xs:string" name="name" use="optional"/>
+                        <xs:attribute type="xs:string" name="position" use="optional"/>
+                        <xs:attribute type="xs:string" name="scale" use="optional"/>
+                        <xs:attribute type="xs:string" name="tooltip" use="optional"/>
+                        <xs:attribute type="xs:string" name="rotation" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                  <xs:attribute type="xs:string" name="url" use="optional"/>
+                  <xs:attribute type="xs:string" name="name" use="optional"/>
+                  <xs:attribute type="xs:byte" name="zoom" use="optional"/>
+                  <xs:attribute type="xs:string" name="position" use="optional"/>
+                  <xs:attribute type="xs:byte" name="scale" use="optional"/>
+                  <xs:attribute type="xs:string" name="rotation" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ambientlight">
+                <xs:annotation>
+                  <xs:documentation>
+                    End room 4&lt;directionalLight position='6 23 11' rotation='54 -150 -190' intensity='1' shadowIntensity='1'>
+                    &lt;/directionalLight>
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:float" name="intensity"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="directionallight">
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element name="spotlight" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="rotation" use="optional"/>
+                            <xs:attribute type="xs:string" name="position" use="optional"/>
+                            <xs:attribute type="xs:float" name="intensity" use="optional"/>
+                            <xs:attribute type="xs:string" name="castShadow" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="rotate" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="axis" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="position" use="optional"/>
+                  <xs:attribute type="xs:string" name="rotation" use="optional"/>
+                  <xs:attribute type="xs:string" name="castShadow" use="optional"/>
+                  <xs:attribute type="xs:float" name="intensity" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

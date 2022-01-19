@@ -42,7 +42,7 @@
                          <meshphongmaterial  color="1 1 1" url="./images/world-physical-map-mercator.jpg" side="doubleside"></meshphongmaterial>
                         <hover target="dummie"></hover>
                     </planeGeometry>
-                    <group name="posgroup" position="-0.032 -0.129 0" scale="0.354">
+                    <group name="posgroup" position="-0.032 -0.113 0.001" scale="0.354">
                      </group>
                 </group>
             <spotlight position="0.5 1 -1.0" intensity="1.23" target="mapdummie" castshadow="true">
@@ -80,7 +80,7 @@
                 var barScale = 1;
                 var isfirst = false;
                 var max = getMaxCount();
-                var hfact = 0.35/max;
+                var hfact = 6/max;
                 for(var n=0;n<jsondata.length;n++){
                     var p=jsondata[n];
                     var plat = p.lat;
@@ -93,9 +93,13 @@
                     
                     var lat =(plat+5) * fact;
                     var lon = plon * fact * yfact;
-                    var s = p.visits * hfact;
+                    var s = Math.log( p.visits) * hfact;
+                    if(s<0.003){
+                        s=0.003
+                    }
                     var s5 = 0.5 * s * barScale;
                     var sS = s;
+
                     var s5S =s5;
                     var tS= (p.S+0.4) * hfact * barScale*0.5;
                     var textName = p.city?"text_" + p.city.replace(" ", "_"):'';
@@ -154,29 +158,22 @@
                 return m;
             }
             function setCamera(region) {
-                var posx = 0;
-                var posy = 0;
-                var posz = 0;
+
                 var pos = { 'x': 0, 'y': 0, 'z': 0 }
                 var target = { 'x': 0, 'y': 0, 'z': -2 }
-                var menu = {'x':0.7, 'y':0.4, 'z':-1.1}
                 switch (region) {
                     case 'world':
-                        posx = 0;
                         break;
                     case 'europe':
                         pos = { 'x': 0, 'y': 0.72, 'z': -1.6 }
-                        menu = { 'x': -0.31, 'y': 0.48, 'z': -2.16 }
                         target = { 'x': 0, 'y': 0.4, 'z': -2 }
                         break;
                     case 'us':
                         pos = { 'x': -1.7, 'y': 0.67, 'z': -1.1 }
-                        menu = { 'x': -0.73, 'y': 0.61, 'z': -1.47 }
                         target = { 'x': -1.4, 'y': 0.4, 'z': -1.7 }
                         break;
                     case 'sa':
                         pos = { 'x': -0.76, 'y': -0.34, 'z': -0.83 }
-                        menu = { 'x': -0.31, 'y': 0, 'z': -1.47 }
                         target = { 'x': -0.6, 'y': -0.4, 'z': -1.7 }
                         break;
                     case 'asia':
@@ -185,20 +182,15 @@
                         break;
                     case 'australia':
                         pos = { 'x': 1.5, 'y': -0.3, 'z': -1 }
-                        menu = { 'x': 0.7, 'y': 0.2, 'z': -1.1 }
                         target = { 'x': 0.6, 'y': -0.4, 'z': -2.7 }
                         break;
                     case 'africa':
                         pos = { 'x': 0, 'y': -0.0, 'z': -1.3 }
-                        menu = { 'x': -0.23, 'y': 0.27, 'z': -1.81 }
                         var target = { 'x': 0, 'y': -0.15, 'z': -2 }
                         break;
                 }
                 threeml.moveToPosition(camera, pos.x, pos.y, pos.z, 0.003)
-                threeml.moveToPosition(choices, menu.x, menu.y, menu.z, 0.01)
-                //var code ='<orbitcontrols target="'+target.x+' '+target.y+' ' + target.z+'" reversed="true"></orbitcontrols>'
                 threeml.lookAtPosition(target.x, target.y, target.z);
-                //camera.position.set(posx, posy, posz);
             }
            
         </script>

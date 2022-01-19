@@ -1,0 +1,35 @@
+﻿.objtree {
+    position: absolute;
+    z-index: 10000;
+    top: 0px;
+}
+
+.node {
+    margin-left: 50px;
+}
+
+.ntitle {
+    padding-left: 24px;
+    cursor: pointer;
+    background: url('../images/closed.svg') no-repeat left;
+    background-size: 30px 30px;
+    background-position-x: -5px;
+}
+
+.ntitle.open {
+    background: url('../images/open.svg') no-repeat left;
+    background-size: 30px 30px;
+    background-position-x: -5px;
+}
+
+.ntitle:hover {
+    background-color: azure;
+}
+
+.children {
+    margin-left: 10px;
+}
+
+.hide {
+    display: none;
+}
