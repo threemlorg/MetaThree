@@ -2,11 +2,14 @@ const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const url = require('url');
 const https = require('https');
-const dbName='./data/threeml.db';
+var dbName='./data/threeml.db';
 const whoisapi='https://ipwhois.app/json/';
 var customerId=-1;
 
-exports.initDB= function(){
+exports.initDB= function(tsqldb){
+  if(tsqldb){
+    dbName=tsqldb;
+  }
   if(customerId<0) {
     let db = new sqlite3.Database(dbName,sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
@@ -66,6 +69,7 @@ exports.getWebsites=function(req, res){
   if(q){
     filter=q.s;
   }
+  
   let db = new sqlite3.Database(dbName,sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message);

@@ -5,6 +5,8 @@ const host = 'localhost' //'37.97.189.248'// Specifying Host
 const port = 8080 // Specifying Port number
 // Creating Http Server from Express App to work with socket.io
 const http = require('http').Server(app);
+const config = require('./config.json');
+
 // Initializing socket.io object
 const io = require('socket.io')(http,{
  // Specifying CORS 
@@ -12,7 +14,7 @@ const io = require('socket.io')(http,{
  origin: "*",
  }
 })
-dal.initDB();
+dal.initDB(config.sqlitedb);
 app.use(express.urlencoded({ extended: true })) // Specifying to use urlencoded
 // Creating object of Socket
 const liveData = io.of("/liveData") // URL which will accept socket connection
