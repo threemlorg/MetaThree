@@ -33,3 +33,4 @@ obj
 # Custom folders
 exp
 data/threeml_copy.db
+config.json
