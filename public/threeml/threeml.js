@@ -233,6 +233,17 @@ var ThreeML = function (element) {
 		}
 	}
 
+	this.getAttributes = function(ele) {
+		var att = {};
+		if (ele && ele.attributes) {
+			for (var n = 0; n < ele.attributes.length; n++) {
+				var name = ele.attributes[n].nodeName;
+				var val = ele.attributes[n].nodeValue;
+				att[name.toLowerCase()] = val;
+			}
+		}
+		return att;
+	}
 
 	//////////////////////////////////////////
 	//Global event handling
@@ -639,6 +650,74 @@ var ThreeML = function (element) {
 		document.body.appendChild(d);
     }
 
+
+	this.setCommonAttributes = function(obj, att) {
+		if (att.position) {
+			var v = toV(att.position)
+			obj.position.set(v.x, v.y, v.z);
+		}
+		if (att.translation) {
+			var v = toV(att.translation)
+			obj.position.set(v.x, v.y, v.z);
+		}
+		if (att.scale) {
+			var v = toV(att.scale)
+			obj.scale.set(v.x, v.y, v.z);
+		}
+		if (att.rotation) {
+			var v = toV(att.rotation);
+	
+			obj.rotation.set(toR(v.x), toR(v.y), toR(v.z));
+		}
+		if (att.name) {
+			obj.name = att.name;
+		}
+		if (att.id) {
+			obj.id = att.id;
+		}
+		if (att.visible) {
+			obj.visible = toB(att.visible);
+		}
+		if (att.intensity) {
+			obj.intensity = Number(att.intensity);
+		}
+		if (att.target) {
+			obj.target = Number(att.target);
+		}
+	
+		if (att.color) {
+			obj.color = toColor(att.color);
+		}
+		if (att.castshadow) {
+			obj.castShadow = toB(att.castshadow);
+			if (obj.castShadow && obj.type != 'DirectionalLight') {
+				obj.traverse(function (node) {
+	
+					if (node.isMesh) { node.castShadow = true; }
+	
+				});
+			}
+		}
+		if (att.receiveshadow) {
+			obj.receiveShadow = toB(att.receiveshadow);
+			if (obj.receiveShadow) {
+				obj.traverse(function (node) {
+	
+					if (node.isMesh) { node.receiveShadow = true; }
+	
+				});
+			}
+	
+		}
+		if (att.shadowdarkness) {
+			obj.shadowDarkness = Number(att.shadowdarkness);
+		}
+		if (att.normalize) {
+			handelNormalize(obj);
+		}
+	
+	}
+
 	let doCheckZoom = true;
 
 	this.parseThree = function (htmlParent) {
@@ -664,6 +743,118 @@ var ThreeML = function (element) {
 		}
 	}
 
+
+//Common conversion functions
+
+function toV2(val) {
+	var arr = val.split(' ');
+	var x = arr.length > 0 ? tryParseNumber(arr[0]) : 0;
+	var y = arr.length > 1 ? tryParseNumber(arr[1]) : x;
+	return new THREE.Vector2(x, y);
+}
+function toRotV(val) {
+	var v = toV(val);
+	return new THREE.Vector3(toR(v.x), toR(v.y), toR(v.z));
+}
+function toV(val, def = new THREE.Vector3()) {
+	if (val) {
+		var arr = val.split(' ');
+		var x = arr.length > 0 ? tryParseNumber(arr[0]) : 0;
+		var y = arr.length > 1 ? tryParseNumber(arr[1]) : x;
+		var z = arr.length > 2 ? tryParseNumber(arr[2]) : y;
+		return new THREE.Vector3(x, y, z);
+	}
+	return def;
+}
+function tryParseNumber(val) {
+	if (val) {
+		var t = parseFloat(val);
+		if (isNaN(t)) {
+			return 0;
+		}
+		return t;
+	}
+	return 0;
+}
+function addTransform(ele, att, parent) {
+	var group = new THREE.Group();
+	parent.add(group);
+	return group;
+}
+
+function handelNormalize(obj) {
+	var bbox = new THREE.Box3().setFromObject(obj);
+	var v = bbox.max.clone().sub(bbox.min);
+	var maxl = Math.abs(v.x);
+	var comp = Math.abs(v.y);
+	if (comp > maxl) {
+		maxl = comp;
+	}
+	comp = Math.abs(v.z);
+	if (comp > maxl) {
+		maxl = comp;
+	}
+	if (maxl > 0) {
+		obj.scale.multiplyScalar(1 / maxl);
+	}
+}
+function toColor(color, def = new THREE.Color()) {
+	var c = def;
+	if (color) {
+		if (color.indexOf('#') == 0 || color.indexOf('#') == 0) {
+			c = new THREE.Color(color)
+		}
+		else {
+			var v = toV(color);
+			c = new THREE.Color(); // create once and reuse
+			c.setRGB(v.x, v.y, v.z);
+		}
+	}
+	return c;
+}
+function isNo(n) {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+}
+function toN(n, def = 1) {
+	if (n && isNo(n)) {
+		return Number(n);
+	}
+	return def;
+}
+function toB(b, def = false) {
+	if (b) {
+		if (b == 'true' || b == '1') {
+			b = true;
+		}
+		else if (b == 'false' || b == '0') {
+			b = false;
+		}
+	}
+	else {
+		b = def;
+	}
+	return b;
+}
+function toT(text, def = undefined) {
+	if (text) {
+		return text;
+	}
+	return def;
+}
+function toR(degrees, def = 0) {
+	if (degrees) {
+		return degrees * Math.PI / 180;
+	}
+	return def;
+}
+function toDg(radials, def = 0) {
+	if (radials) {
+		return 180 * radials / Math.PI
+	}
+	return def;
+}
+
+//End common conversion functions
 
 	var ThreeScene = function (threeml, threenode, htmlParent) {
 		var flycontrols;
@@ -4320,15 +4511,20 @@ var ThreeML = function (element) {
 			return new THREE.MeshPhongMaterial();
 		}
 		function getAttributes(ele) {
-			var att = {};
-			if (ele && ele.attributes) {
-				for (var n = 0; n < ele.attributes.length; n++) {
-					var name = ele.attributes[n].nodeName;
-					var val = ele.attributes[n].nodeValue;
-					att[name.toLowerCase()] = val;
-				}
-			}
-			return att;
+			// var att = {};
+			// if (ele && ele.attributes) {
+			// 	for (var n = 0; n < ele.attributes.length; n++) {
+			// 		var name = ele.attributes[n].nodeName;
+			// 		var val = ele.attributes[n].nodeValue;
+			// 		att[name.toLowerCase()] = val;
+			// 	}
+			// }
+			return self.getAttributes(ele);
+		}
+
+
+		function setCommonAttributes(obj, att) {
+			self.setCommonAttributes(obj, att);
 		}
 		function handleMeshBasicMaterial(ele) {
 			var mat;
@@ -4529,185 +4725,6 @@ var ThreeML = function (element) {
 
 
 		//End shape
-
-		function toV2(val) {
-			var arr = val.split(' ');
-			var x = arr.length > 0 ? tryParseNumber(arr[0]) : 0;
-			var y = arr.length > 1 ? tryParseNumber(arr[1]) : x;
-			return new THREE.Vector2(x, y);
-		}
-		function toRotV(val) {
-			var v = toV(val);
-			return new THREE.Vector3(toR(v.x), toR(v.y), toR(v.z));
-		}
-		function toV(val, def = new THREE.Vector3()) {
-			if (val) {
-				var arr = val.split(' ');
-				var x = arr.length > 0 ? tryParseNumber(arr[0]) : 0;
-				var y = arr.length > 1 ? tryParseNumber(arr[1]) : x;
-				var z = arr.length > 2 ? tryParseNumber(arr[2]) : y;
-
-				return new THREE.Vector3(x, y, z);
-			}
-			return def;
-		}
-		function tryParseNumber(val) {
-			if (val) {
-				var t = parseFloat(val);
-				if (isNaN(t)) {
-					return 0;
-				}
-				return t;
-			}
-			return 0;
-		}
-		function addTransform(ele, att, parent) {
-			var group = new THREE.Group();
-			parent.add(group);
-			return group;
-		}
-
-		function setCommonAttributes(obj, att) {
-			if (att.position) {
-				var v = toV(att.position)
-				obj.position.set(v.x, v.y, v.z);
-			}
-			if (att.translation) {
-				var v = toV(att.translation)
-				obj.position.set(v.x, v.y, v.z);
-			}
-			if (att.scale) {
-				var v = toV(att.scale)
-				obj.scale.set(v.x, v.y, v.z);
-			}
-			if (att.rotation) {
-				var v = toV(att.rotation);
-
-				obj.rotation.set(toR(v.x), toR(v.y), toR(v.z));
-			}
-			if (att.name) {
-				obj.name = att.name;
-			}
-			if (att.id) {
-				obj.id = att.id;
-			}
-			if (att.visible) {
-				obj.visible = toB(att.visible);
-			}
-			if (att.intensity) {
-				obj.intensity = Number(att.intensity);
-			}
-			if (att.target) {
-				obj.target = Number(att.target);
-			}
-
-			if (att.color) {
-				obj.color = toColor(att.color);
-			}
-			if (att.castshadow) {
-				obj.castShadow = toB(att.castshadow);
-				if (obj.castShadow && obj.type != 'DirectionalLight') {
-					obj.traverse(function (node) {
-
-						if (node.isMesh) { node.castShadow = true; }
-
-					});
-				}
-			}
-			if (att.receiveshadow) {
-				obj.receiveShadow = toB(att.receiveshadow);
-				if (obj.receiveShadow) {
-					obj.traverse(function (node) {
-
-						if (node.isMesh) { node.receiveShadow = true; }
-
-					});
-				}
-
-			}
-			if (att.shadowdarkness) {
-				obj.shadowDarkness = Number(att.shadowdarkness);
-			}
-			if (att.normalize) {
-				handelNormalize(obj);
-			}
-			//if (obj && obj.material && obj.material.envMap && cubeCamera) {
-			//	//obj.add(cubeCamera);
-			//         }
-		}
-		function handelNormalize(obj) {
-			var bbox = new THREE.Box3().setFromObject(obj);
-			var v = bbox.max.clone().sub(bbox.min);
-			var maxl = Math.abs(v.x);
-			var comp = Math.abs(v.y);
-			if (comp > maxl) {
-				maxl = comp;
-			}
-			comp = Math.abs(v.z);
-			if (comp > maxl) {
-				maxl = comp;
-			}
-			if (maxl > 0) {
-				obj.scale.multiplyScalar(1 / maxl);
-			}
-			//v.multiplyScalar(0.5);
-
-		}
-		function toColor(color, def = new THREE.Color()) {
-			var c = def;
-			if (color) {
-				if (color.indexOf('#') == 0 || color.indexOf('#') == 0) {
-					c = new THREE.Color(color)
-				}
-				else {
-					var v = toV(color);
-					c = new THREE.Color(); // create once and reuse
-					c.setRGB(v.x, v.y, v.z);
-				}
-			}
-			return c;
-		}
-		function isNo(n) {
-			return !isNaN(parseFloat(n)) && isFinite(n);
-		}
-		function toN(n, def = 1) {
-			if (n && isNo(n)) {
-				return Number(n);
-			}
-			return def;
-		}
-		function toB(b, def = false) {
-			if (b) {
-				if (b == 'true' || b == '1') {
-					b = true;
-				}
-				else if (b == 'false' || b == '0') {
-					b = false;
-				}
-			}
-			else {
-				b = def;
-			}
-			return b;
-		}
-		function toT(text, def = undefined) {
-			if (text) {
-				return text;
-			}
-			return def;
-		}
-		function toR(degrees, def = 0) {
-			if (degrees) {
-				return degrees * Math.PI / 180;
-			}
-			return def;
-		}
-		function toDg(radials, def = 0) {
-			if (radials) {
-				return 180 * radials / Math.PI
-			}
-			return def;
-		}
 
 		///////////////////////
 		function createTreeCss() {

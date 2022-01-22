@@ -1,0 +1,30 @@
+﻿<html>
+<head>
+    <title>Garage sale</title>
+</head>
+<body>
+    <div id="container">
+        <three>
+            <stat></stat>
+            <loader maxtime="10"></loader>
+            <!-- <skybox url="/ex/grass/images/lilienstein.jpg"></skybox> -->
+            <home></home>
+   
+            <group name="total" position="0 -3 -4" rotation="0 0 0" scale="1">
+                <gltfLoader position="0 0 0" url="models/plank.glb" rotation="0 0 0" scale="1">
+                </gltfLoader>
+            </group>
+            <directionallight color="0 0 0" intensity="1" target="total">
+            </directionallight>
+        </three>
+    </div>
+    <script>
+      var threeml;
+    </script>
+    <script type="module">
+      import { ThreeML } from '/threeml/threeml.js'
+      threeml = new ThreeML();
+      threeml.parseThree();
+    </script>
+</body>
+</html>
