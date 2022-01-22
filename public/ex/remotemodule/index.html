@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Remote module</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="container" >
+			
+			<three>
+				<renderer clearColor="0.0 0.05 0.0"></renderer>
+				<home></home>
+				<orbitcontrols></orbitcontrols>
+				<skybox url="images/clouds.jpeg"></skybox>
+				<TextGeometry name="text2" position="0 0.6 -2" scale="1" text="Demo of loading a remotely stored ThreeJS module. Click the box." bevelEnabled="false" height="0.1">
+                    <meshphongmaterial id="text" color="#82724a"></meshphongmaterial>
+                </TextGeometry>
+
+				<group name="water" position="-1 1 -3">
+
+				</group>
+				<group position="0 0 -2" rotation="30 10 0">
+					<boxgeometry name="button" scale="0.1">
+						<meshphongmaterial color="1 0 1"></meshphongmaterial>
+						<hover action="scale" factor="1.07"></hover>
+						<hover action="color" color="0.3 1 0.3"></hover>
+						<hover type="tooltip" text="Load water module"></hover>
+						<link url="./html/scenepart.html" target="water" replace="true"></link>
+					</boxgeometry>
+				</group>
+				<directionallight intensity="1.1" position="0 2 2" target="button"></directionallight>
+			</three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

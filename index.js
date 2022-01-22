@@ -44,7 +44,7 @@ app.get('/api_getsnippets', (req, res) => {
 // Get request on home page
 app.get('/', (req, res) => {
     res.writeHead(302, {
-    location: "/sub/search",
+    location: config.homepage,
   });
   res.end();
 });

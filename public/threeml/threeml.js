@@ -1136,6 +1136,8 @@ var ThreeML = function (element) {
 					return handleVRbutton(ele, parent);
 				case 'stat':
 					return handleStat(ele, parent);
+				case 'module':
+					return handleModule(ele, parent);
 				default:
 				
 				//return v.checkElements(name.ele.parent);
@@ -1148,7 +1150,7 @@ var ThreeML = function (element) {
 			for (var i = 0; i < externalModules.length; i++) {
 				var module = externalModules[i];
 				if (module.name == name) {
-					return module.handle(self, ele, parent);
+					return module.handle(ele, parent);
 				}
 			}
 		}
@@ -2416,7 +2418,18 @@ var ThreeML = function (element) {
 			parent.add(obj);
 			return obj;
 		}
+		function handleModule(ele, parent){
+			var att = getAttributes(ele);
 
+			var m=document.createElement('script');
+			m.src=att.url;
+			m.type='module';
+			document.head.appendChild(m);
+			m.addEventListener('load', ()=>{
+				doParseChildren(ele, parent);
+			})
+			
+		}
 		function handleDirectionalLight(ele, parent) {
 			var att = getAttributes(ele);
 			if (att.name) {

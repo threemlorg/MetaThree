@@ -1,3 +1,4 @@
 {
-    "sqlitedb":"./data/threemlweb.db"
+    "sqlitedb":"./data/threemlweb.db",
+    "homepage":"sub/search"
 }
