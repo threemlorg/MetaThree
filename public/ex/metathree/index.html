@@ -1,0 +1,37 @@
+﻿<html>
+<head>
+    <title>MetaThree</title>
+</head>
+<body>
+    <div id="container">
+        <three>
+            <stat></stat>
+            <loader maxtime="10"></loader>
+            <skybox url="./images/clouds.jpeg"></skybox>
+            <home></home>
+            <camera mode="scan"></camera>
+            <group name="total" position="0 0 0">
+                <group name="terrain" scale="3">
+                    <gltfLoader name="ground"  url="models/ground.glb"  castshadow="true">
+                    </gltfLoader>
+                    <gltfLoader name="path" url="models/path.glb" castshadow="true">
+                        <walk></walk>
+                    </gltfLoader>
+                </group>
+                <group name="garagesale" url="../garagesale" position="22 -1.4 9.26"></group>
+            </group>
+            <directionallight position="7 8 -5" color="1 1 1" intensity="1" target="total" castshadow="true">
+            </directionallight>
+            <ambientlight intensity="0.4"></ambientlight>
+        </three>
+    </div>
+    <script>
+      var threeml;
+    </script>
+    <script type="module">
+      import { ThreeML } from '/threeml/threeml.js'
+      threeml = new ThreeML();
+      threeml.parseThree();
+    </script>
+</body>
+</html>

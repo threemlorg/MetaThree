@@ -5,17 +5,37 @@
 <body>
     <div id="container">
         <three>
-            <stat></stat>
+            <!-- <stat></stat>
             <loader maxtime="10"></loader>
-            <!-- <skybox url="/ex/grass/images/lilienstein.jpg"></skybox> -->
+             <skybox url="/ex/grass/images/lilienstein.jpg"></skybox> 
             <home></home>
-   
-            <group name="total" position="0 -3 -4" rotation="0 0 0" scale="1">
-                <gltfLoader position="0 0 0" url="models/plank.glb" rotation="0 0 0" scale="1">
+            <camera mode="scan"></camera> -->
+			<!-- <orbitcontrols target="0 0 -2" reversed="true" enableZoom="false" enablePan="false"></orbitcontrols>
+    -->
+            <group name="total" position="0 0 0">
+                <boxgeometry scale="10 0.5 10" position="0 -0.94 0" rotation="0 0 0" receiveshadow="true">
+                    <meshphongmaterial url="/ex/garagesale/images/concrete.jpg"></meshphongmaterial>
+                    <walk></walk>
+                </boxgeometry>
+               <gltfLoader name="plank" position="0 0 0" url="/ex/garagesale/models/plank.glb" rotation="0 0 0" scale="0.6" castshadow="true">
                 </gltfLoader>
+                <gltfLoader name="lamp" position="0 0 -1" url="/ex/garagesale/models/lamp.glb" rotation="0 0 0" scale="0.6" castshadow="true">
+                    <draggable></draggable>
+                </gltfLoader>
+                <gltfLoader name="box" position="3 0.15 -1" url="/ex/garagesale/models/box.glb" rotation="180 40 0" scale="0.6" >
+                    <draggable></draggable>
+                </gltfLoader>
+                <gltfLoader name="metalcage" position="-3 0.06 -1" url="/ex/garagesale/models/metalcage.glb" rotation="0 40 0" scale="0.3" >
+                    <draggable></draggable>
+                </gltfLoader>
+                <gltfLoader name="rollingshelfs" position="-3 -0.52 3" url="/ex/garagesale/models/rollingshelfs.glb" rotation="0 40 0" scale="1"  castshadow="true">
+                    <draggable></draggable>
+                </gltfLoader>
+
             </group>
-            <directionallight color="0 0 0" intensity="1" target="total">
+            <!-- <directionallight position="7 8 -5" color="1 1 1" intensity="1" target="total" castshadow="true">
             </directionallight>
+            <ambientlight intensity="0.4"></ambientlight> -->
         </three>
     </div>
     <script>

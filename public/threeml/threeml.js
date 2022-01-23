@@ -1,5 +1,5 @@
 ﻿//import { isNumeric } from 'jquery';
-import * as THREE from './build/three.module.js';
+import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r123/three.module.js';
 import { GLTFLoader } from './controls/GLTFLoader.js';
 import { CSS3DObject, CSS3DRenderer } from './renderers/CSS3DRenderer.js';
 import { DefaultFont } from './fonts/defaultfont.js'
