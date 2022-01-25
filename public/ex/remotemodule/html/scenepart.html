@@ -1,9 +1,23 @@
-<spheregeometry scale="0.2">
+<spheregeometry name="sphere" scale="0.2">
     <meshphongmaterial color="0 0 1"></meshphongmaterial>
 
 </spheregeometry>
 <module url="http://v-slam.org/clearwater/myscript.js">
-    <group rotation="0 0 0" position="0 -0.13 0">
+    <group name="sea" rotation="0 0 0" position="0 -0.13 0">
         <clearwater></clearwater>
     </group>
 </module>
+<htmlPlaneGeometry url="./html/info.html" name="info" zoom="1" position='-5 0 -2' scale='0.8' rotation="0 -40 0">
+    <present cameradistance="0.8" class="handle" speed="0.03"></present>
+</htmlPlaneGeometry>
+
+<gltfLoader name="sign" url="./models/sign.glb" position="3.55 0 0" rotation="0 -40 0" scale="0.3" >
+    <present target="info" repeat="true"></present>
+    <actions>
+        <action type="click"></action>
+        <action type="pause" speed="0.04"></action>
+        <action type="transform" position="0 -0.5 0" target="sea" speed="0.003"></action>
+        <action type="click"></action>
+        <action type="transform" position="0 -0.13 0" target="sea" speed="0.003"></action>
+    </actions>
+</gltfLoader>

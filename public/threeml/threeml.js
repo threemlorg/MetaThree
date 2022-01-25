@@ -756,15 +756,75 @@ function toRotV(val) {
 	var v = toV(val);
 	return new THREE.Vector3(toR(v.x), toR(v.y), toR(v.z));
 }
-function toV(val, def = new THREE.Vector3()) {
-	if (val) {
-		var arr = val.split(' ');
-		var x = arr.length > 0 ? tryParseNumber(arr[0]) : 0;
-		var y = arr.length > 1 ? tryParseNumber(arr[1]) : x;
-		var z = arr.length > 2 ? tryParseNumber(arr[2]) : y;
-		return new THREE.Vector3(x, y, z);
+
+function Convert(){
+	this.toV = function(val, def = new THREE.Vector3()){
+		if (val) {
+			var arr = val.split(' ');
+			var x = arr.length > 0 ? tryParseNumber(arr[0]) : 0;
+			var y = arr.length > 1 ? tryParseNumber(arr[1]) : x;
+			var z = arr.length > 2 ? tryParseNumber(arr[2]) : y;
+			return new THREE.Vector3(x, y, z);
+		}
+		return def;
 	}
-	return def;
+	this.toColor = function (color, def = new THREE.Color()) {
+		var c = def;
+		if (color) {
+			if (color.indexOf('#') == 0 || color.indexOf('#') == 0) {
+				c = new THREE.Color(color)
+			}
+			else {
+				var v = toV(color);
+				c = new THREE.Color(); // create once and reuse
+				c.setRGB(v.x, v.y, v.z);
+			}
+		}
+		return c;
+	}
+	this.toN = function (n, def = 1) {
+		if (n && isNo(n)) {
+			return Number(n);
+		}
+		return def;
+	}
+	this.toB = function (b, def = false) {
+		if (b) {
+			if (b == 'true' || b == '1') {
+				b = true;
+			}
+			else if (b == 'false' || b == '0') {
+				b = false;
+			}
+		}
+		else {
+			b = def;
+		}
+		return b;
+	}
+	this.toT = function (text, def = undefined) {
+		if (text) {
+			return text;
+		}
+		return def;
+	}
+	this.toR = function (degrees, def = 0) {
+		if (degrees) {
+			return degrees * Math.PI / 180;
+		}
+		return def;
+	}
+	this.toDg= function (radials, def = 0) {
+		if (radials) {
+			return 180 * radials / Math.PI
+		}
+		return def;
+	}
+	
+}
+this.conv = new Convert();
+function toV(val, def = new THREE.Vector3()) {
+	return self.conv.toV(val, def);
 }
 function tryParseNumber(val) {
 	if (val) {
@@ -799,59 +859,26 @@ function handelNormalize(obj) {
 	}
 }
 function toColor(color, def = new THREE.Color()) {
-	var c = def;
-	if (color) {
-		if (color.indexOf('#') == 0 || color.indexOf('#') == 0) {
-			c = new THREE.Color(color)
-		}
-		else {
-			var v = toV(color);
-			c = new THREE.Color(); // create once and reuse
-			c.setRGB(v.x, v.y, v.z);
-		}
-	}
-	return c;
+	return self.conv.toColor(color, def);
 }
 function isNo(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
 function toN(n, def = 1) {
-	if (n && isNo(n)) {
-		return Number(n);
-	}
-	return def;
+	return self.conv.toN(n, def);
 }
 function toB(b, def = false) {
-	if (b) {
-		if (b == 'true' || b == '1') {
-			b = true;
-		}
-		else if (b == 'false' || b == '0') {
-			b = false;
-		}
-	}
-	else {
-		b = def;
-	}
-	return b;
+	return self.conv.toB(b, def);
 }
 function toT(text, def = undefined) {
-	if (text) {
-		return text;
-	}
-	return def;
+	return self.conv.toT(text, def);
 }
 function toR(degrees, def = 0) {
-	if (degrees) {
-		return degrees * Math.PI / 180;
-	}
-	return def;
+	return self.conv.toR(degrees, def);
 }
 function toDg(radials, def = 0) {
-	if (radials) {
-		return 180 * radials / Math.PI
-	}
-	return def;
+
+	return self.conv.toDg(radials, def);
 }
 
 //End common conversion functions

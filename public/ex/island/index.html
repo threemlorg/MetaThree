@@ -20,8 +20,86 @@
 					<gltfLoader name="island" url="./models/island.glb" rotation="0 0 0" scale="0.02" castshadow="true" receiveshadow="true">
 						<!--<walk></walk>-->
 					</gltfLoader>
-					<water name="water" position="0 0.3 0" waveScale="0.01" steepness="3" speed="0.1" color="#9999FF"></water>
+					<!-- <water name="water" position="0 0.3 0" waveScale="0.01" steepness="3" speed="0.1" color="#9999FF"></water> -->
+					<module url="http://v-slam.org/clearwater/myscript.js">
+						<group rotation="0 0 0" position="0 0.5 0" scale="200">
+							<clearwater scale="0.1"></clearwater>
+						</group>
+					</module>
+					<circlegeometry position="0 0.1 0" scale="200" rotation="-90 0 0">
+						<meshphongmaterial color="#2f2b17"></meshphongmaterial>
+					</circlegeometry>
+
+					<gltfLoader name="fish1" url="./models/fish.glb" position="-6 0.4 0" rotation="0 0 0" castshadow="true" scale="0.3" >
+						<actions repeat="true">
+							<action type="transform" position="-8 0.4 1" rotation="0 30 0" speed="0.003"></action>
+							<action type="transform" rotation="0 150 0"></action>
+							<action type="transform" position="-7 0.4 4" speed="0.003"></action>
+							<action type="transform" rotation="0 270 0"></action>
+							<action type="transform" position="-6 0.4 0" speed="0.003"></action>
+						</actions>
+					</gltfLoader>
+					<gltfLoader name="fish2" url="./models/fish.glb" position="-5 0.4 0" rotation="0 0 0" castshadow="true" scale="0.3" >
+						<actions repeat="true">
+							<action type="transform" rotation="0 150 0"></action>
+							<action type="transform" position="-7 0.4 3" speed="0.002"></action>
+							<action type="transform" position="-12 0.4 1" rotation="0 30 0" speed="0.002"></action>
+							<action type="transform" rotation="0 110 0"></action>
+							<action type="transform" position="-5 0.4 0" speed="0.003"></action>
+						</actions>
+					</gltfLoader>
+					<group name="sharkgroup" position="-35 0 -30">
+						<rotate axis="0 -0.0002 0"></rotate>
+						<group position="25 0 27">
+							<gltfLoader name="shark" url="./models/shark.glb" position="0 0.35 0" rotation="0 -45 0" scale="2" >
+							</gltfLoader>	
+		
+						</group>
+					</group>
+					<group name="urchingroup" position="-0.4 0.35 3.32" rotation="0 0 0" scale="1">
+						<gltfLoader name="urchin1" url="./models/urchin.glb"  >
+						</gltfLoader>	
+						<gltfLoader name="urchin2" url="./models/urchin.glb" position="0 -0.04 .4" scale="0.7">
+						</gltfLoader>	
+					</group>
+					<group name="seahorsegroup" position="5 0.25 5.6" rotation="0 0 0" scale="0.4">
+						<gltfLoader name="seahorse1" url="./models/seahorse.glb"  >
+							<actions repeat="true">
+								<action type="transform" rotation="0 150 0"></action>
+								<action type="transform" position="0.4 0 0.23" speed="0.002"></action>
+								<action type="transform" position="-0.12 -0.1 0.1" rotation="0 -30 0" speed="0.002"></action>
+								<action type="transform" rotation="0 0.0 0"></action>
+								<action type="transform" position="-0.5 -0.2 0" speed="0.003"></action>
+							</actions>
+	
+						</gltfLoader>	
+						<group position="0.1 0.05 0.2">
+							<gltfLoader name="seahorse2" url="./models/seahorse.glb" position="0 -0.04 .4"  scale="0.6">
+								<actions repeat="true">
+									<action type="transform" position="-0.12 -0.1 0.1" rotation="0 -30 0" speed="0.002"></action>
+									<action type="transform" rotation="0 0.0 0"></action>
+									<action type="transform" rotation="0 150 0"></action>
+									<action type="transform" position="0.4 0 0.23" speed="0.002"></action>
+									<action type="transform" position="-0.5 -0.2 0" speed="0.003"></action>
+								</actions>
+							</gltfLoader>	
+						</group>
+						<group name="grassgroup" scale="1 0.1 1" position="0 -0.4 0">
+							<gltfLoader name="grass" position="0 0 0" url="/sub/docu/models/grass.glb" rotation="0 0 0">
+								<softbody>
+								<constraint type="fixed" index="0 22 8 12 26 57 60 75 118 105 108 121 168 154 157 171 214 200 204 217 264 250 252 266"></constraint>
+								<constraint type="gravity" factor="-0.5"></constraint>
+								<constraint type="normal"></constraint>
+								<constraint type="stretch" factor="0.1"></constraint>
+								<constraint type="wind" factor="10"></constraint>
+								<constraint type="structure" factor="1"></constraint>
+								</softbody>
+								<repeat number="20" maxposition="2 0 2" maxrotation="0 180 0" minscale="0.3" maxscale="1.5"></repeat>
+							</gltfLoader>
+						</group>
+					</group>
 				</group>
+
 				<ambientlight></ambientlight>
 				<spotlight position="10 10 10" intensity="1" target="islandgroup" castshadow="true"></spotlight>
 				<directionallight position="-2 1 -3.6" intensity="1" target="islandgroup"></directionallight>

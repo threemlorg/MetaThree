@@ -1,0 +1,135 @@
+<html>
+    <head>
+        <title>MetaThree module</title>
+        <style>
+            body{
+                background-color: #2fa1d6;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: x-large;
+            }
+            .container{
+                display: block;
+                margin-left: 20%;
+                margin-right: 20%;
+            }
+            .col{
+                display: flex;
+                flex-direction: column;
+            }
+            .text
+            {
+                border: solid 1pt silver;
+                background-color: aliceblue;
+                border-radius: 4px;
+                padding: 5px;
+                margin: 5px;
+            }
+            .code, pre{
+                color: darkblue;
+                font-family: 'Courier New', Courier, monospace;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>MetaThree module</h1>
+            <div class="col">
+                <div class="text">
+                    A metathree module is a ThreeJS script file or group of files that can be loaded at runtime in a ThreeML scene, for example based on an event, like clicking a button.
+                    The example below shows its usage:
+
+                </div>
+                <div class="text code">
+                    &nbsp; &nbsp;&lt;module url="http://v-slam.org/clearwater/myscript.js"&gt;<br/>
+                    &nbsp; &nbsp;&nbsp; &nbsp;&lt;group rotation="0 0 0" position="0 -0.13 0"&gt;<br/>
+                    &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&lt;clearwater&gt;&lt;/clearwater&gt;<br/>
+                    &nbsp; &nbsp;&nbsp; &nbsp;&lt;/group&gt;<br/>
+                    &nbsp; &nbsp;&lt;/module&gt;<br/>
+                </div> 
+                <div class="text">
+                    The module can be called from the same domain, or from another that is accessible. For this the 'module' tag is used, in combination with
+                    its 'url' property. The ThreeML parser waits until the module is loaded, and then starts to parse its child tags. Within the 'module' tag the normal ThreeML tags are valid to use. 
+                    But there will also be the tag or tags defined by the module, in this case 'clearwater'.
+                </div> 
+                <h2>Definition</h2>
+                <div class="text">
+                    For the module to be accessible, it needs a register file to be able to hook in to the ThreeML scene. For that, it can make use of the 'threeml' object, that
+                    should have been made publicly availabe by the parent scene. Here is the code for the clearwater module:
+                </div> 
+                <div class="text code" style="overflow: auto;max-height: 400px;">
+                    <pre>
+    import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r123/three.module.js';
+    import { Water } from 'http://v-slam.org/clearwater/Water2.js';
+    
+    var mod={}
+    mod.name='clearwater';
+    mod.handle = function(ele, parent){
+        var att=threeml.getAttributes(ele);
+
+        const params = {
+            color: '#ffffff',
+            scale: 40,
+            flowX: 1,
+            flowY: 1
+        };
+
+        const waterGeometry = new THREE.PlaneGeometry( 20, 20 );
+
+        var water = new Water( waterGeometry, {
+            color: params.color,
+            scale: params.scale,
+            flowDirection: new THREE.Vector2( params.flowX, params.flowY ),
+            textureWidth: 1024,
+            textureHeight: 1024
+        } );
+
+        threeml.setCommonAttributes(water, att);
+        if(!att.rotation){
+            water.rotation.x = Math.PI * - 0.5;
+        }
+        parent.add( water );
+        
+    }
+
+    threeml.registerModule(mod)
+                    </pre>
+                </div> 
+
+        <div class="text">
+            As can be seen, the module should define a javascript object ('mod') having a 'name' property, and a 'handle' function. The 'name' specifies 
+            the tag name that can be used by the parent ThreeML definition code to determine its place in the parent scene. The javascript object is used in 
+            <pre>
+    threeml.registerModule(mod)
+            </pre>
+            to actually register the module in the ThreeML handler. When the ThreeML handler finds the tag with the specified name, it will call the module's
+            handler function, and pass both the element as well as the ThreeJS parent object as parameters.
+            This handler function can then invoke the actual module code.
+            For that, it can use the 'getAttributes' method from threeml to convert attributes that can have been assigned to the tag to a JS object.
+            This makes it possible for a user to pass for example a relative position or rotation, which can be applied for example to an object3d created by the module.
+            <pre>
+    var att=threeml.getAttributes(ele);  
+            </pre>
+            In fact, for easy applying commonly used attributes, like position, rotation, scale, color etc., the method 'setCommonAttributes' can be used.
+            <pre>
+    threeml.setCommonAttributes(water, att);
+            </pre>
+        </div> 
+        <div class="text">
+            For a remote module to run smoothly it is <b>important that all links to files are absolute</b>. This should be the case for all modules called
+            from within the remote module scripts, but also for assets they use, like for this example some .jpg files that are referenced. For ThreeJS itself
+            the best way is to use a CDN link. 
+        </div>
+        <div class="text">
+            When making a MetaThree module publicly available, the server hosting the module should allow cross domain usage (CORS).
+        </div>
+        <h2>Advantages</h2>
+        <div class="text">
+            It will be evident that once remote modules have been made available, this makes it very simple to be used by others in their scenes. But also,
+             when they are not needed at the start of the scene, but only later, or only in certain conditions, this mechanism can reduce the initial loading time of the scene.
+        </div>
+
+ 
+       </div>
+    </div>
+    </body>
+</html>
