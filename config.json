@@ -1,4 +1,4 @@
 {
     "sqlitedb":"./data/threemlweb.db",
-    "homepage":"sub/search"
+    "homepage":"ex/remotemodule"
 }
