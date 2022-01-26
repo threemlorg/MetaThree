@@ -10,7 +10,7 @@ The server has several API's to support usage statistics, present websites etc. 
 Requirements
 - A local copy of the code
 - A recent version of NodeJS (https://nodejs.org/en/).
-- Instead of using NodeJS, you can also just run [the client code of ThreeML](./data/readme.md). This works on any server that allows you to place the JavaScript-, HTML-, image- and other asset files.
+- Instead of using NodeJS, you can also just run [the client code of ThreeML](https://github.com/threemlorg/MetaThree/tree/master/docu). This works on any server that allows you to place the JavaScript-, HTML-, image- and other asset files.
 
 Handy
 - VSCode (https://code.visualstudio.com/)
