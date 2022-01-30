@@ -78,7 +78,7 @@
 					<group name="tablegroup" rotation="0 90 0">
 						<gltfLoader name="table1b" url="./models/table.glb" scale="4 4 6" castshadow="true" receiveshadow="true">
 						</gltfLoader>
-						<gltfLoader name="printer" url="./models/printer.glb" scale="1" position="-1.1 0.63 0.32">
+						<gltfLoader name="printer" url="./models/printer.glb" scale="1" position="-1.9 0.63 0.32">
 						</gltfLoader>
 					</group>
 					<gltfLoader name="table2b" url="./models/table.glb" position="1.1 0 0.22" scale="4 4 6" rotation="0 0 0" castshadow="true" receiveshadow="true">
@@ -100,13 +100,31 @@
 					</gltfLoader>
 
 					<gltfLoader url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0" castshadow="true" receiveshadow="true">
+						<actions repeat="true">
+							<action type="click"></action>
+							<action type="transform" position="-0.7 0.2 -0.7" speed="0.03"></action>
+							<action type="click"></action>
+							<action type="transform" position="-0.1 0.2 0" speed="0.03"></action>
+						</actions>
 					</gltfLoader>
 					<group name="lockergroup" scale="0.3" position="1.46 -0.1 -0.4" rotation="0 -90 0">
 						<gltfLoader url="./models/locker.glb">
 						</gltfLoader>
 						<gltfLoader url="./models/drawer1.glb">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="0 0 1.23" speed="0.06"></action>
+								<action type="click"></action>
+								<action type="transform" position="0 0 0" speed="0.06"></action>
+							</actions>
 						</gltfLoader>
 						<gltfLoader url="./models/drawer2.glb">
+							<actions repeat="true">
+								<action type="click"></action>
+								<action type="transform" position="0 0 1.23" speed="0.06"></action>
+								<action type="click"></action>
+								<action type="transform" position="0 0 0" speed="0.06"></action>
+							</actions>
 						</gltfLoader>
 					</group>
 					<group name="trashbingroup" position="-0.3 -0.3 2.28" scale="1">
@@ -285,7 +303,7 @@
 					</group>
 
 				</group>
-				<group name="henk" position="1.6 -0.74 -5.5" rotation="0 90 0">
+				<group name="henk" position="1.6 -0.74 -5.3" rotation="0 90 0">
 					<gltfLoader name="deskphone" url="./models/deskphone.glb" scale="0.7" position="1.7 0.53 0" rotation="0 -102 0">
 					</gltfLoader>
 

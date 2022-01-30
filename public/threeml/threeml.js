@@ -371,11 +371,11 @@ var ThreeML = function (element) {
 				if(orbitControls){
 					orbitTarget=getOrbitTarget(point);
 				}
-				self.moveToPosition(camera, point.x, point.y + avatarheight, point.z, orbitTarget)
+				self.moveToPosition(camera, point.x, point.y + avatarheight, point.z, orbitTarget.x, orbitTarget.y, orbitTarget.z)
 			}
 		}
 	}
-	this.moveToPosition = function (obj, x, y, z, orbitTarget, speed = 0.01) {
+	this.moveToPosition = function (obj, x, y, z, targetx, targety, targetz, speed = 0.01) {
 		checkObjectUpdateArray(obj);
 		if (!obj.targetPosition && obj.targetPosition != '') {
 			var f = function () {
@@ -397,8 +397,8 @@ var ThreeML = function (element) {
 			}
 			obj.updateArray.push(f);
 		}
-		obj.orbitTarget=orbitTarget.clone();
-		
+		obj.orbitTarget=new THREE.Vector3(targetx, targety, targetz);
+
 		obj.targetPosition = new THREE.Vector3(x, y, z);
 		//var le = obj.position.clone().sub(obj.targetPosition).length() / 20;
 		//le = le < 0.2 ? 0.1 : le;
@@ -441,7 +441,7 @@ var ThreeML = function (element) {
 			// }
 			// camera.updateArray.push(f);
 		}
-		self.moveToPosition(targetLookAt, x, y, z, targetLookAt, speed);
+		self.moveToPosition(targetLookAt, x, y, z, targetLookAt.x, targetLookAt.y, targetLookAt.z, speed);
 	}
 
 	function rotateCameraToObject(position, t) {

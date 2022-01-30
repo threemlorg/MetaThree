@@ -30,6 +30,8 @@
                  <group name="camgroup">
                     <orbitcontrols target="0 0 -2" reversed="true"></orbitcontrols>
                  </group>
+                 <group name="timegroup" parent="camera" position="0.8 0.4 -1"></group>
+
                 <renderer clearColor="0.2 0.5 0.9"></renderer>
                  <group name="dummie"></group>
                   <group name="mapdummie" position="0 0.1 -2.3"></group>
@@ -62,6 +64,7 @@
             var choices;
             var jsondata;
             function getData(){
+                try{
                 fetch("/api_getstats")
                 .then(response => {
                     return response.json();
@@ -70,8 +73,15 @@
                     json => {
                         jsondata = json;
                         write3dGraph();
+                        const d = new Date();
+                        var c='<TextGeometry name="timetext" scale="0.2" text="Last update: '+d.toLocaleTimeString()+'" bevelEnabled="false" height="0.1">';
+                        c+='<meshphongmaterial id="timetext" color="0.1 0.2 0.11"></meshphongmaterial>';
+                        c+='</TextGeometry>';
+                        threeml.loadCodeInGroup('timegroup', c, true);
                     }
                 );
+                }
+                catch(x){}
             }
             function write3dGraph(){
                 var c = '';
@@ -189,8 +199,8 @@
                         var target = { 'x': 0, 'y': -0.15, 'z': -2 }
                         break;
                 }
-                threeml.moveToPosition(camera, pos.x, pos.y, pos.z, 0.003)
-                threeml.lookAtPosition(target.x, target.y, target.z);
+                threeml.moveToPosition(camera, pos.x, pos.y, pos.z,target.x, target.y, target.z, 0.003)
+                //threeml.lookAtPosition(target.x, target.y, target.z);
             }
            
         </script>
@@ -202,6 +212,7 @@
             camera = threeml.getCamera();
             choices = scene.getObjectByName('choices');
             getData();
+            window.setInterval(getData, 60*1000);
         </script>
     </form>
 </body>
