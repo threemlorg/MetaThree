@@ -284,26 +284,29 @@ var ThreeML = function (element) {
 		}
 	}
 	var mouseDown = false;
+	var mousedownpoint;
 	function onMouseDown(event) {
 		event.stopPropagation();
+		//mousedownpoint=undefined;
 		selectedObject = getRayCastedObject();
 		hideIframe(selectedObject);
 		mouseDown = true;
-		if (cursor3d && !cursor3d.visible) {
-			var p;
-			if (selectedObject && selectedObject.point) {
-				p = selectedObject.point;
-			}
-			else if (mouseDirection) {
-				var l = cursor3d.position.distanceTo(camera.position);
-				p = mouseDirection.normalize().clone().multiplyScalar(l);
-			}
+		var p;
+		if (selectedObject && selectedObject.point) {
+			p = selectedObject.point;
+			mousedownpoint=p;
+		}
+		else if (mouseDirection&& cursor3d && !cursor3d.visible) {
+			var l = cursor3d.position.distanceTo(camera.position);
+			p = mouseDirection.normalize().clone().multiplyScalar(l);
+			
 			if (p) {
 				cursor3d.position.set(p.x, p.y, p.z);
 
 			}
 			cursor3d.visible = true;
 		}
+		
 	}
 	function onMouseUp(event) {
 		mouseDown = false;
@@ -341,6 +344,14 @@ var ThreeML = function (element) {
 			}
 		}
 	}
+	function getOrbitTarget(point){
+		var orbitTarget=new THREE.Vector3(point.x, point.y + avatarheight, point.z);
+		var direction=orbitTarget.clone().sub(camera.getWorldPosition(new THREE.Vector3())).clone();
+		direction.normalize();
+		orbitTarget.add(direction);
+		return orbitTarget;
+	} 
+
 	function onDocumentMouseClick(event) {
 		var intersected = getRayCastedObject();
 		if (intersected) {
@@ -351,29 +362,20 @@ var ThreeML = function (element) {
 				event.preventDefault();
 				intersected.callback('click');
 			}
-			else if (intersected.walk) {
-				var point = getPoint(intersected)
-				if (!point) { return; }
-				self.moveToPosition(camera, point.x, point.y + avatarheight, point.z)
+			else if (intersected.walk ) {
 
-				//camera.targetPosition = new THREE.Vector3(point.x, point.y+avatarheight, point.z);
-				//checkObjectUpdateArray(camera);
-				//var f = function () {
-				//	if (camera.targetPosition) {
-				//		if (camera.position.distanceTo(camera.targetPosition) < 0.1) {
-				//			//camera.position.set(camera.targetPosition.clone());
-				//			camera.targetPosition = undefined;
-				//		}
-				//		else {
-				//			camera.position.lerp(camera.targetPosition, 0.01);
-				//                    }position.copy()
-				//	}
-				//            }
-				//camera.updateArray.push(f);
+				var point = getPoint(intersected)
+				if (!point ) { return; }
+				if(mousedownpoint && mousedownpoint.distanceTo(point)>0.1){console.log(mousedownpoint.distanceTo(point)); return;}
+				var orbitTarget=null;
+				if(orbitControls){
+					orbitTarget=getOrbitTarget(point);
+				}
+				self.moveToPosition(camera, point.x, point.y + avatarheight, point.z, orbitTarget)
 			}
 		}
 	}
-	this.moveToPosition = function (obj, x, y, z, speed = 0.01) {
+	this.moveToPosition = function (obj, x, y, z, orbitTarget, speed = 0.01) {
 		checkObjectUpdateArray(obj);
 		if (!obj.targetPosition && obj.targetPosition != '') {
 			var f = function () {
@@ -383,14 +385,19 @@ var ThreeML = function (element) {
 					if (obj.position.distanceTo(obj.targetPosition) < 0.1 || obj.targetStep<0) {
 						//camera.position.set(camera.targetPosition.clone());
 						obj.targetPosition = '';
+						obj.orbitTarget=undefined;
 					}
 					else {
 						obj.position.lerp(obj.targetPosition, speed);
+						if(orbitControls && obj.orbitTarget){
+							orbitControls.target.lerp(obj.orbitTarget.clone(), speed);
+						}
 					}
 				}
 			}
 			obj.updateArray.push(f);
 		}
+		obj.orbitTarget=orbitTarget.clone();
 		
 		obj.targetPosition = new THREE.Vector3(x, y, z);
 		//var le = obj.position.clone().sub(obj.targetPosition).length() / 20;
@@ -414,26 +421,27 @@ var ThreeML = function (element) {
 	this.lookAtPosition = function (x, y, z, speed = 0.01) {
 		checkObjectUpdateArray(camera);
 		if (!targetLookAt) {
-			targetLookAt = self.getCameraDefaultLookAtDummy();
+			//targetLookAt = self.getCameraDefaultLookAtDummy();
+			targetLookAt =getOrbitTarget(point);
 			//camera.lookAt(camera.targetLookAt);
-			var f = function () {
-				if (targetLookAt) {// && camera.targetLookAtCnt && camera.targetLookAtCnt >0 ) {
-					//camera.targetLookAtCnt--;
-					//rotateCameraToObject(targetLookAt.position)
-					var v = new THREE.Vector3(x, y, z);
-					if (navigating == CameraMode.ORBIT && orbitControls) {
-						orbitControls.target.copy(targetLookAt.position.clone());
-						var d = v.distanceTo(targetLookAt.position);
-						if (d< 0.1) {
-							//targetLookAt = undefined;
-							return false;
-						}
-					}
-				}
-			}
-			camera.updateArray.push(f);
+			// var f = function () {
+			// 	if (targetLookAt) {// && camera.targetLookAtCnt && camera.targetLookAtCnt >0 ) {
+			// 		//camera.targetLookAtCnt--;
+			// 		//rotateCameraToObject(targetLookAt.position)
+			// 		var v = new THREE.Vector3(x, y, z);
+			// 		if (navigating == CameraMode.ORBIT && orbitControls) {
+			// 			orbitControls.target.copy(targetLookAt.position.clone());
+			// 			var d = v.distanceTo(targetLookAt.position);
+			// 			if (d< 0.1) {
+			// 				//targetLookAt = undefined;
+			// 				return false;
+			// 			}
+			// 		}
+			// 	}
+			// }
+			// camera.updateArray.push(f);
 		}
-		self.moveToPosition(targetLookAt, x, y, z, speed);
+		self.moveToPosition(targetLookAt, x, y, z, targetLookAt, speed);
 	}
 
 	function rotateCameraToObject(position, t) {
@@ -936,8 +944,8 @@ function toDg(radials, def = 0) {
 
 			window.addEventListener('click', onDocumentMouseClick, false);
 			window.addEventListener('contextmenu', onDocumentMouseClick, false);
-			document.addEventListener("mousedown", onMouseDown);
-			document.addEventListener("mouseup", onMouseUp);
+			document.addEventListener("pointerdown", onMouseDown);
+			document.addEventListener("pointerup", onMouseUp);
 			document.addEventListener('keyup', (event) => {
 				ctrlKey = false;
 			});
