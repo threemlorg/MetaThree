@@ -67,16 +67,16 @@
     mod.name='clearwater';
     mod.handle = function(ele, parent){
         var att=threeml.getAttributes(ele);
-
+    
         const params = {
-            color: '#ffffff',
-            scale: 40,
-            flowX: 1,
-            flowY: 1
+            color: att.color?att.color:'#ffffff',
+            scale: threeml.conv.toN(att.scale, 40),
+            flowX: threeml.conv.toN(att.flowx,1),
+            flowY: threeml.conv.toN(att.flowy,1)
         };
-
+    
         const waterGeometry = new THREE.PlaneGeometry( 20, 20 );
-
+    
         var water = new Water( waterGeometry, {
             color: params.color,
             scale: params.scale,
@@ -84,7 +84,7 @@
             textureWidth: 1024,
             textureHeight: 1024
         } );
-
+    
         threeml.setCommonAttributes(water, att);
         if(!att.rotation){
             water.rotation.x = Math.PI * - 0.5;
@@ -92,7 +92,7 @@
         parent.add( water );
         
     }
-
+    
     threeml.registerModule(mod)
                     </pre>
                 </div> 

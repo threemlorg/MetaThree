@@ -3,15 +3,7 @@
 	<head>
 		<title>Cube input</title>
 		<meta charset="utf-8">
-		<link type="text/css" rel="stylesheet" href="layout/main.css">
-		<style>
 
-            #container {
-                pointer-events: none;
-				//background-color:black;
-            }
-
-		</style>
 	</head>
 	<body>
 		<div id="container" >
@@ -20,8 +12,8 @@
 				<renderer clearColor="0.0 0.05 0.0"></renderer>
 				<stat></stat>
 				<home></home>
-
-				<group position="0 0 -2" rotation="30 0 0" scale="2">
+				<group name="sqfparent" position="0 0 -2" rotation="30 0 0">
+				<group name="sqf"  rotation="0 270 0" scale="2">
 					<htmlplanegeometry url="./html/form1.html" position="0.20 0 0" rotation="0 90 0" scale="1" width="500" height="500" panelbar="false"></htmlplanegeometry>
 					<htmlplanegeometry url="./html/form2.html" position="0 0 0.20" rotation="0 0 0" scale="1" width="500" height="500" panelbar="false"></htmlplanegeometry>
 					<htmlplanegeometry url="./html/form3.html" position="-0.20 0 0" rotation="0 -90 0" scale="1" width="500" height="500" panelbar="false"></htmlplanegeometry>
@@ -29,18 +21,53 @@
 					<htmlplanegeometry url="./html/form5.html" position="0 0.19 0" rotation="-90 00 0" scale="1" width="500" height="500" panelbar="false"></htmlplanegeometry>
 					<htmlplanegeometry url="./html/form6.html" position="0 -0.19 0" rotation="90 00 0" scale="1" width="500" height="500" panelbar="false"></htmlplanegeometry>
 					<!--<rotate axis="0.0001 0.0002 0.0003"></rotate>-->
-					<actions repeat="true">
-						<action typeof="transform" rotation="0 90 0"></action>
-						<action typeof="transform" rotation="90 0 0"></action>
-						<action typeof="transform" rotation="0 180 0"></action>
-						<action typeof="transform" rotation="0 260 0"></action>
-						<action typeof="transform" rotation="0 0 0"></action>
-						<action typeof="transform" rotation="-90 0 0"></action>
-						<action typeof="transform" rotation="-90 0 0" scale="3" speed="0.1"></action>
-						<action typeof="transform" rotation="-90 0 0" scale="2" speed="0.1"></action>
-					</actions>
 				</group>
-				<directionallight intensity="1.1" position="0 2 2"></directionallight>
+			</group>
+			<group name="checkparent"  visible="false">
+				<actions>
+					<action typeof="transform" visible="false"></action>
+					<action typeof="pause" speed="0.04"></action>
+					<action typeof="transform" visible="true"></action>
+
+				</actions>
+				<gltfLoader name="check" url="./models/check.glb" position="0.2 -0.45 -1.5" scale="0.06" visible="false">
+					<hover action="scale" factor="1.2"></hover>
+					<actions repeat="true">
+						<action typeof="transform" visible="true"></action>
+
+						<action typeof="click"></action>
+						<action typeof="transform" visible="false"></action>
+						<action typeof="transform" rotation="0 0 0" target="sqf"></action>
+						<action typeof="transform" visible="true"></action>
+ 
+						<action typeof="click"></action>
+						<action typeof="transform" visible="false"></action>
+						<action typeof="transform" rotation="0 90 0" target="sqf"></action>
+						<action typeof="transform" visible="true"></action>
+
+						<action typeof="click"></action>
+						<action typeof="transform" visible="false"></action>
+						<action typeof="transform" rotation="0 180 0" target="sqf"></action>
+						<action typeof="transform" visible="true"></action>
+
+						<action typeof="click"></action>
+						<action typeof="transform" visible="false"></action>
+						<action typeof="transform" rotation="90 0 0" target="sqf"></action>
+						<action typeof="transform" visible="true"></action>
+
+
+
+
+						<action typeof="click"></action>
+						<action typeof="transform" visible="false"></action>
+						<action typeof="transform" rotation="-120 0 0" target="sqf"></action>
+						<action typeof="transform" rotation="-120 0 0" scale="3" speed="0.1" target="sqf"></action>
+						<action typeof="transform" rotation="-120 0 0" scale="2" speed="0.1" target="sqf"></action>
+					</actions>
+
+				</gltfLoader>
+			</group>
+				<directionallight intensity="1.1" position="0 3 -1" target="sqf"></directionallight>
 			</three>
 
 		</div>

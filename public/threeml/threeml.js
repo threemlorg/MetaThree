@@ -1389,20 +1389,10 @@ function toDg(radials, def = 0) {
 			if (att.url) {
 				if (!audioContext) {
 					audioContext = new AudioContext();
-
-
 				}
 				if (!isplaying) {
 					loadSound(obj, att);
 				}
-					//if (audioContext.state == 'running') {
-					//	audioContext.suspend();
-					//}
-					//else {
-					//	audioContext.resume();
-					//}
-
-				
 			}
 		}
 		var isplaying = false;
@@ -1513,6 +1503,7 @@ function toDg(radials, def = 0) {
 			return r * 5 * guifact;
 		}
 		var guifact = 1;
+		var sceneno=0;
 		function showGui(guiElement, name) {
 			if (guiElement) {
 				createGUI();
@@ -1526,6 +1517,13 @@ function toDg(radials, def = 0) {
 
 				scene.traverse(function (child) {
 					if (child.id == guiElement) {
+						if(name.toLowerCase()=='scene'){
+							if(sceneno>0){
+								name+=sceneno;
+								return;
+							}
+							sceneno++;
+						}
 						const folder = gui.addFolder(name)
 						if (child.position) {
 							var f = highValue(highVectorValue(child.position));
@@ -1882,10 +1880,18 @@ function toDg(radials, def = 0) {
 					obj.name = getRandowmName();
 					ele.setAttribute("name", obj.name);
 				}
+				obj.margin=toN(att.margin, 0);
+				obj.replace=toB(att.replace, false);
 				var f = function () {
 					if (!obj.loaded) {
-						self.loadInGroup(obj.name, obj.url);
-						obj.loaded = true;
+						if(obj.margin==0 || obj.getWorldPosition(new THREE.Vector3()).distanceTo(camera.getWorldPosition(new THREE.Vector3()))<obj.margin){
+							self.loadInGroup(obj.name, obj.url, obj.replace);
+							obj.loaded = true;
+						}
+					}
+					else if(obj.loaded && obj.margin!=0 && obj.getWorldPosition(new THREE.Vector3()).distanceTo(camera.getWorldPosition(new THREE.Vector3()))>obj.margin * 1.1){
+						doClearGoupChildren(obj);
+						obj.loaded=false;
 					}
 				}
 
@@ -3584,22 +3590,12 @@ function toDg(radials, def = 0) {
 			}
 			addCallbackFunction(obj, f);
 			if (att.volumetric && toB(att.volumetric)) {
-				//obj.sound = {};
-				//obj.sound.volume = att.volume ? toN(att.volume) : 1;
 				checkObjectUpdateArray(obj);
 				var f2 = function () {
 					if (audioContext && obj.sound) {
-						//if (!obj.sound.panner) {
-						//	obj.sound.panner = audioContext.createPanner();
-						//	// Instead of hooking up the volume to the main volume, hook it up to the panner.
-						//	obj.sound.volume.connect(obj.sound.panner);
-						//	// And hook up the panner to the main volume.
-						//	obj.sound.panner.connect(mainVolume);
-						//}
+
 						var p = getWorldPosition(obj);
 						obj.sound.panner.setPosition(p.x, p.y, p.z);
-
-
 
 						var p = new THREE.Vector3();
 						p.setFromMatrixPosition(camera.matrixWorld);
@@ -4149,7 +4145,7 @@ function toDg(radials, def = 0) {
 						break;
 					case 'pause':
 						var f = function () {
-							t.visible = visible ? toB(visible) : true;
+							//t.visible = visible ? toB(visible) : true;
 							if (!obj.act.pause || obj.act.pause <= 0) {
 								obj.act.pause = 1;
 							}
@@ -4264,6 +4260,7 @@ function toDg(radials, def = 0) {
 								obj.targetStep = obj.targetStepDefault;
 								t.act.active = false
 								obj.lookatSet = false;
+								return true;
                                }
 							//}
                         }
@@ -4271,7 +4268,15 @@ function toDg(radials, def = 0) {
 
 						obj.act.actions.push(f);
 						break;
-				}
+					case 'media':
+						var f=function(){
+								activateAudio(obj, att);
+								obj.mediastarted=true;
+							return true;
+						}
+						obj.act.actions.push(f);
+						break;
+					}
 			}
 		}
 		function makeCallBackObj(f, t) {

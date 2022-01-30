@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Repeat</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+			
+			<three>
+				<renderer clearColor="0.2 0.5 0.5"></renderer>
+				<camera mode="scan"></camera>
+				<group name="lighttarget" position="0 0 -5"></group>				
+				<planegeometry position="0 -1 0" scale="20" rotation="-90 0 0" receiveshadow="true">
+					<meshphongmaterial color="0.8 0.8 0.1"></meshphongmaterial>
+					<walk></walk>
+				</planegeometry>
+				<group name="choice1" position="4 -1 -5">
+					<boxgeometry scale="1" castshadow="true" receiveshadow="true">
+						<meshphongmaterial color="1 0 0"></meshphongmaterial>					
+					</boxgeometry>
+					<group url="/sub/docu/html/choice1.html" position="0 0.7 0" scale="2" margin="4"></group>
+				</group>
+				<group name="choice2" position="-4 -1 -5">
+					<boxgeometry scale="1" castshadow="true" receiveshadow="true">
+						<meshphongmaterial color="0 1 0"></meshphongmaterial>					
+					</boxgeometry>
+					<group url="/sub/docu/html/choice2.html" position="0 0.7 0" scale="2" margin="4"></group>
+				</group>
+				<directionallight position="0 5 1.6" target="lighttarget" castshadow="true"></directionallight>
+			</three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '/threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>
