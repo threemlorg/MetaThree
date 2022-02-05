@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js" crossorigin="anonymous"></script>
+ <title>Receiver</title>
+ <style>
+     body{
+         font-family: Arial, Helvetica, sans-serif;
+         background-color: aliceblue;
+         height: 100vh;
+         width: 100vw;
+         font-size: xx-large;
+     }
+     input{
+        font-size: xx-large;
+         
+     }
+     .rowitem{
+         display: flex;
+     }
+     .label{
+         display:inline-block;
+         width: 300px;
+     }
+     .field{
+         display:inline-block;
+     }
+     .search{
+         width: 700px;
+         height: 100px;
+         font-size: xx-large;
+     }
+     .commonMsg{
+         color: cadetblue;
+         margin-top: 30px;;
+     }
+     .error{
+         color: red;
+     }
+     .hide{
+         display: none;
+     }
+ </style>
+</head>
+<body>
+ <h1>Join the discussion:</h1>
+ <div id="nicknamerow" class="rowitem">
+    <div class="label">Your nickname:</div>
+    <div class="field"><input type="text" id="username"></div>
+</div>
+<div id="commonMsg" class="commonMsg"></div>
+<div class="rowitem">
+    <div class="label">Message:</div>
+    <div class="field"><textarea class="search" maxlength="250" type="search" id="message" onchange="sendMessage()"></textarea>    
+   <input type="button" value="send" onclick="sendMessage()"></div>
+</div>
+
+ <div id="msgBox" class="msg"></div>
+
+ <script>
+ const msgBox = document.getElementById("msgBox")
+ const socket = io.connect()
+ socket.on("new-data",(chatarr)=>{
+    for(var i=0;i<chatarr.length;i++){
+        var chat=chatarr[i];
+        var txt=`${chat.d} (${chat.u}): ${chat.m}`;
+        msgBox.innerHTML = (txt + "<br/>")+msgBox.innerHTML;
+    }
+    var m=document.getElementById('message');
+    m.value='';
+    m.focus();
+ });
+ function getRelativeUrl(){
+    var loc = new URL(window.top.location.href); //get the current location
+    var rel = loc.pathname; //relative link from dir to loc
+    return rel;
+}
+
+function sendMessage(){
+    var n=document.getElementById('username');
+    var e=document.getElementById('commonMsg');
+    var nn=document.getElementById('nicknamerow');
+    if(!n || n.value.length==0)
+    {
+        e.innerHTML='Please provide a nickname';
+        e.classList.add('error');
+    }
+    else{
+        e.innerHTML='';//`Welcome to the chatbox, ${n.value}`;
+        e.classList.remove('error');
+        nn.classList.add('hide')
+        var m=document.getElementById('message');
+
+        if(m.value && m.value.length>0){
+            var j={
+                'm':m.value,
+                'u':n.value, 
+                'r':getRelativeUrl()
+            }
+            socket.emit('message',j);
+        }
+    }
+}
+//socket.on("connection",()=>{
+    socket.emit('initiate-chat',getRelativeUrl());
+//});
+// const username = prompt()
+// socket.emit("user-connected",username)
+ </script>
+</body>
+</html>

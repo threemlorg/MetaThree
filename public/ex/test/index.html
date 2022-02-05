@@ -1,29 +1,30 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" >
 	<head>
-		<title>Repeat</title>
+		<title>Test</title>
 		<meta charset="utf-8">
-		<link type="text/css" rel="stylesheet" href="layout/main.css">
-		<style>
 
-            #container {
-                pointer-events: none;
-				background-color:white;
-            }
-
-		</style>
 	</head>
 	<body>
 		<div id="container" >
 			
 			<three>
 				<renderer clearColor="0.2 0.5 0.5"></renderer>
-				<camera mode="scan"></camera>
-				<group name="lighttarget" position="0 0 -5"></group>				
+				<orbitcontrols target="0 0 -2" reversed="true"></orbitcontrols>
+				<group name="lighttarget" position="0 0 -5"></group>
+				<chatbox name="chatting" position="0 0 -2">
+					<present></present>
+				</chatbox>				
 				<planegeometry position="0 -1 0" scale="20" rotation="-90 0 0" receiveshadow="true">
 					<meshphongmaterial color="0.8 0.8 0.1"></meshphongmaterial>
 					<walk></walk>
 				</planegeometry>
+				<!-- <group name="text" position="0 0.3 -3" parent="camera">
+					<planegeometry name="test" scale="1.8 0.2 1" >
+						<DynamicTextureMaterial margin="0.2" fontSize="15" width="512" height="128" fontcolor="#8E8C11" backgroundcolor="#333333" lineHeight="0.3" text="Complex Theories: Since the beginning of time and space, the universe keeps evolving ">
+						</DynamicTextureMaterial>
+					</planegeometry>
+						</group> -->
 				<group name="choice1" position="4 -1 -5">
 					<boxgeometry scale="1" castshadow="true" receiveshadow="true">
 						<meshphongmaterial color="1 0 0"></meshphongmaterial>					

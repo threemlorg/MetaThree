@@ -139,7 +139,73 @@ exports.getSnippets=function(res){
   });
 }
 
+exports.getChats=function(room, socket){
+  let db = new sqlite3.Database(dbName,sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    else {
+    let sql = `SELECT Nickname u, Message m, STRFTIME('%Y-%m-%d %H:%M', CreateDate) d
+    from Chat where (Disabled=0 or Disabled is NULL) and Room='${room}' `;
+       console.log(sql);
+        db.all(sql, [], (err, rows) => {
+        if (err) {
+          throw err;
+        }
+        socket.emit("new-data",rows);
+      });
+    }
+  });
+}
 
+exports.saveChat=function(chat, socket){
+  let db = new sqlite3.Database(dbName,sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    else {
+
+      let sql = `SELECT IP FROM BlockedIP
+      Where IP='${chat.ip}'`;
+      console.log(sql);
+      db.all(sql, [], (err, rows) => {
+        if (err) {
+          throw err;
+        }
+        if(rows.length==0){
+
+          let sql = `INSERT INTO Chat (IP, Nickname, Message, CreateDate, Room, itsCustomer_ID)
+          VALUES (
+            '${chat.ip}',
+            '${chat.u}',
+            '${chat.m}',
+            DATETIME('now'),
+            '${chat.r}',
+            ${customerId}
+          ) `;
+            console.log(sql);
+            db.serialize(() => {
+                db.run(sql);
+
+                db.close((err) => {
+                if (err) {
+                  return console.error(err.message);
+                }
+                var arr=[];
+                arr.push(chat);
+                socket.emit("new-data",arr);
+            });
+         
+      
+          });
+        }
+        });
+      }
+  
+  
+  });
+
+}
 
 //Whois
 
@@ -290,7 +356,20 @@ function performRequest(endpoint, ip, success) {
 }
 
 
+exports.printDate = function() {
+  var temp = new Date();
+  var dateStr = padStr(temp.getFullYear()) +'-'+
+                padStr(1 + temp.getMonth()) +'-'+
+                padStr(temp.getDate()) +' '+
+                padStr(temp.getHours()) +':'+
+                padStr(temp.getMinutes());// +':'+
+               // padStr(temp.getSeconds());
+  return (dateStr );
+}
 
+function padStr(i) {
+  return (i < 10) ? "0" + i : "" + i;
+}
 
 
 /////////////////////////////////////////////

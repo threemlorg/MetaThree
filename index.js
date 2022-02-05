@@ -1,8 +1,8 @@
 const express = require('express') // Importing Express
 const dal = require('./dal.js');
-const app = express() // Creating Express Server
+const app = express(); // Creating Express Server
 const host = 'localhost' //'37.97.189.248'// Specifying Host
-const port = 8080 // Specifying Port number
+const port = 8080; // Specifying Port number
 // Creating Http Server from Express App to work with socket.io
 const http = require('http').Server(app);
 const config = require('./config.json');
@@ -13,15 +13,34 @@ const io = require('socket.io')(http,{
  cors: {
  origin: "*",
  }
-})
-dal.initDB(config.sqlitedb);
-app.use(express.urlencoded({ extended: true })) // Specifying to use urlencoded
-// Creating object of Socket
-const liveData = io.of("/liveData") // URL which will accept socket connection
-// Socket event
-liveData.on("user-connected",(username)=>{
- console.log(`Receiver ${username} connected..`) // Logging when user is connected
 });
+dal.initDB(config.sqlitedb);
+app.use(express.urlencoded({ extended: true })); // Specifying to use urlencoded
+io.sockets.on('connection', function(socket) {
+  console.log(`LOG: [EVENT=connection] New client connected: ${socket.conn.remoteAddress}.`);
+//A client left
+  socket.on('disconnect', function() {
+      console.log("LOG: [EVENT=disconnect] client has disconnected.");
+  });
+  socket.on("message",(j)=>{
+    console.log(`Message from: ${socket.conn.remoteAddress}.`);
+    j.ip=socket.conn.remoteAddress;
+    j.d=dal.printDate();
+    if(j.m.length>0 && j.m.length<=250)
+    {
+      j.m=j.m.split('<').join('&lt;').split('>').join('&gt;').split("'").join("`");
+      dal.saveChat(j, socket);
+    }
+    // Emitting event.
+   });
+   socket.on("initiate-chat",(r)=>{
+    dal.getChats(r, socket);
+   }
+   );
+});
+
+
+
 //API
 app.get('/api_getscenepart', (req, res) => {
   console.log(`HERE NOW ..`);
@@ -49,10 +68,7 @@ app.get('/', (req, res) => {
   res.end();
 });
 
-// Post request on home page
-app.post('/',(req, res) => {
- liveData.emit("new-data",req.body.message) // Emitting event.
-})
+
 //static files
 app.use(express.static('public'))
 

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Label</title>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="layout/main.css">
+		<style>
+
+            .moonlabel{
+				width: 100vw;
+				height: 120vh;
+				background-color: white;
+				color: steelblue;
+				font-size: 500px;
+				text-align: center;
+				cursor: pointer;
+				text-decoration: none;
+			}
+			.moonlabel:hover{
+				color: rgb(70, 180, 94);
+				font-weight: bold;
+			}
+			a{
+				text-decoration: none;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+			
+			<three>
+				<renderer clearColor="0.2 0.5 0.5"></renderer>
+				<skybox url="./images/space.jpg"></skybox>
+				<home></home>
+				<stat></stat>
+				<orbitcontrols target="0 0 -2" reversed="true"></orbitcontrols>
+				<group name="worldgroup" position="0 0 -2" scale="0.1">
+					<spheregeometry name="globe"  widthSegments="30" heightSegments="30">
+						<meshphongmaterial id="blueish" color="1 1 1" url="./images/earth-topo.png"></meshphongmaterial>
+						<rotate axis="0 0.004 0"></rotate>
+						<present target="hello"></present>
+					</spheregeometry>
+					<group name="moongroup">
+						<group name="moonxis" position="0 0 5">
+							<spheregeometry name="moon"  widthSegments="30" heightSegments="30" scale="0.3">
+								<meshphongmaterial color="1 1 1" url="./images/moon.png"></meshphongmaterial>
+								<rotate axis="0 0.002 0"></rotate>
+							</spheregeometry>
+							<group name="labelgroup">
+								<htmlplanegeometry position="1 1 0" scale="1" height="600" rotation="0 0 0" panelbar="false">
+									<!--
+										<a href="https://en.wikipedia.org/wiki/Moon" target="_blank"> <div class="moonlabel">Moon</div></a>
+									-->
+								</htmlplanegeometry>
+								<lookat></lookat>
+							</group>
+						</group>
+						 <rotate axis="0 0.002 0"></rotate>
+					</group>
+	
+				</group>
+				<directionallight position="0 5 1.6" target="globe" castshadow="true"></directionallight>
+			</three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '/threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

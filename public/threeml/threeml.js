@@ -1928,20 +1928,24 @@ function toDg(radials, def = 0) {
 			return obj;
 		}
 		function handleChatBox(ele, parent) {
-			var att = getAttributes(ele);
-			var name = toT(att.name, 'myChatBox');
-			var chatGroup = handleGroup(ele, parent);
-			if (!socket) {
-				socket = io.connect('http://localhost:3000');
-			}
+			//var att = getAttributes(ele);
+			//var name = toT(att.name, 'myChatBox');
+			//var chatGroup = handleGroup(ele, parent);
+			ele.setAttribute('url', '/sub/chat/receiver.html')
+			var plane=handleHtmlPlaneGeometry(ele, parent);
+			//setCommonAttributes(chatGroup, att);
+			// if (!socket) {
+			// 	socket = io.connect('http://localhost:3000');
+			// }
 
 
-			socket.on('new message', function (data) {
-				let code = '<sprite><DynamicTextureMaterial text="' + data.message+'" fontSize="50"  fontcolor="black" backgroundcolor="transparent"></DynamicTextureMaterial></sprite>';
+			// socket.on('new message', function (data) {
+			// 	let code = '<sprite><DynamicTextureMaterial text="' + data.message+'" fontSize="50"  fontcolor="black" backgroundcolor="transparent"></DynamicTextureMaterial></sprite>';
 
-				self.loadCodeInGroup(name, code);
-				//chatArea.append('<div class="well">' + data.message + '</div>');
-			});
+			// 	self.loadCodeInGroup(name, code);
+			// 	//chatArea.append('<div class="well">' + data.message + '</div>');
+			// });
+			//parent.add(plane);
 		}
 		function handleGltfLoader(ele, parent) {
 			var att = getAttributes(ele);
@@ -3695,12 +3699,15 @@ function toDg(radials, def = 0) {
 			var fontColor = toT(att.fontcolor, 'red')
 			var backgroundColor = toT(att.backgroundcolor, 'cyan')
 			var lineHeight = toN(att.lineheight, 0.1)
+			var margin = toN(att.margin, 0.1)
 
 			var options = {
 				"text" : text,
 				"font": fontstring,
 				"fillStyle": fontColor,
-				"lineHeight": lineHeight};
+				"lineHeight": lineHeight,
+				"margin": margin
+			};
 
 			//text, undefined, height / 2, fontColor
 			var dynamicTexture = new THREEx.DynamicTexture(width, height)
