@@ -43,10 +43,11 @@
  </style>
 </head>
 <body>
- <h1>Join the discussion:</h1>
+ <h1>Leave your remarks</h1>
+ 
  <div id="nicknamerow" class="rowitem">
     <div class="label">Your nickname:</div>
-    <div class="field"><input type="text" id="username"></div>
+    <div class="field"><input type="text" id="username" maxlength="20"></div>
 </div>
 <div id="commonMsg" class="commonMsg"></div>
 <div class="rowitem">
@@ -59,7 +60,11 @@
 
  <script>
  const msgBox = document.getElementById("msgBox")
- const socket = io.connect()
+ const socket = io.connect();
+ socket.on('connect', function() {
+   // Connected, let's sign-up for to receive messages for this room
+   socket.emit('room', getRelativeUrl());
+});
  socket.on("new-data",(chatarr)=>{
     for(var i=0;i<chatarr.length;i++){
         var chat=chatarr[i];
@@ -101,11 +106,7 @@ function sendMessage(){
         }
     }
 }
-//socket.on("connection",()=>{
-    socket.emit('initiate-chat',getRelativeUrl());
-//});
-// const username = prompt()
-// socket.emit("user-connected",username)
+
  </script>
 </body>
 </html>

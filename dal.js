@@ -139,7 +139,7 @@ exports.getSnippets=function(res){
   });
 }
 
-exports.getChats=function(room, socket){
+exports.getChats=function(room, io){
   let db = new sqlite3.Database(dbName,sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message);
@@ -152,13 +152,13 @@ exports.getChats=function(room, socket){
         if (err) {
           throw err;
         }
-        socket.emit("new-data",rows);
+        io.sockets.in(room).emit("new-data",rows);
       });
     }
   });
 }
 
-exports.saveChat=function(chat, socket){
+exports.saveChat=function(chat, io){
   let db = new sqlite3.Database(dbName,sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message);
@@ -193,7 +193,7 @@ exports.saveChat=function(chat, socket){
                 }
                 var arr=[];
                 arr.push(chat);
-                socket.emit("new-data",arr);
+                io.sockets.in(chat.r).emit("new-data",arr);
             });
          
       

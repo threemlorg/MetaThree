@@ -9,7 +9,10 @@
 			
 			<three>
 				<renderer clearColor="0.0 0.05 0.0"></renderer>
-				<home></home>
+				<group name="chatlocation" position="1.7 0.4 -3" parent="camera"></group>
+				<home>
+					<menu tooltip="View discussion" url="/sub/chat/chatloader.html" target="chatlocation"></menu>
+				</home>
 				<stat></stat>
                 <orbitcontrols target="0 0 -2" reversed="true" maxpolarangle="90"></orbitcontrols>
  				<skybox url="images/clouds.jpeg"></skybox>

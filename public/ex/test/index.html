@@ -11,10 +11,11 @@
 			<three>
 				<renderer clearColor="0.2 0.5 0.5"></renderer>
 				<orbitcontrols target="0 0 -2" reversed="true"></orbitcontrols>
+				<group name="chatlocation" position="1.7 0.8 -3" parent="camera"></group>
+				<home>
+					<menu tooltip="View discussion" url="/sub/chat/chatloader.html" target="chatlocation"></menu>
+				</home>
 				<group name="lighttarget" position="0 0 -5"></group>
-				<chatbox name="chatting" position="0 0 -2">
-					<present></present>
-				</chatbox>				
 				<planegeometry position="0 -1 0" scale="20" rotation="-90 0 0" receiveshadow="true">
 					<meshphongmaterial color="0.8 0.8 0.1"></meshphongmaterial>
 					<walk></walk>
@@ -25,6 +26,7 @@
 						</DynamicTextureMaterial>
 					</planegeometry>
 						</group> -->
+						<fire position="1 0 -2" url="/threeml/textures/smoke.png"></fire>
 				<group name="choice1" position="4 -1 -5">
 					<boxgeometry scale="1" castshadow="true" receiveshadow="true">
 						<meshphongmaterial color="1 0 0"></meshphongmaterial>					

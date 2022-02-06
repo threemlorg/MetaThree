@@ -1030,20 +1030,71 @@ function toDg(radials, def = 0) {
 			doParseChildren(threenode, group);
 			initYoutubePlayers();
 		}
-		function handleHomeObject(ele, parent) {
+
+		function handleMenuObject(ele, parent) {
 			var att = getAttributes(ele);
-			var url='/threeml/models/home.glb'
-				const gltfLoader = new GLTFLoader();
+			var menuContainer=new THREE.Group();
+			var menuName=toT(att.name,'menuContainer' );
+			var menuGroupName=menuName+'Group';
+			var tooltip=toT(att.tooltip, 'Menu');
+			menuContainer.name=menuGroupName;
+			var position=toV(att.position, new THREE.Vector3(-0.07, 0, 0));
+			menuContainer.position.add(position);
+			parent.add(menuContainer);
+			var url='/threeml/models/menu.glb'
+			const gltfLoader = new GLTFLoader();
+			var target=toT( att.target, menuGroupName);
+			var loadUrl=att.url;
+			
 			gltfLoader.load(url, (gltf) => {
 				let obj = gltf.scene;
+				menuContainer.add(obj);
+				checkObjectUpdateArray(obj);
+				obj.name = 'menu';
+				obj.scale.multiplyScalar(0.2);
+				setEventParent(obj, obj);
+				var light = new THREE.SpotLight();
+				light.position.x = 0.13;
+				light.position.y = -0.2;
+				light.position.z = 0.5;
+				light.target = obj;
+				light.distance = 0.8;
+				obj.add(light);
+				if(loadUrl){
+					var f = function () {
+						if (!(event.shiftKey || event.ctrlKey || event.altKey)) {
+							self.loadInGroup(target, loadUrl, true); 
+							}					
+						}
+					addCallbackFunction(obj, f);
+				}
+				var latt = {
+					'action': 'tooltip',
+					'text':tooltip
+                }
+				handleHoverAtt(obj, latt);
+
+				});
+		//	parent.add(obj);
+		return menuContainer;
+		}
+
+		function handleHomeObject(ele, parent) {
+			var att = getAttributes(ele);
+			var homecontainer=new THREE.Group();
+			camera.add(homecontainer);
+			homecontainer.position.add(new THREE.Vector3(0, 0.51, -1.2));
+			var r = toR(80);
+			homecontainer.rotation.x = r;
+		var url='/threeml/models/home.glb'
+			const gltfLoader = new GLTFLoader();
+			gltfLoader.load(url, (gltf) => {
+				let obj = gltf.scene;
+				homecontainer.add(obj);
 				checkObjectUpdateArray(obj);
 				obj.name = 'home';
-				camera.add(obj);
-				setEventParent(obj, obj);
-				obj.position.add(new THREE.Vector3(0, 0.51, -1.2));
-				var r = toR(80);
-				obj.rotation.x = r;
 				obj.scale.multiplyScalar(0.2);
+				setEventParent(obj, obj);
 				var light = new THREE.SpotLight();
 				light.position.z = 1;
 				light.position.x = 1;
@@ -1062,20 +1113,10 @@ function toDg(radials, def = 0) {
 					'text':'Back to the home page'
                 }
 				handleHoverAtt(obj, att);
-				//var f = function () {
-				//	if (camera) {
-				//		var p = camera.position.clone().add(new THREE.Vector3(0, 0, -2));
-				//		p.applyQuaternion(camera.quaternion);
-				//		p.add(new THREE.Vector3(0, 1, 0))
-				//		obj.position.lerp(p, 0.1);
-				//	}
-				//}
 
-				//obj.updateArray.push(f);
-				//parent.add(obj);
 				});
 		//	parent.add(obj);
-		//	return obj;
+		return homecontainer;
 		}
 
 		var waitModel;
@@ -1349,7 +1390,11 @@ function toDg(radials, def = 0) {
 				case 'cursor3d':
 					return handleCursor3d(ele);
 				case 'home':
-					return handleHomeObject(ele, parent);
+					tr = handleHomeObject(ele, parent);
+					break;
+				case 'menu':
+					tr = handleMenuObject(ele, parent);
+					break;
 				case 'rain':
 					return handleRain(ele, parent);
 				case 'smoke':
@@ -1512,6 +1557,7 @@ function toDg(radials, def = 0) {
 		}
 		var guifact = 1;
 		var sceneno=0;
+		var camno=0;
 		function showGui(guiElement, name) {
 			if (guiElement) {
 				createGUI();
@@ -1532,6 +1578,14 @@ function toDg(radials, def = 0) {
 							}
 							sceneno++;
 						}
+						if(name.toLowerCase()=='perspectivecamera'){
+							if(camno>0){
+								name+=camno;
+								
+							}
+							camno++;
+						}
+						
 						const folder = gui.addFolder(name)
 						if (child.position) {
 							var f = highValue(highVectorValue(child.position));
@@ -1928,24 +1982,10 @@ function toDg(radials, def = 0) {
 			return obj;
 		}
 		function handleChatBox(ele, parent) {
-			//var att = getAttributes(ele);
-			//var name = toT(att.name, 'myChatBox');
-			//var chatGroup = handleGroup(ele, parent);
+
 			ele.setAttribute('url', '/sub/chat/receiver.html')
 			var plane=handleHtmlPlaneGeometry(ele, parent);
-			//setCommonAttributes(chatGroup, att);
-			// if (!socket) {
-			// 	socket = io.connect('http://localhost:3000');
-			// }
 
-
-			// socket.on('new message', function (data) {
-			// 	let code = '<sprite><DynamicTextureMaterial text="' + data.message+'" fontSize="50"  fontcolor="black" backgroundcolor="transparent"></DynamicTextureMaterial></sprite>';
-
-			// 	self.loadCodeInGroup(name, code);
-			// 	//chatArea.append('<div class="well">' + data.message + '</div>');
-			// });
-			//parent.add(plane);
 		}
 		function handleGltfLoader(ele, parent) {
 			var att = getAttributes(ele);
@@ -2019,15 +2059,15 @@ function toDg(radials, def = 0) {
 		function getBarImage(imageType) {
 			const img = document.createElement('img');
 			img.src = imageType;
-			img.style.width = '40px';
-			img.style.height = '40px';
+			 img.style.width = '95%';
+			 img.style.height = '95%';
 			img.style.margin = '5px';
 			return img;
 		}
 		function getImageBarButton(name, title, imageType, bgc) {
 			const div_h = document.createElement('div');
-			div_h.style.width = '50px';
-			div_h.style.height = '50px';
+			// div_h.style.width = '50px';
+			// div_h.style.height = '50px';
 			div_h.title = title;
 			if (bgc) {
 				div_h.style.backgroundColor = bgc;
@@ -2036,7 +2076,7 @@ function toDg(radials, def = 0) {
 			div_h.style.marginRight = '5px';
 			//div_h.style.border = 'solid';
 			div_h.name = name;
-			div_h.className = name;
+			div_h.className = `${name} htmlpanebutton`;
 			const img = getBarImage(imageType);
 			div_h.appendChild(img);
 			return div_h;
@@ -2116,7 +2156,7 @@ function toDg(radials, def = 0) {
 
 			const div_left_menu = document.createElement('div');
 			div_left_menu.style.width = '170px';
-			div_left_menu.style.display = 'inline-block';
+			//div_left_menu.style.display = 'inline-block';
 			//home button:
 			const div_hb = getImageBarButton('home', 'Home', Images.Home, bgc);
 
@@ -2223,6 +2263,21 @@ function toDg(radials, def = 0) {
 			});
 
 			holder.threemlType = 'HtmlPlaneGeometry';
+			//style section/////////////////
+			var style=document.createElement('style');
+			div.appendChild(style);
+			style.innerText=`
+			.htmlpanebutton{
+				width:40px;
+				height:40px;
+			}
+			.htmlpanebutton:hover{
+				width:100px;
+				height:100px;
+			}`;
+
+			////////////////////////////////
+			
 			return obj;
 
 		};
