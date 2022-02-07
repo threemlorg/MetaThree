@@ -40,11 +40,19 @@
      .hide{
          display: none;
      }
+     .msg{
+         overflow-y: auto;
+         max-height: 650px;
+         width: 1200px;
+     }
+     .users{
+         color:green;
+     }
  </style>
 </head>
 <body>
  <h1>Leave your remarks</h1>
- 
+ <div class="users" id="users"></div>
  <div id="nicknamerow" class="rowitem">
     <div class="label">Your nickname:</div>
     <div class="field"><input type="text" id="username" maxlength="20"></div>
@@ -52,40 +60,59 @@
 <div id="commonMsg" class="commonMsg"></div>
 <div class="rowitem">
     <div class="label">Message:</div>
-    <div class="field"><textarea class="search" maxlength="250" type="search" id="message" onchange="sendMessage()"></textarea>    
+    <div class="field"><textarea class="search" maxlength="250" type="search" id="message" ></textarea>    
    <input type="button" value="send" onclick="sendMessage()"></div>
 </div>
 
- <div id="msgBox" class="msg"></div>
+ <div id="msgBox" class="msg">
+
+ </div>
 
  <script>
  const msgBox = document.getElementById("msgBox")
+ const usersDiv=document.getElementById("users");
  const socket = io.connect();
  socket.on('connect', function() {
    // Connected, let's sign-up for to receive messages for this room
    socket.emit('room', getRelativeUrl());
-});
+
+
+socket.on("new-chat",(chatarr)=>{
+    addChats(chatarr);
+   });
+
  socket.on("new-data",(chatarr)=>{
-    for(var i=0;i<chatarr.length;i++){
-        var chat=chatarr[i];
-        var txt=`${chat.d} (${chat.u}): ${chat.m}`;
-        msgBox.innerHTML = (txt + "<br/>")+msgBox.innerHTML;
-    }
-    var m=document.getElementById('message');
-    m.value='';
-    m.focus();
+    msgBox.innerHTML='';
+    addChats(chatarr);
  });
+ socket.on("usersList", (ul)=>{
+     if(ul.length>0){
+        var users=ul.join(', ');
+        usersDiv.innerHTML='Current visitors: '+users;
+     }
+     else{
+        usersDiv.innerHTML='';
+     }
+ })
+});
  function getRelativeUrl(){
     var loc = new URL(window.top.location.href); //get the current location
     var rel = loc.pathname; //relative link from dir to loc
     return rel;
 }
-
+function addChats(chatarr){
+    for(var i=0;i<chatarr.length;i++){
+        var chat=chatarr[i];
+        var txt=`${chat.d} (${chat.u}): ${chat.m}`;
+        msgBox.innerHTML = (txt + "<br/>")+ msgBox.innerHTML;
+    }
+}
 function sendMessage(){
     var n=document.getElementById('username');
     var e=document.getElementById('commonMsg');
     var nn=document.getElementById('nicknamerow');
-    if(!n || n.value.length==0)
+    var m=document.getElementById('message');
+     if(!n || n.value.length==0)
     {
         e.innerHTML='Please provide a nickname';
         e.classList.add('error');
@@ -103,7 +130,9 @@ function sendMessage(){
                 'r':getRelativeUrl()
             }
             socket.emit('message',j);
-        }
+            m.value='';
+            m.focus();
+       }
     }
 }
 

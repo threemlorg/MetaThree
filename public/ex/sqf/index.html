@@ -11,7 +11,11 @@
 			<three>
 				<renderer clearColor="0.0 0.05 0.0"></renderer>
 				<stat></stat>
-				<home></home>
+				<group name="chatlocation" position="-1.9 0.9 -3" parent="camera"></group>
+				<home>
+					<menu tooltip="View discussion" url="/sub/chat/chatloader.html" target="chatlocation"></menu>
+				</home>
+
 				<group name="sqfparent" position="0 0 -2" rotation="30 0 0">
 				<group name="sqf"  rotation="0 270 0" scale="2">
 					<htmlplanegeometry url="./html/form1.html" position="0.20 0 0" rotation="0 90 0" scale="1" width="500" height="500" panelbar="false"></htmlplanegeometry>
@@ -36,33 +40,42 @@
 						<action typeof="transform" visible="true"></action>
 
 						<action typeof="click"></action>
+						<action typeof="transform" scale="0.01" speed="0.04"></action>
 						<action typeof="transform" visible="false"></action>
 						<action typeof="transform" rotation="0 0 0" target="sqf"></action>
 						<action typeof="transform" visible="true"></action>
- 
+
 						<action typeof="click"></action>
+						<action typeof="transform" scale="0.01" speed="0.04"></action>
 						<action typeof="transform" visible="false"></action>
 						<action typeof="transform" rotation="0 90 0" target="sqf"></action>
 						<action typeof="transform" visible="true"></action>
 
 						<action typeof="click"></action>
+						<action typeof="transform" scale="0.01" speed="0.04"></action>
 						<action typeof="transform" visible="false"></action>
 						<action typeof="transform" rotation="0 180 0" target="sqf"></action>
 						<action typeof="transform" visible="true"></action>
 
 						<action typeof="click"></action>
+						<action typeof="transform" scale="0.01" speed="0.04"></action>
 						<action typeof="transform" visible="false"></action>
 						<action typeof="transform" rotation="90 0 0" target="sqf"></action>
 						<action typeof="transform" visible="true"></action>
 
-
-
-
 						<action typeof="click"></action>
+						<action typeof="transform" scale="0.01" speed="0.04"></action>
 						<action typeof="transform" visible="false"></action>
 						<action typeof="transform" rotation="-120 0 0" target="sqf"></action>
 						<action typeof="transform" rotation="-120 0 0" scale="3" speed="0.1" target="sqf"></action>
 						<action typeof="transform" rotation="-120 0 0" scale="2" speed="0.1" target="sqf"></action>
+						<action typeof="transform" visible="true"></action>
+
+						<action typeof="click"></action>
+						<action typeof="transform" scale="0.01" speed="0.04"></action>
+						<action typeof="transform" visible="false"></action>
+						<action typeof="transform" rotation="0 270 0" target="sqf"></action>
+						<action typeof="transform" visible="true"></action>
 					</actions>
 
 				</gltfLoader>

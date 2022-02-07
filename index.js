@@ -15,28 +15,32 @@ const io = require('socket.io')(http,{
  }
 });
 dal.initDB(config.sqlitedb);
+
 app.use(express.urlencoded({ extended: true })); // Specifying to use urlencoded
 io.sockets.on('connection', function(socket) {
   socket.on('room', function(room) {  
+    var remoteip=dal.getRemoteIp(socket);
       socket.join(room);
-      console.log(`in room ${room}.`);
+       console.log(`in room ${room}.`);
       dal.getChats(room, io);
   });
 
   console.log(`LOG: [EVENT=connection] New client connected: ${socket.conn.remoteAddress} .`);
 //A client left
   socket.on('disconnect', function() {
-      console.log("LOG: [EVENT=disconnect] client has disconnected.");
-  });
+    var remoteip=dal.getRemoteIp(socket);
+    console.log("LOG: [EVENT=disconnect] client has disconnected.");
+      dal.leaveRoom(io, remoteip);
+    });
   socket.on("message",(j)=>{
-    var remoteip=socket.handshake.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
+    var remoteip=dal.getRemoteIp(socket);
     console.log(`Message from: ${remoteip}.`);
     j.ip=remoteip;
-    j.d=dal.printDate();
     if(j.m.length>0 && j.m.length<=250 && j.u.length>0 && j.u.length<=20)
     {
       j.m=j.m.split('<').join('&lt;').split('>').join('&gt;').split("'").join("`");
       dal.saveChat(j, io);
+      dal.joinToRoom(io, j.r, remoteip, j.u);
     }
     // Emitting event.
    });

@@ -6,6 +6,71 @@ var dbName='./data/threeml.db';
 const whoisapi='https://ipwhois.app/json/';
 var customerId=-1;
 
+const connectedUsers = new Map();
+
+exports.getRemoteIp=function(socket){
+  return socket.handshake.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
+}
+exports.joinToRoom=function(io, room, remoteip, user) {
+  // create users array, if key not exists
+  if (!connectedUsers.has(room)) {
+      connectedUsers.set(room, []);
+  }
+  // add user to room array
+  let userList = connectedUsers.get(room);
+  userList = userList.filter(u => u.ip == remoteip && u.u==user);
+  if(userList.length==0){
+  let item={
+    'u':user,
+    'ip':remoteip
+  }
+
+  connectedUsers.get(room).push(item);
+  // call update function
+  updateUsersList(io, room);
+}
+}
+
+exports.leaveRoom=function(io,  remoteip) {
+  // delete user
+
+  for (var [room, roomUsers] of connectedUsers.entries()) {  
+    for(var j=0;j<roomUsers.length;j++){
+      var us=roomUsers[j];
+      if(us.ip==remoteip){
+        userList=leaveTheRoom(io, room, remoteip );
+        // if (!userList.length) {
+        //   // delete key if no more users in room
+        //   connectedUsers.delete(io, room);
+        // } 
+        // else
+        // {
+            connectedUsers.set(room, userList);
+            // call update function
+            updateUsersList(io, room);
+        // }
+      }
+    }
+  }
+
+}
+function leaveTheRoom(io, room, remoteip ){
+  let userList = connectedUsers.get(room);
+  userList = userList.filter(u => u.ip !== remoteip);
+  return userList;
+ 
+}
+function updateUsersList(io, room){
+  let userList = connectedUsers.get(room);
+  let users=[]
+  for(var i=0;i<userList.length;i++){
+    let user=userList[i];
+    users.push(user.u);
+  } 
+  io.sockets.in(room).emit('usersList', users);
+}
+
+
 exports.initDB= function(tsqldb){
   if(tsqldb){
     dbName=tsqldb;
@@ -172,33 +237,52 @@ exports.saveChat=function(chat, io){
         if (err) {
           throw err;
         }
-        if(rows.length==0){
+          if(rows.length==0){
+            //let nowDateTime=new Date();
+            //#nowDateTime.setSeconds(nowDateTime.getSeconds()-3);
+            let strdateFrom=this.printDate(true);
+            let sql = `SELECT Id FROM Chat 
+          Where IP='${chat.ip}' AND CreateDate=='${strdateFrom}'`;
+          console.log(sql);
+          db.all(sql, [], (err, rows) => {
+            if (err) {
+              throw err;
+            }
 
-          let sql = `INSERT INTO Chat (IP, Nickname, Message, CreateDate, Room, itsCustomer_ID)
-          VALUES (
-            '${chat.ip}',
-            '${chat.u}',
-            '${chat.m}',
-            DATETIME('now'),
-            '${chat.r}',
-            ${customerId}
-          ) `;
-            console.log(sql);
-            db.serialize(() => {
-                db.run(sql);
+        ///////////////////
+            if(rows.length==0){
 
-                db.close((err) => {
-                if (err) {
-                  return console.error(err.message);
-                }
-                var arr=[];
-                arr.push(chat);
-                io.sockets.in(chat.r).emit("new-data",arr);
+              let sql = `INSERT INTO Chat (IP, Nickname, Message, CreateDate, Room, itsCustomer_ID)
+              VALUES (
+                '${chat.ip}',
+                '${chat.u}',
+                '${chat.m}',
+                '${strdateFrom}',
+                '${chat.r}',
+                ${customerId}
+              ) `;
+                console.log(sql);
+                db.serialize(() => {
+                    db.run(sql);
+
+                    db.close((err) => {
+                    if (err) {
+                      return console.error(err.message);
+                    }
+                    chat.d=this.printDate();
+                    var arr=[];
+                    arr.push(chat);
+                    io.sockets.in(chat.r).emit("new-chat",arr);
+                });
+            
+          
+              });
+            }
+        ////////////
+          
+        
             });
-         
-      
-          });
-        }
+          }
         });
       }
   
@@ -356,15 +440,23 @@ function performRequest(endpoint, ip, success) {
 }
 
 
-exports.printDate = function() {
+exports.printDate = function(includeSeconds=false) {
   var temp = new Date();
+  var dateStr = this.printDateFrom(temp, includeSeconds);
+  return dateStr;
+}
+
+exports.printDateFrom = function(temp, includeSeconds=false) {
+  
   var dateStr = padStr(temp.getFullYear()) +'-'+
                 padStr(1 + temp.getMonth()) +'-'+
                 padStr(temp.getDate()) +' '+
                 padStr(temp.getHours()) +':'+
-                padStr(temp.getMinutes());// +':'+
-               // padStr(temp.getSeconds());
-  return (dateStr );
+                padStr(temp.getMinutes());// +
+  if(includeSeconds){
+    dateStr += ':'+padStr(temp.getSeconds());
+  }
+  return dateStr ;
 }
 
 function padStr(i) {
