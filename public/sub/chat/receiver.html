@@ -6,28 +6,35 @@
  <style>
      body{
          font-family: Arial, Helvetica, sans-serif;
-         background-color: aliceblue;
+         background-color: black;
          height: 100vh;
          width: 100vw;
          font-size: xx-large;
+         color:white;
+         margin-left: 200px;
      }
      input{
-        font-size: xx-large;
+         font-size: xx-large;
          
+     }
+     .submitbtn{
+         border-radius: 5px;
+         top: -10px;
+         position: relative;
      }
      .rowitem{
          display: flex;
      }
      .label{
          display:inline-block;
-         width: 300px;
+         width: 230px;
      }
      .field{
          display:inline-block;
      }
      .search{
-         width: 700px;
-         height: 100px;
+         width: 960px;
+         height: 60px;
          font-size: xx-large;
      }
      .commonMsg{
@@ -44,9 +51,37 @@
          overflow-y: auto;
          max-height: 650px;
          width: 1200px;
+         margin-top: 20px;
      }
      .users{
          color:green;
+     }
+     .chatbox{
+         display: block;
+         width: 1150px;
+         margin: 10px;
+         border-radius: 5px;
+         border: solid;
+        border-width: 1pt;
+        border-color: silver;
+     }
+     .chattitle{
+        display: block;
+        background-color: #182a2a;;
+        font-size: smaller;
+        color: #2d89d9;       
+     }
+     .chatname{
+         display: inline-block;
+     }
+     .chatdate{
+         display: inline-block;
+         font-size: small;
+     }
+
+     .chatmessage{
+         display: block;
+         width: 100%;
      }
  </style>
 </head>
@@ -61,7 +96,7 @@
 <div class="rowitem">
     <div class="label">Message:</div>
     <div class="field"><textarea class="search" maxlength="250" type="search" id="message" ></textarea>    
-   <input type="button" value="send" onclick="sendMessage()"></div>
+   <input type="button" class="submitbtn" value="send" onclick="sendMessage()"></div>
 </div>
 
  <div id="msgBox" class="msg">
@@ -103,9 +138,19 @@ socket.on("new-chat",(chatarr)=>{
 function addChats(chatarr){
     for(var i=0;i<chatarr.length;i++){
         var chat=chatarr[i];
-        var txt=`${chat.d} (${chat.u}): ${chat.m}`;
-        msgBox.innerHTML = (txt + "<br/>")+ msgBox.innerHTML;
+        //var txt=`${chat.d} (${chat.u}): ${chat.m}`;
+        msgBox.innerHTML = makeChatBox(chat)+ msgBox.innerHTML;
     }
+}
+function makeChatBox(chat){
+
+    return `<div class='chatbox'>
+            <div class='chattitle'>
+                <div class='chatname'>${chat.u}</div>
+                <div class='chatdate'>${chat.d}</div>
+            </div>
+            <div class='chatmessage'>${chat.m}</div>
+       </div>`
 }
 function sendMessage(){
     var n=document.getElementById('username');

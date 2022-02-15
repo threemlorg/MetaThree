@@ -422,7 +422,7 @@ var ThreeML = function (element) {
 		checkObjectUpdateArray(camera);
 		if (!targetLookAt) {
 			//targetLookAt = self.getCameraDefaultLookAtDummy();
-			targetLookAt =getOrbitTarget(point);
+			targetLookAt =getOrbitTarget(new THREE.Vector3(x, y, z));
 			//camera.lookAt(camera.targetLookAt);
 			// var f = function () {
 			// 	if (targetLookAt) {// && camera.targetLookAtCnt && camera.targetLookAtCnt >0 ) {
@@ -2001,8 +2001,9 @@ function toDg(radials, def = 0) {
 				const gltfLoader = new GLTFLoader();
 				loaderRegistrations++;
 				gltfLoader.load(att.url, (gltf) => {
-					const root = gltf.scene;
-					threescene.checkRepeat(ele, root, parent);
+					const obj = gltf.scene;
+					obj.gltfanimations=gltf.animations;
+					threescene.checkRepeat(ele, obj, parent);
 					loaderRegistrations--;
 
 					//addModelInScene(root, att, ele, parent)
@@ -3042,7 +3043,10 @@ function toDg(radials, def = 0) {
 					case 'synchronise':
 						handleSynchronise(obj, child);
 						break;
-				}
+					case 'animate':
+						handleAnimate(obj, child);
+						break;
+					}
 			}
 			return hasMouseEvent;
 		}
@@ -4575,6 +4579,19 @@ function toDg(radials, def = 0) {
 					}
 					break;
            }
+			obj.updateArray.push(f);
+		}
+
+		function handleAnimate(obj, ele){
+			var att = getAttributes(ele);
+			var speed=toN(att.speed,1);
+			checkObjectUpdateArray(obj);
+			obj.mixer = new THREE.AnimationMixer( obj );
+			const action = obj.mixer.clipAction( obj.gltfanimations[0] );
+			action.play();
+			var f=function(){
+				obj.mixer.update(clock.getDelta()*70*speed);
+			}
 			obj.updateArray.push(f);
 		}
 		function handleRotate(obj, ele) {

@@ -16,10 +16,13 @@
 					<menu tooltip="View discussion" url="/sub/chat/chatloader.html" target="chatlocation"></menu>
 				</home>
 				<group name="lighttarget" position="0 0 -5"></group>
-				<planegeometry position="0 -1 0" scale="20" rotation="-90 0 0" receiveshadow="true">
+				<planegeometry position="0 -1 -4.2" scale="1" rotation="-90 0 0" receiveshadow="true">
 					<meshphongmaterial color="0.8 0.8 0.1"></meshphongmaterial>
 					<walk></walk>
 				</planegeometry>
+				<gltfLoader name="robot" position="0 0 -3" url="./models/robot.glb" scale="0.3" rotation="0 39 0" castshadow="true">
+					<animate speed="2"></animate>
+				</gltfLoader>
 				<!-- <group name="text" position="0 0.3 -3" parent="camera">
 					<planegeometry name="test" scale="1.8 0.2 1" >
 						<DynamicTextureMaterial margin="0.2" fontSize="15" width="512" height="128" fontcolor="#8E8C11" backgroundcolor="#333333" lineHeight="0.3" text="Complex Theories: Since the beginning of time and space, the universe keeps evolving ">
