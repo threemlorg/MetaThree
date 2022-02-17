@@ -13,6 +13,7 @@ import { THREEx } from './controls/threex.dynamictexture.js';
 import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 import GerstnerWater from './controls/gerstnerWater.js'
 import { Fire } from './controls/Fire.js';
+import { Vector3 } from './build/three.module.js';
 
 var ThreeScenes = []
 var camera;
@@ -23,7 +24,8 @@ var mixer = null;
 var clock = new THREE.Clock();
 var controls;
 var socket;
-
+var playerGuid;
+var playerGuids=[];
 var ThreeML = function (element) {
 	const loader = new GLTFLoader();
 	const defaultFont = new DefaultFont();
@@ -1409,6 +1411,8 @@ function toDg(radials, def = 0) {
 					return handleStat(ele, parent);
 				case 'module':
 					return handleModule(ele, parent);
+				case 'multiplayer':
+					return handleMultiPlayer(ele, parent);
 				default:
 				
 				//return v.checkElements(name.ele.parent);
@@ -2441,7 +2445,6 @@ function toDg(radials, def = 0) {
 				doCheckZoom = toB(att.checkzoom);
 			}
 		}
-
 		function handlePlaneGeometry(ele, parent) {
 			var att = getAttributes(ele);
 			var geometry = new THREE.PlaneBufferGeometry(1, 1);
@@ -2919,6 +2922,133 @@ function toDg(radials, def = 0) {
 			checkevents(ele, obj);
 			parent.add(obj);
 			return obj;
+		}
+		var socket;
+		function checkSocket(){
+			if(!socket){
+				socket = io.connect();
+				socket.on('connect', function() {
+					// Connected, let's sign-up for to receive messages for this room
+					socket.emit('room', getCurrentRoom());
+				 
+					 socket.on("new-playerdata",(playerarr)=>{
+						 
+						 handlePlayers(playerarr);
+					 });
+					//  socket.on("usersList", (ul)=>{
+					// 	 if(ul.length>0){
+					// 		 var users=ul.join(', ');
+					// 		 usersDiv.innerHTML='Current visitors: '+users;
+					// 	 }
+					// 	 else{
+					// 		 usersDiv.innerHTML='';
+					// 	 }
+					//  })
+				 });
+		   }
+	    }
+		function checkPlayerGuid(){
+			if(!playerGuid){
+				playerGuid=uuidv4();
+			}
+		}
+		function handlePlayers(playerarr){
+			for(var n=0;n<playerarr.length;n++){
+				var j=playerarr[n];
+				if(j.g!=playerGuid){
+					var pc=playerGuids.filter(e => e.guid==j.g);
+					var p;
+					if(pc.length==0 && !j.left){
+						p = createNewPlayer(j.g);
+						playerGuids.push(p);
+					}
+					else{
+						p=pc[0];
+						if(j.left){
+							playerGuids.splice(playerGuids.indexOf(p), 1);
+							scene.remove(p);
+							
+						}
+					}
+					if(!j.left){
+						var pos=j.p;
+						var rot=j.u;
+						p.newPosition=new THREE.Vector3(pos[0], pos[1], pos[2]);
+						p.newQuaternion=new THREE.Quaternion(rot[0], rot[1], rot[2], rot[3]);
+					}
+
+					// p.position.set(pos[0], pos[1], pos[2]);
+					// var q=new THREE.quaternion(rot[0], rot[1], rot[2], rot[3])
+					// p.quaternion.lerp(q, 0.01);
+				}
+			}
+		}
+		function createNewPlayer(guid){
+			var player=new THREE.Group();
+			player.guid=guid;
+			player.name=guid;
+			scene.add(player);
+			checkObjectUpdateArray(player);
+			var f = function(){
+				if(player.newPosition){
+					player.position.lerp(player.newPosition, 0.01);
+				}
+				if(player.newQuaternion){
+					player.quaternion.slerp(player.newQuaternion, 0.01);
+				}
+			}
+			player.updateArray.push(f);
+			// var material=new THREE.MeshPhongMaterial();
+			// material.color=toColor('1 0 0');
+			// var geometry=new THREE.BoxBufferGeometry();
+			// var obj = new THREE.Mesh(geometry, material);
+			// player.add(obj);
+			const gltfLoader = new GLTFLoader();
+			var url='/sub/docu/models/robot.glb';
+			gltfLoader.load(url, (gltf) => {
+				const obj = gltf.scene;
+				player.add(obj);
+				obj.rotation.y=Math.PI;
+			});
+			return player;
+
+		}
+		function uuidv4() {
+			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			  var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			  return v.toString(16);
+			});
+		  }
+		function handleMultiPlayer(ele, parent) {
+			checkObjectUpdateArray(camera);
+			checkPlayerGuid();
+			checkSocket();
+			var att = getAttributes(ele);
+			camera.updateCounter=0;
+			var f=function(){
+				camera.updateCounter++;
+				if(camera.updateCounter && camera.updateCounter>100){
+					updateSceneStatus();
+					camera.updateCounter=0;
+				}
+			}
+			camera.updateArray.push(f);
+		}
+		
+		function updateSceneStatus(){
+			var j={
+				'g':playerGuid,
+                'p':[camera.position.x, camera.position.y, camera.position.z],
+                'u':[camera.quaternion.x, camera.quaternion.y, camera.quaternion.z, camera.quaternion.w], 
+                'r':getCurrentRoom()
+            }
+            socket.emit('playerdata',j);
+
+		}
+		function getCurrentRoom(){
+			var loc = new URL(window.top.location.href); //get the current location
+			var rel = loc.pathname; //relative link from dir to loc
+			return rel;
 		}
 		function handleWater(ele, parent) {
 			var att = getAttributes(ele);

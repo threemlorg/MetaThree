@@ -4,10 +4,98 @@ const url = require('url');
 const https = require('https');
 var dbName='./data/threeml.db';
 const whoisapi='https://ipwhois.app/json/';
+var local_io;
 var customerId=-1;
 
 const connectedUsers = new Map();
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+const connectedPlayers = new Map();
+
+exports.setLocalIO= function(io){
+  local_io=io;
+}
+exports.playerUpdateToRoom=function( j) {
+  if(j && j.r){
+    var room=j.r;
+    //console.log(j.g + " joined "+ room);
+    // create users array, if key not exists
+    if (!connectedPlayers.has(room)) {
+      connectedPlayers.set(room, []);
+    }
+    // remove user from room array
+    let userList = connectedPlayers.get(room);
+    userList = userList.filter(u => u.g !=j.g);
+    userList.push(j);
+    connectedPlayers.set(room, userList);  
+    //add user
+    //connectedPlayers.get(room).push(j);
+    //console.log(userList.length + ' players in room' + room);
+  }
+}
+
+exports.playerLeaveRoom=function( id) {
+  // delete user
+
+  for (var [room, roomUsers] of connectedPlayers.entries()) {  
+    for(var j=0;j<roomUsers.length;j++){
+      var us=roomUsers[j];
+      if(us.id==id){
+        // userList=playerLeaveTheRoom(io, room, id );
+        // connectedPlayers.set(room, userList);
+        us.left=true;
+        us.steps=10;
+      }
+    }
+  }
+
+}
+function playerLeaveTheRoom(room, id ){
+  let userList = connectedPlayers.get(room);
+  userList = userList.filter(u => u.id !== id);
+  return userList;
+ 
+}
+
+exports.updatePlayers=function(){
+  for (var [room, roomUsers] of connectedPlayers.entries()) {  
+    checkPartedPlayers(room, roomUsers);
+    //console.log(roomUsers.length + ' players emitted in room' + room);
+    local_io.sockets.in(room).emit('new-playerdata', roomUsers);
+  }
+}
+
+function checkPartedPlayers(room, roomUsers){
+  var parted=roomUsers.filter(u => u.left==true);
+ 
+ 
+  for(var i=0; i<parted.length;i++){
+     var p=parted[i];
+     console.log(`p.steps ${p.steps}` );
+ 
+    if(p.steps){
+      p.steps--;
+      if(p.steps==0){
+        roomUsers=roomUsers.filter(u => u.id !=p.id);
+        connectedPlayers.set(room, roomUsers);  
+        console.log(` player ${p.id} removed from room ${room}` );
+        break;
+      }
+    }
+  }
+}
+// function playerUpdateUsersList(io, room){
+//   let userList = connectedPlayers.get(room);
+//   let users=[]
+//   for(var i=0;i<userList.length;i++){
+//     let user=userList[i];
+//     users.push(user.u);
+//   } 
+//   io.sockets.in(room).emit('playersList', users);
+// }
+
+
+/////////////////////////////////////////////////////////////////////
 exports.getRemoteIp=function(socket){
   return socket.handshake.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
 }
@@ -39,16 +127,10 @@ exports.leaveRoom=function(io,  remoteip) {
       var us=roomUsers[j];
       if(us.ip==remoteip){
         userList=leaveTheRoom(io, room, remoteip );
-        // if (!userList.length) {
-        //   // delete key if no more users in room
-        //   connectedUsers.delete(io, room);
-        // } 
-        // else
-        // {
             connectedUsers.set(room, userList);
             // call update function
             updateUsersList(io, room);
-        // }
+
       }
     }
   }

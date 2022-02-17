@@ -112,23 +112,23 @@
    socket.emit('room', getRelativeUrl());
 
 
-socket.on("new-chat",(chatarr)=>{
-    addChats(chatarr);
-   });
+    socket.on("new-chat",(chatarr)=>{
+        addChats(chatarr);
+    });
 
- socket.on("new-data",(chatarr)=>{
-    msgBox.innerHTML='';
-    addChats(chatarr);
- });
- socket.on("usersList", (ul)=>{
-     if(ul.length>0){
-        var users=ul.join(', ');
-        usersDiv.innerHTML='Current visitors: '+users;
-     }
-     else{
-        usersDiv.innerHTML='';
-     }
- })
+    socket.on("new-data",(chatarr)=>{
+        msgBox.innerHTML='';
+        addChats(chatarr);
+    });
+    socket.on("usersList", (ul)=>{
+        if(ul.length>0){
+            var users=ul.join(', ');
+            usersDiv.innerHTML='Current visitors: '+users;
+        }
+        else{
+            usersDiv.innerHTML='';
+        }
+    })
 });
  function getRelativeUrl(){
     var loc = new URL(window.top.location.href); //get the current location

@@ -23,15 +23,21 @@ io.sockets.on('connection', function(socket) {
       socket.join(room);
        console.log(`in room ${room}.`);
       dal.getChats(room, io);
+      console.log(`LOG: [EVENT=connection] New client connected: ${socket.id} .`);
   });
-
-  console.log(`LOG: [EVENT=connection] New client connected: ${socket.conn.remoteAddress} .`);
+  socket.on('playerdata', function(j) {  
+    j.id=socket.id;
+    dal.playerUpdateToRoom(j);
+  });
+  
 //A client left
   socket.on('disconnect', function() {
     var remoteip=dal.getRemoteIp(socket);
-    console.log("LOG: [EVENT=disconnect] client has disconnected.");
-      dal.leaveRoom(io, remoteip);
-    });
+    console.log("LOG: [EVENT=disconnect] client "+socket.id+" has disconnected.");
+    dal.leaveRoom(io, remoteip);
+    dal.playerLeaveRoom(socket.id);
+  });
+
   socket.on("message",(j)=>{
     var remoteip=dal.getRemoteIp(socket);
     console.log(`Message from: ${remoteip}.`);
@@ -83,5 +89,7 @@ app.get('/', (req, res) => {
 //static files
 app.use(express.static('public'))
 
+dal.setLocalIO(io);
+setInterval(dal.updatePlayers,100);
 // Listening on Host and Port
 http.listen(port, host, () => console.log(`Listening on http://${host}:${port}/`))
