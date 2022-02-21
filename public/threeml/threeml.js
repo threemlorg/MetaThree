@@ -1413,6 +1413,8 @@ function toDg(radials, def = 0) {
 					return handleModule(ele, parent);
 				case 'multiplayer':
 					return handleMultiPlayer(ele, parent);
+				case 'avatar':
+					return handleAvatar(ele, parent);
 				default:
 				
 				//return v.checkElements(name.ele.parent);
@@ -2014,7 +2016,31 @@ function toDg(radials, def = 0) {
 				});
 			}
 		}
-
+		function handleAvatar(ele, parent) {
+			var att = getAttributes(ele);
+			var loader='/sub/avatars/preloader.glb'
+			const gltfLoader = new GLTFLoader();
+			gltfLoader.load(loader, (gltf) => {
+				const obj = gltf.scene;
+				obj.gltfanimations=gltf.animations;
+				setCommonAttributes(obj, att);
+				parent.add(obj);
+				obj.threemlType = 'avatar';
+				obj.url = loader;
+				obj.name+='preloader';
+				checkevents(ele, obj);
+				gltfLoader.load(att.url, (gltf) => {
+					const obj2 = gltf.scene;
+					obj2.gltfanimations=gltf.animations;
+					setCommonAttributes(obj2, att);
+					parent.remove(obj);
+					parent.add(obj2);
+					obj2.threemlType = 'avatar';
+					obj2.url = att.url;
+					checkevents(ele, obj2);				
+				});
+			});
+		}
 		function setEventParent(parent, ele) {
 			for (var n = 0; n < ele.children.length; n++) {
 				var ch = ele.children[n];
@@ -2959,7 +2985,7 @@ function toDg(radials, def = 0) {
 					var pc=playerGuids.filter(e => e.guid==j.g);
 					var p;
 					if(pc.length==0 && !j.left){
-						p = createNewPlayer(j.g);
+						p = createNewPlayer(j);
 						playerGuids.push(p);
 					}
 					else{
@@ -2983,11 +3009,18 @@ function toDg(radials, def = 0) {
 				}
 			}
 		}
-		function createNewPlayer(guid){
+
+		function createNewPlayer(j){
+			var guid=j.g;
 			var player=new THREE.Group();
 			player.guid=guid;
 			player.name=guid;
 			scene.add(player);
+			var pos=j.p;
+			var rot=j.u;
+			player.position.set(pos[0], pos[1], pos[2]);
+			player.quaternion.set(rot[0], rot[1], rot[2], rot[3]);
+
 			checkObjectUpdateArray(player);
 			var f = function(){
 				if(player.newPosition){
@@ -2998,17 +3031,26 @@ function toDg(radials, def = 0) {
 				}
 			}
 			player.updateArray.push(f);
-			// var material=new THREE.MeshPhongMaterial();
-			// material.color=toColor('1 0 0');
-			// var geometry=new THREE.BoxBufferGeometry();
-			// var obj = new THREE.Mesh(geometry, material);
-			// player.add(obj);
+
 			const gltfLoader = new GLTFLoader();
 			var url='/sub/docu/models/robot.glb';
 			gltfLoader.load(url, (gltf) => {
 				const obj = gltf.scene;
 				player.add(obj);
 				obj.rotation.y=Math.PI;
+				obj.traverse(function (node) {
+					if (node.isMesh) { node.castShadow = true; }
+				});
+				//animate
+				checkObjectUpdateArray(obj);
+				obj.mixer = new THREE.AnimationMixer( obj );
+				const action = obj.mixer.clipAction( gltf.animations[0] );
+				action.play();
+				var f=function(){
+					obj.mixer.update(clock.getDelta()*70);
+				}
+				obj.updateArray.push(f);
+
 			});
 			return player;
 
@@ -3023,6 +3065,7 @@ function toDg(radials, def = 0) {
 			checkObjectUpdateArray(camera);
 			checkPlayerGuid();
 			checkSocket();
+			checkInitialCameraPosition();
 			var att = getAttributes(ele);
 			camera.updateCounter=0;
 			var f=function(){
@@ -3034,7 +3077,15 @@ function toDg(radials, def = 0) {
 			}
 			camera.updateArray.push(f);
 		}
-		
+		function checkInitialCameraPosition(){
+			var angle=Math.random()*2*Math.PI;
+			var randomD=new THREE.Vector3(Math.sin(angle)*2, 0,Math.cos(angle)*2 );
+			camera.position.add(randomD);
+			if(navigating == CameraMode.ORBIT && orbitControls){
+				orbitControls.target.add(randomD);
+			}
+		}
+
 		function updateSceneStatus(){
 			var j={
 				'g':playerGuid,
@@ -4717,13 +4768,16 @@ function toDg(radials, def = 0) {
 			var speed=toN(att.speed,1);
 			checkObjectUpdateArray(obj);
 			obj.mixer = new THREE.AnimationMixer( obj );
-			const action = obj.mixer.clipAction( obj.gltfanimations[0] );
-			action.play();
-			var f=function(){
-				obj.mixer.update(clock.getDelta()*70*speed);
+			if(obj.gltfanimations.length>0){
+				const action = obj.mixer.clipAction( obj.gltfanimations[0] );
+				action.play();
+				var f=function(){
+					obj.mixer.update(clock.getDelta()*70*speed);
+				}
+				obj.updateArray.push(f);
 			}
-			obj.updateArray.push(f);
 		}
+
 		function handleRotate(obj, ele) {
 			checkObjectUpdateArray(obj);
 			var att = getAttributes(ele);

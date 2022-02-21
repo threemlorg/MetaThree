@@ -1,0 +1,118 @@
+﻿<html>
+<head>
+    <style>
+        .item{
+            text-align:center;
+            padding:20%;
+            background-color:lightblue;
+            font-size:200pt;
+            width:800px;
+            height:400px;
+            display:inline-block;
+            top:0px;
+        }
+        .item:hover{
+            background-color:aquamarine;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <three>
+            <stat></stat>
+            <renderer clearColor="#329ec0"></renderer>
+            <!--<skybox url="/ex/grass/images/lilienstein.jpg"></skybox>-->
+            <orbitcontrols target="0 0 -4" reversed="true"></orbitcontrols>
+            <home></home>
+            <TextGeometry name="text2" position="0 1.6 -4.3" scale="1.5" text="Avatars loading ..." bevelEnabled="false" height="0.1">
+                <meshphongmaterial id="text" color="#4662bb"></meshphongmaterial>
+            </TextGeometry>             <group name="main1" position="1.3 -0.5 -4">
+                <group position="1 -0.15 0.4" rotation="0 -45 0">
+                    <avatar name="female1" url="/sub/avatars/female1.glb"  castshadow="true" >
+                        <animate speed="4"></animate>
+                    </avatar>
+                    <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
+                        <meshphongmaterial color="#572f2f"></meshphongmaterial>
+                    </boxgeometry>
+                </group>	
+                <group position="-1 -0.15 0.4" rotation="0 25 0">
+                    <avatar name="female2" url="/sub/avatars/female2.glb"  castshadow="true" >
+                        <animate speed="4"></animate>
+                    </avatar>
+                    <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
+                        <meshphongmaterial color="#466b3e"></meshphongmaterial>
+                    </boxgeometry>
+                </group>	
+                <group position="0 -0.15 -0.4" rotation="0 0 0">
+                    <avatar name="female3" url="/sub/avatars/female3.glb"  castshadow="true" >
+                        <animate speed="4"></animate>
+                    </avatar>
+                    <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
+                        <meshphongmaterial color="#1b1b55"></meshphongmaterial>
+                    </boxgeometry>
+                </group>	
+                <group position="-1.2 -0.15 -0.8" rotation="0 30 0">
+                    <avatar name="female4" url="/sub/avatars/female4.glb"  castshadow="true" >
+                        <animate speed="4"></animate>
+                    </avatar>
+                    <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
+                        <meshphongmaterial color="#68a0a0"></meshphongmaterial>
+                    </boxgeometry>
+                </group>	
+  
+            </group> 
+            <group name="main2" position="-1.3 -0.51 -4">
+                <group position="0.7 -0.17 0.4" rotation="0 -45 0">
+                    <avatar name="male1" url="/sub/avatars/male1.glb"  castshadow="true" >
+                        <animate speed="2"></animate>
+                    </avatar>
+                    <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
+                        <meshphongmaterial color="#572f2f"></meshphongmaterial>
+                    </boxgeometry>
+                </group>	
+                <group position="-0.73 -0.15 0.4" rotation="0 25 0">
+                    <avatar name="male2" url="/sub/avatars/male2.glb"  castshadow="true" >
+                        <animate speed="2"></animate>
+                    </avatar>
+                    <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
+                        <meshphongmaterial color="#466b3e"></meshphongmaterial>
+                    </boxgeometry>
+                </group>	
+                <group position="0.3 -0.15 -0.75" rotation="0 0 0">
+                    <avatar name="male3" url="/sub/avatars/male3.glb"  castshadow="true" >
+                        <animate speed="4"></animate>
+                    </avatar>
+                    <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
+                        <meshphongmaterial color="#1b1b55"></meshphongmaterial>
+                    </boxgeometry>
+                </group>	
+                <group position="-1.8 -0.15 -0.4" rotation="0 50 0">
+                    <avatar name="male4" url="/sub/avatars/male4.glb"  castshadow="true" >
+                        <!-- <avatar name="male4" url="/sub/avatars/preloader.glb"  castshadow="true" > -->
+                            <animate speed="4"></animate>
+                        </avatar>
+                    <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
+                        <meshphongmaterial color="#68a0a0"></meshphongmaterial>
+                    </boxgeometry>
+                </group>	 
+  
+            </group>
+            <hemispherelight></hemispherelight>
+            <!-- <spotlight intensity="0.6" target="main1" position="3 2 2" castshadow="true">
+            </spotlight> -->
+            <spotlight intensity="0.6" target="main2" position="-1 2 2" castshadow="true">
+            </spotlight>
+             <ambientlight intensity="0.3"></ambientlight> 
+        </three>
+    </div>
+    <script>
+      var threeml;
+    </script>
+    <script type="module">
+      import { ThreeML } from '/threeml/threeml.js'
+      threeml = new ThreeML();
+      threeml.parseThree();
+    </script>
+</body>
+</html>
