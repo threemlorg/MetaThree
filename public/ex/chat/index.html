@@ -1,0 +1,38 @@
+﻿<html>
+<head>
+    <style>
+        #container {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <three>
+            <stat></stat>
+            <loader maxtime="10"></loader>
+            <skybox url="./images/cartoonminrap.png"></skybox>
+            <home></home>
+             <group name="screens" position="0 0 -2" rotation="-50 0 0">
+                <htmlPlaneGeometry url="/sub/chat/receiver.html" name="main" zoom="1" position='0 0.06 0' scale='1.1' rotation="0 0 0">
+                    <present cameradistance="1.2" class="handle" speed="0.03" atStart="true"></present>
+                </htmlPlaneGeometry>
+            </group>
+            <group name="minrap" position="0.65 0 -1" scale="0.2">
+                <gltfLoader url="./models/minrap.glb" castshadow="true">
+                </gltfLoader>
+                 </group>
+            <directionallight target="minrap" position="-2 2 2" intensity="2.5"></spotlight>
+ 
+        </three>
+    </div>
+    <script>
+      var threeml;
+    </script>
+    <script type="module">
+      import { ThreeML } from '/threeml/threeml.js'
+      threeml = new ThreeML();
+      threeml.parseThree();
+    </script>
+</body>
+</html>

@@ -20,13 +20,13 @@
 					</TextGeometry>
 					<group name='threescreens' position='-1.15 0.34 1.1' rotation="0 90 0">
 						<htmlPlaneGeometry url="https://threejs.org/examples/#webgl_animation_keyframes" name="keyframes" position='0 0 0' scale="0.3">
-							<present cameradistance="0.7" class="handle" speed="0.02" fromgroup="threescreens"></present>
+							<present cameradistance="0.5" class="handle" speed="0.02" fromgroup="threescreens"></present>
 						</htmlPlaneGeometry>
-						<htmlPlaneGeometry url="https://threejs.org/examples/#webgl_postprocessing_nodes" name="nodes" position='-0.1 0.3 0' scale="0.2" rotation="0 0 10">
-							<present cameradistance="0.7" class="handle" speed="0.02" fromgroup="threescreens"></present>
+						<htmlPlaneGeometry url="https://threejs.org/examples/#webgl_lightningstrike" name="nodes" position='-0.1 0.3 0' scale="0.2" rotation="0 0 10">
+							<present cameradistance="0.35" class="handle" speed="0.04" fromgroup="threescreens"></present>
 						</htmlPlaneGeometry>
 						<htmlPlaneGeometry url="https://threejs.org/examples/#webgl_animation_skinning_blending" name="skinning" position='-0.1 -0.2 0' scale="0.2" rotation="0 0 -5">
-							<present cameradistance="0.7" class="handle" speed="0.02" fromgroup="threescreens"></present>
+							<present cameradistance="0.35" class="handle" speed="0.02" fromgroup="threescreens"></present>
 						</htmlPlaneGeometry>
 					</group>
 					<group name="leaves" position="-0.2 -1 0">
@@ -39,7 +39,7 @@
 						<gltfLoader scale="1" name="leaf2" url="./models/button1.glb" position="-0.4 0 0" rotation="0 0 0">
 							<present class="handle" speed="0.02" target="nodes"></present>
 							<hover action="scale" factor="1.2"></hover>
-							<hover action="tooltip" text="Postprocessing nodes" atmouse="true"></hover>
+							<hover action="tooltip" text="Lightning strike" atmouse="true"></hover>
 						</gltfLoader>
 						<gltfLoader scale="1" name="leaf3" url="./models/button1.glb" position="0.4 0 0" rotation="0 0 0">
 							<present class="handle" speed="0.02" target="skinning"></present>

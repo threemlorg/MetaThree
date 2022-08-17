@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Building</title>
+	</head>
+	<body>
+		<div id="container" >
+			
+            <three>
+                <stat></stat>
+                <renderer clearcolor="#131613"></renderer>
+                <skybox url="./images/kloppenheim_05.jpg"></skybox>
+                <home></home>
+                <orbitcontrols target="-0.3 0 -2" reversed="true" ></orbitcontrols>
+                <group name="x" parent="camera" position="0 0 0">
+                    <group name="y"  position="0 0 -1"></group>
+                    <spotlight position="0 0 0"  intensity="1" decay="0.3" distance="10" target="y"></spotlight>
+                </group>
+                <group name="c"  position="0 -1.8 0">
+                    <gltfLoader name="museum" url="./models/museum.glb"  castshadow="true"  receiveshadow="true">
+                    </gltfLoader>
+                    <gltfLoader name="museumfloor1" url="./models/museumfloor1.glb" position="0 0.001 0"  castshadow="true"  receiveshadow="true">
+                        <walk></walk>
+                    </gltfLoader>
+                    <gltfLoader name="museumfloor2" url="./models/museumfloor2.glb"  castshadow="true"  receiveshadow="true">
+                        <walk></walk>
+                    </gltfLoader>
+                    <gltfLoader name="museumfence" url="./models/museumfence.glb"  castshadow="true"  receiveshadow="true">
+                    </gltfLoader>
+                    <gltfLoader name="indigenous" position="9 0 17.4" url="./models/indigenous.glb"  castshadow="true"  receiveshadow="true">
+                    </gltfLoader>
+                    <gltfLoader name="pillar" position="9 5.5 -17.4" url="./models/pillar.glb"  castshadow="true"  receiveshadow="true">
+                    </gltfLoader>
+                    <gltfLoader name="sculpture" position="17.5 1 5" rotation="6 72 28" scale="1.5" url="./models/sculpture.glb"  castshadow="true" >
+                    </gltfLoader>
+                   <group name="rembrandpaintings" position="11 3 19.48" rotation="0 180 0">
+                        <pointlight position="5 2.5 4"  intensity="1" decay="0.3" distance="10"></pointlight>
+                        <boxgeometry tooltip='Het Joodse bruidje' name='Het_Joodse_bruidje' position='0 0 0' scale='1.665 1.215 0.02'>
+                            <meshphongmaterial url='./images/rembrand/Het_Joodse_bruidje.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2'></present>
+                            <hover action="tooltip" text="c 1665-1669
+                            oil on canvas
+                            	121,5 × 166,5 cm" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='painting1' name='painting1' position='3 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/rembrand/painting1.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2'></present>
+                            <hover action="tooltip" text="painting1" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='painting3' name='painting3' position='6 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/rembrand/painting3.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2'></present>
+                            <hover action="tooltip" text="painting3" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Prodigal_Son2' name='Prodigal_Son2' position='9 0 0' scale='2.05 2.62 0.02'>
+                            <meshphongmaterial url='./images/rembrand/Prodigal_Son2.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2' presentationangle='-90'></present>
+                            <hover action="tooltip" text="The Prodigal Son
+                            c. 1669
+                            oil on canvas, 262 x 205 cm" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Rembrandt' name='Rembrandt' position='12 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/rembrand/rembrandt.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2' presentationangle='-90'></present>
+                            <hover action="tooltip" text="Rembrandt" atmouse="true"></hover>
+                        </boxgeometry>
+                    </group>
+                    <group name="vermeerpaintings" position="0 3 -19.48" rotation="0 0 0">
+                        <pointlight position="5 2.5 4"  intensity="0.3" decay="0.3" distance="10"></pointlight>
+                        <boxgeometry tooltip='Delft' name='Delft' position='0 0 0' scale='0.44 0.543 0.02'>
+                            <meshphongmaterial url='./images/vermeer/Jan_Vermeer_van_Delft_025.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='0.6'></present>
+                            <hover action="tooltip" text="The Little Street, 1657–1658" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='painting1' name='Johannes-vermeer-het-meisje-met-de-parel' position='3 0 0' scale='0.40 0.465 0.02'>
+                            <meshphongmaterial url='./images/vermeer/Johannes-vermeer-het-meisje-met-de-parel-art-salon-holland.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='0.6'></present>
+                            <hover action="tooltip" text="Girl with a Pearl Earring, c. 1665" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='painting3' name='painting3' position='6 0 0' scale='0.41 0.455 0.02'>
+                            <meshphongmaterial url='./images/vermeer/melkmeisje550x733.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='0.6'></present>
+                            <hover action="tooltip" text="The Milkmaid, c. 1657–1658" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Prodigal_Son2' name='Prodigal_Son2' position='9 0 0' scale='0.391 0.466 0.02'>
+                            <meshphongmaterial url='./images/vermeer/Vermeer_Johannes_-_Woman_reading_a_letter_-_ca._1662-1663-e1470252237912.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='0.6'></present>
+                            <hover action="tooltip" text="Woman reading a letter - ca. 1662-1663 " atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='view-of-delft' name='view-of-delft' position='12 0 0' scale='1.157 0.965 0.02'>
+                            <meshphongmaterial url='./images/vermeer/Vermeer-view-of-delft-e1470252080231.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='1'></present>
+                            <hover action="tooltip" text="View of delft, ca. 1659–1661" atmouse="true"></hover>
+                        </boxgeometry>
+                    </group>
+                    <group name="picassopaintings" position="-19.48 3 0" rotation="0 90 0">
+                        <pointlight position="5 2.5 4"  intensity="0.3" decay="0.3" distance="10"></pointlight>
+                        <boxgeometry tooltip='Delft' name='Delft' position='0 0 0' scale='0.54 0.73 0.02'>
+                            <meshphongmaterial url='./images/picasso/ABSINTHE DRINKER.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='0.6'></present>
+                            <hover action="tooltip" text="Absinte drinker 1901" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='seated woman' name='seated_woman' position='3 0 0' scale='0.65 0.81 0.02'>
+                            <meshphongmaterial url='./images/picasso/seated woman.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='0.6'></present>
+                            <hover action="tooltip" text="Seated woman 1909" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Science and charity' name='Science_charity' position='6 0 0' scale='2.495 1.97 0.02'>
+                            <meshphongmaterial url='./images/picasso/Science and charity.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='1.6'></present>
+                            <hover action="tooltip" text="Science and charity 1897" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Prodigal_Son2' name='Prodigal_Son2' position='9 0 0' scale='0.391 0.466 0.02'>
+                            <meshphongmaterial url='./images/picasso/Vermeer_Johannes_-_Woman_reading_a_letter_-_ca._1662-1663-e1470252237912.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='0.6'></present>
+                            <hover action="tooltip" text="Woman reading a letter - ca. 1662-1663 " atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='view-of-delft' name='view-of-delft' position='12 0 0' scale='1.157 0.965 0.02'>
+                            <meshphongmaterial url='./images/picasso/Vermeer-view-of-delft-e1470252080231.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='1'></present>
+                            <hover action="tooltip" text="View of delft, ca. 1659–1661" atmouse="true"></hover>
+                        </boxgeometry>
+                    </group>
+
+                    <group name="painters1" position="-7 8 19.48" rotation="0 180 0">
+                        <boxgeometry tooltip='Dali' name='dali' position='0 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/painters/dali.png'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2'></present>
+                            <hover action="tooltip" text="Dali" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Davinci' name='davinci' position='3 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/painters/davinci.png'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2'></present>
+                            <hover action="tooltip" text="Davinci" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Michelangelo' name='michelangelo' position='6 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/painters/michelangelo.png'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2'></present>
+                            <hover action="tooltip" text="Michelangelo" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Monet' name='monet' position='9 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/painters/monet.png'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2' presentationangle='-90'></present>
+                            <hover action="tooltip" text="Monet" atmouse="true"></hover>
+                        </boxgeometry>
+                        </group>
+                       <group name="painters2" position="-19.48 8 28" rotation="0 90 0">
+                        <boxgeometry tooltip='Picasso' name='picasso' position='12 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/painters/picasso.png'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2'></present>
+                            <hover action="tooltip" text="Picasso" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Rembrandt' name='rembrandt' position='15 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/painters/rembrandt.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2'></present>
+                            <hover action="tooltip" text="Rembrandt" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Van Gogh' name='vangogh' position='18 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/painters/vangogh.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2'></present>
+                            <hover action="tooltip" text="Van Gogh" atmouse="true"></hover>
+                        </boxgeometry>
+                        <boxgeometry tooltip='Vermeer' name='vermeer' position='21 0 0' scale='1.2 1.2 0.02'>
+                            <meshphongmaterial url='./images/painters/vermeer.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='2'></present>
+                            <hover action="tooltip" text="Vermeer" atmouse="true"></hover>
+                        </boxgeometry>
+                        </group>     
+                    <group name="stairs" position="-3.8 0.3 -7" rotation="0 -90 0">
+                        <boxgeometry scale="5 0.2 8" position="0 2.4 3" rotation="-37 0 0" visible="false" >
+                            
+                            <walk></walk>
+                        </boxgeometry>
+
+                        <group name="stairpart2">
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.3 0" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair" url="./images/Dirt_map.jpg" ></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.6 0.4" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair"></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.9 0.8" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair"></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 1.2 1.2" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair" ></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                        </group>
+                        <group name="stairpart2" position="0 1.2 1.6">
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.3 0" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair" url="./images/Dirt_map.jpg" ></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.6 0.4" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair"></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.9 0.8" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair"></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 1.2 1.2" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair" ></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                        </group>
+                        <group name="stairpart3" position="0 2.4 3.2">
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.3 0" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair" url="./images/Dirt_map.jpg" ></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.6 0.4" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair"></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.9 0.8" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair"></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 1.2 1.2" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair" ></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                        </group>
+                        <group name="stairpart4" position="0 3.6 4.8">
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.3 0" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair" url="./images/Dirt_map.jpg" ></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.6 0.4" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair"></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 0.9 0.8" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair"></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                            <boxgeometry scale="5 0.2 0.4" position="0 1.2 1.2" castshadow="true"  receiveshadow="true">
+                                <meshphongmaterial id="stair" ></meshphongmaterial>
+                                <walk></walk>
+                            </boxgeometry>
+                        </group>
+
+                    </group>
+                </group>
+
+
+                <hemispherelight position="100 100 70" intensity="0.3" target="c"   castshadow="true"></hemispherelight>
+               <directionallight position="-2 1 -3.6" intensity="1" target="c"  castshadow="true"></directionallight>
+                <!-- <ambientlight intensity="0.3"></ambientlight>-->
+            </three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

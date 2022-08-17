@@ -1,4 +1,4 @@
 {
     "sqlitedb":"./data/threemlweb.db",
-    "homepage":"sub/search"
+    "homepage":"exp/timeline/flat.html"
 }

@@ -14,7 +14,6 @@ import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 import GerstnerWater from './controls/gerstnerWater.js'
 import { Fire } from './controls/Fire.js';
 import { Vector3 } from './build/three.module.js';
-
 var ThreeScenes = []
 var camera;
 var scene;
@@ -25,6 +24,8 @@ var clock = new THREE.Clock();
 var controls;
 var socket;
 var playerGuid;
+var playerName;
+var avatarUrl='/sub/avatars/male1.glb';
 var playerGuids=[];
 var ThreeML = function (element) {
 	const loader = new GLTFLoader();
@@ -48,6 +49,67 @@ var ThreeML = function (element) {
 	var externalModules = [];
 	this.registerModule = function (module) {
 		externalModules.push(module);
+	}
+	this.writeCookie=function (userName){
+		if(userName && userName.length>0){
+			playerName=userName;
+		}
+		var days=365;
+		var date = new Date();
+		date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+		var expires = `; expires=${date.toGMTString()}`;
+		var cookie='';
+		if(avatarUrl && avatarUrl.length>0){
+			cookie=`avatarurl=${encodeURI(avatarUrl)};`;
+			document.cookie=`${cookie}; domain=.${getDomain()};path=/${expires}`
+		}
+		if(playerGuid && playerGuid.length>0){
+			cookie=`playerguid=${encodeURI(playerGuid)};`;
+			document.cookie=`${cookie}; domain=.${getDomain()};path=/${expires}`
+		}
+		if(playerName && playerName.length>0){
+			cookie=`playername=${encodeURI(playerName)};`;
+			document.cookie=`${cookie}; domain=.${getDomain()};path=/${expires}`
+		}
+	
+
+	}
+	function getDomain(){
+		var loc = new URL(window.top.location.href); //get the current location
+		var hostname=loc.hostname;
+		var parts=hostname.split('.');
+		if(parts.length>2){
+			parts.splice(0,1);
+		}
+		return parts.join('.');
+	}
+	this.readCookie=function (){
+		var x=document.cookie;
+		if(x && x.length>0){
+			var arr=x.split(";");
+			for(var i=0;i<arr.length;i++){
+				var c=arr[i];
+				var carr=c.split('=');
+				if(carr.length==2){
+					var key=carr[0].trim();
+					var val=decodeURI(carr[1]).trim();
+					switch(key){
+						case 'avatarurl':
+							avatarUrl= val;
+							break;
+						case 'playerguid':
+							playerGuid= val;
+							break;
+						case 'playername':
+							playerName= val;
+							break;
+		
+					}
+
+				}
+			}
+		}
+		return `${playerName}|${playerGuid}`;
 	}
 	function createGUI() {
 
@@ -400,11 +462,7 @@ var ThreeML = function (element) {
 			obj.updateArray.push(f);
 		}
 		obj.orbitTarget=new THREE.Vector3(targetx, targety, targetz);
-
 		obj.targetPosition = new THREE.Vector3(x, y, z);
-		//var le = obj.position.clone().sub(obj.targetPosition).length() / 20;
-		//le = le < 0.2 ? 0.1 : le;
-		//obj.targetLimit = le ;
 		obj.targetStep = Math.floor(2 / speed);
 	}
 	this.getCameraDefaultLookAtDummy = function() {
@@ -549,7 +607,16 @@ var ThreeML = function (element) {
 			return intersects[0].object;
 		}
 	}
-
+	function getDistanceToWalkFloor() {
+		var raycaster = new THREE.Raycaster(camera.position, new THREE.Vector3(0,-1,0), 0,50);
+		raycaster.camera=camera;
+		var intersects = raycaster.intersectObjects(allObjects);
+		if (intersects.length > 0 && intersects[0].object) {
+			var p = intersects[0].point;
+			return camera.position.distanceTo(p);
+		}
+		return 0;
+	}	
 
 	function fillAllObjects() {
 		allObjects = [];
@@ -902,6 +969,7 @@ function toDg(radials, def = 0) {
 		var youtubePlayers = [];
 		var container;
 		var threescene = this;
+		
 		init(threenode, htmlParent);
 		animate();
 
@@ -2037,15 +2105,35 @@ function toDg(radials, def = 0) {
 					parent.add(obj2);
 					obj2.threemlType = 'avatar';
 					obj2.url = att.url;
-					checkevents(ele, obj2);				
+					checkevents(ele, obj2);	
 				});
 			});
+		}
+		function handleAvatarSelect(avatarParent, ele){
+
+			var b =getAvatarCollisionObject();
+			avatarParent.add(b);
+			b.position.y=1;
+			var f=function(){
+				avatarUrl=avatarParent.url; 
+				self.writeCookie();	
+			}
+			addCallbackFunction(b, f);
+			
+		}
+		function getAvatarCollisionObject(){
+			var geometry = new THREE.BoxBufferGeometry();
+			var material = new THREE.MeshPhongMaterial();
+			var b = new THREE.Mesh(geometry, material);
+			b.scale.set(0.4, 1, 0.4);
+			b.visible=false;
+			return b;
 		}
 		function setEventParent(parent, ele) {
 			for (var n = 0; n < ele.children.length; n++) {
 				var ch = ele.children[n];
 				setEventParent(parent, ch);
-				if (ch.type == "Mesh") {
+				if (ch.type == "Mesh" ) {
 					ch.eventParent = parent;
 				}
 			}
@@ -2872,76 +2960,44 @@ function toDg(radials, def = 0) {
 			var bevelSize = toN(att.bevelsize, 1);
 			var bevelEnabled = toB(att.bevelenabled, true);
 			var textGeo = new THREE.TextGeometry(text, {
-
 				font: font,
-
 				size: size,
 				height: height,
 				curveSegments: curveSegments,
-
 				bevelThickness: bevelThickness,
 				bevelSize: bevelSize,
 				bevelEnabled: bevelEnabled
-
-			}
-			);
-
+			});
 			textGeo.computeBoundingBox();
 			textGeo.computeVertexNormals();
-
 			const triangle = new THREE.Triangle();
-
 			// "fix" side normals by removing z-component of normals for side faces
 			// (this doesn't work well for beveled geometry as then we lose nice curvature around z-axis)
 
 			if (!bevelEnabled) {
-
 				const triangleAreaHeuristics = 0.1 * (height * size);
-
 				for (let i = 0; i < textGeo.faces.length; i++) {
-
 					const face = textGeo.faces[i];
-
 					if (face.materialIndex == 1) {
-
 						for (let j = 0; j < face.vertexNormals.length; j++) {
-
 							face.vertexNormals[j].z = 0;
 							face.vertexNormals[j].normalize();
-
 						}
-
 						const va = textGeo.vertices[face.a];
 						const vb = textGeo.vertices[face.b];
 						const vc = textGeo.vertices[face.c];
-
 						const s = triangle.set(va, vb, vc).getArea();
-
 						if (s > triangleAreaHeuristics) {
-
 							for (let j = 0; j < face.vertexNormals.length; j++) {
-
 								face.vertexNormals[j].copy(face.normal);
-
 							}
-
 						}
-
 					}
-
 				}
-
 			}
-
 			const centerOffset = - 0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x);
-
 			textGeo = new THREE.BufferGeometry().fromGeometry(textGeo);
-
 			var obj = new THREE.Mesh(textGeo, material);
-
-
-
-
 			setCommonAttributes(obj, att);
 			obj.scale.multiplyScalar(0.001);
 			obj.position.x += centerOffset * obj.scale.x;
@@ -2949,6 +3005,7 @@ function toDg(radials, def = 0) {
 			parent.add(obj);
 			return obj;
 		}
+		
 		var socket;
 		function checkSocket(){
 			if(!socket){
@@ -2961,27 +3018,19 @@ function toDg(radials, def = 0) {
 						 
 						 handlePlayers(playerarr);
 					 });
-					//  socket.on("usersList", (ul)=>{
-					// 	 if(ul.length>0){
-					// 		 var users=ul.join(', ');
-					// 		 usersDiv.innerHTML='Current visitors: '+users;
-					// 	 }
-					// 	 else{
-					// 		 usersDiv.innerHTML='';
-					// 	 }
-					//  })
 				 });
 		   }
 	    }
 		function checkPlayerGuid(){
 			if(!playerGuid){
 				playerGuid=uuidv4();
+				self.writeCookie();	
 			}
 		}
 		function handlePlayers(playerarr){
 			for(var n=0;n<playerarr.length;n++){
 				var j=playerarr[n];
-				if(j.g!=playerGuid){
+				if(true){//sj.g!=playerGuid){
 					var pc=playerGuids.filter(e => e.guid==j.g);
 					var p;
 					if(pc.length==0 && !j.left){
@@ -3001,6 +3050,7 @@ function toDg(radials, def = 0) {
 						var rot=j.u;
 						p.newPosition=new THREE.Vector3(pos[0], pos[1], pos[2]);
 						p.newQuaternion=new THREE.Quaternion(rot[0], rot[1], rot[2], rot[3]);
+						checkMessage(p, j.m);
 					}
 
 					// p.position.set(pos[0], pos[1], pos[2]);
@@ -3009,18 +3059,22 @@ function toDg(radials, def = 0) {
 				}
 			}
 		}
-
 		function createNewPlayer(j){
 			var guid=j.g;
 			var player=new THREE.Group();
 			player.guid=guid;
 			player.name=guid;
 			scene.add(player);
+			var coll=getAvatarCollisionObject()
+			coll.position.y=-1;
+			player.add(coll);
+			var aname=(j.n && j.n.length>0)?j.n:'unknown';
+			addAvatarHover(coll, player, aname);
+
 			var pos=j.p;
 			var rot=j.u;
 			player.position.set(pos[0], pos[1], pos[2]);
 			player.quaternion.set(rot[0], rot[1], rot[2], rot[3]);
-
 			checkObjectUpdateArray(player);
 			var f = function(){
 				if(player.newPosition){
@@ -3033,27 +3087,69 @@ function toDg(radials, def = 0) {
 			player.updateArray.push(f);
 
 			const gltfLoader = new GLTFLoader();
-			var url='/sub/docu/models/robot.glb';
+			var url='/sub/avatars/preloader.glb';
 			gltfLoader.load(url, (gltf) => {
 				const obj = gltf.scene;
 				player.add(obj);
-				obj.rotation.y=Math.PI;
-				obj.traverse(function (node) {
-					if (node.isMesh) { node.castShadow = true; }
-				});
-				//animate
-				checkObjectUpdateArray(obj);
-				obj.mixer = new THREE.AnimationMixer( obj );
-				const action = obj.mixer.clipAction( gltf.animations[0] );
-				action.play();
-				var f=function(){
-					obj.mixer.update(clock.getDelta()*70);
+				prepareAvatar(obj, gltf);
+				if(j.au && j.au.length>0){
+					gltfLoader.load(j.au, (gltf) => {
+						const obj2 = gltf.scene;
+						player.remove(obj);
+						player.add(obj2);
+						prepareAvatar(obj2, gltf, j.n);	
+					});
 				}
-				obj.updateArray.push(f);
 
 			});
 			return player;
 
+		}
+		function checkMessage(player, chat){
+			if(chat && chat.length>0 && chat!=player.lastMessage){
+				var sprite=player.getObjectByName('chat');
+				if(sprite){
+					player.remove(sprite);
+				}
+				var h=2;
+				if(chat.length>30){
+					h=3;
+				}
+				if(chat.length>60){
+					h=4;
+				}
+				var material=getDynamicTexture(chat,50,0.3,1000,h*100,'black', 'white',0.05);//, fontColor, backgroundColor, lineHeight,margin, width, height, font, fontSize, fontWeight);
+				sprite = new THREE.Sprite(material);
+				sprite.rotation.y=Math.PI;
+				sprite.scale.x=1;
+				sprite.scale.y=h*0.1;
+				sprite.name='chat';
+				sprite.position.y=0.2;
+				player.add(sprite);
+				player.lastMessage=chat;
+			}
+			
+		}
+		function prepareAvatar(obj, gltf, name){
+			obj.rotation.y=Math.PI;
+			obj.position.y=-avatarheight-0.23;
+			obj.traverse(function (node) {
+				if (node.isMesh) { node.castShadow = true; }
+			});
+			//animate
+			checkObjectUpdateArray(obj);
+			obj.mixer = new THREE.AnimationMixer( obj );
+			const action = obj.mixer.clipAction( gltf.animations[0] );
+			action.play();
+			var f=function(){
+				obj.mixer.update(clock.getDelta()*70);
+			}
+			obj.updateArray.push(f);
+			// if(name){
+			// 	var text=new THREE.TextGeometry(name);
+			// 	obj.add(text);
+			// 	text.position.set(new THREE.Vector3(0, 1, 0));
+			// }
 		}
 		function uuidv4() {
 			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -3061,8 +3157,33 @@ function toDg(radials, def = 0) {
 			  return v.toString(16);
 			});
 		  }
+		  var camAjusted=false;
+		  function setCameraHeight(){
+			var f2=function(){
+				if(!camAjusted){
+					var d=getDistanceToWalkFloor();
+					if(d!=0){
+						var delta=avatarheight+0.2-d;
+						if(Math.abs(delta)>0.01){
+							var s=Math.sign(delta);
+							camera.position.y+=s*0.01;
+							if(orbitControls){
+								orbitControls.target.y=camera.position.y;
+							}
+						}
+						else{
+							camAjusted=true;
+						}
+					}
+				}
+			}
+			camera.updateArray.push(f2);
+
+		  }
 		function handleMultiPlayer(ele, parent) {
+			threeml.readCookie();
 			checkObjectUpdateArray(camera);
+			setCameraHeight();
 			checkPlayerGuid();
 			checkSocket();
 			checkInitialCameraPosition();
@@ -3089,9 +3210,11 @@ function toDg(radials, def = 0) {
 		function updateSceneStatus(){
 			var j={
 				'g':playerGuid,
+				'n':playerName,
                 'p':[camera.position.x, camera.position.y, camera.position.z],
                 'u':[camera.quaternion.x, camera.quaternion.y, camera.quaternion.z, camera.quaternion.w], 
-                'r':getCurrentRoom()
+                'r':getCurrentRoom(),
+				'au':avatarUrl
             }
             socket.emit('playerdata',j);
 
@@ -3227,7 +3350,10 @@ function toDg(radials, def = 0) {
 					case 'animate':
 						handleAnimate(obj, child);
 						break;
-					}
+					case 'avatarselect':
+						handleAvatarSelect(obj, child);
+						break;
+						}
 			}
 			return hasMouseEvent;
 		}
@@ -3935,12 +4061,15 @@ function toDg(radials, def = 0) {
 			var font = toT(att.font, 'Verdana');
 			var fontSize = toN(att.fontsize, 20);
 			var fontWeight=toT(att.fontweight, 'bolder')
-			var fontstring = fontWeight + ' ' + fontSize + 'px ' + font;
 			var fontColor = toT(att.fontcolor, 'red')
 			var backgroundColor = toT(att.backgroundcolor, 'cyan')
 			var lineHeight = toN(att.lineheight, 0.1)
 			var margin = toN(att.margin, 0.1)
 
+			return getDynamicTexture(text, fontSize, lineHeight, width, height, fontColor, backgroundColor,margin, font, fontWeight);
+		}
+		function getDynamicTexture(text, fontSize=20, lineHeight=0.1, width=512, height=512, fontColor='red', backgroundColor='cyan', margin=0.1, font='Verdana', fontWeight='bolder') {
+			var fontstring = fontWeight + ' ' + fontSize + 'px ' + font;
 			var options = {
 				"text" : text,
 				"font": fontstring,
@@ -3949,7 +4078,7 @@ function toDg(radials, def = 0) {
 				"margin": margin
 			};
 
-			//text, undefined, height / 2, fontColor
+					//text, undefined, height / 2, fontColor
 			var dynamicTexture = new THREEx.DynamicTexture(width, height)
 			dynamicTexture.context.font = fontstring;
 			dynamicTexture.texture.anisotropy = renderer.getMaxAnisotropy();
@@ -4245,6 +4374,48 @@ function toDg(radials, def = 0) {
 
 			addCallbackFunction(obj, f, 'hover')
 		}
+		function addAvatarHover(obj, player, text){
+			var group=new THREE.Group();
+			player.add(group);
+			group.position.set(player.position.x,player.position.y,player.position.z);
+			group.visible=false;
+			var material=getDynamicTexture(text,50,0.7,500,100,'black', 'white',0.05);//, fontColor, backgroundColor, lineHeight,margin, width, height, font, fontSize, fontWeight);
+			const sprite = new THREE.Sprite(material);
+			sprite.rotation.y=Math.PI;
+			sprite.scale.x=1;
+			sprite.scale.y=0.1;
+			group.add(sprite);
+			const sprite2 = new THREE.Sprite(material);
+			sprite2.scale.x=1;
+			sprite2.scale.y=0.1;
+			group.add(sprite2);
+			//var target=sprite;
+
+			var f = function () {
+				var t=group;
+				if (hoverObject) {
+					if (hoverObject.o == obj) {
+						t = hoverObject.t;
+					}
+					else {
+						clearHover(container);
+					}
+				}
+				if (!obj.hoveractions) {
+					obj.hoveractions = 'show';
+				}
+				t.visible = true;
+				// var pl=camera.position.clone();
+				// p.worldToLocal(pl);
+				// p.lookAt=camera.position;
+				hoverObject = {
+					o: obj,
+					t: t
+				}
+			}
+			addCallbackFunction(obj, f, 'hover')
+		}
+
 		function handleActions(obj, ele) {
 			var att = getAttributes(ele);
 			var targetName = att.target;

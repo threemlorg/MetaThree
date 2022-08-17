@@ -334,10 +334,11 @@ exports.saveChat=function(chat, io){
         ///////////////////
             if(rows.length==0){
 
-              let sql = `INSERT INTO Chat (IP, Nickname, Message, CreateDate, Room, itsCustomer_ID)
+              let sql = `INSERT INTO Chat (IP, Nickname, PlayerGuid, Message, CreateDate, Room, itsCustomer_ID)
               VALUES (
                 '${chat.ip}',
                 '${chat.u}',
+                '${chat.g}',
                 '${chat.m}',
                 '${strdateFrom}',
                 '${chat.r}',
@@ -352,6 +353,7 @@ exports.saveChat=function(chat, io){
                       return console.error(err.message);
                     }
                     chat.d=this.printDate();
+                    updateLastChat(chat);
                     var arr=[];
                     arr.push(chat);
                     io.sockets.in(chat.r).emit("new-chat",arr);
@@ -373,6 +375,21 @@ exports.saveChat=function(chat, io){
 
 }
 
+function updateLastChat(chat){
+  let roomUsers = connectedPlayers.get(chat.r);
+  if(roomUsers){
+    for(var j=0;j<roomUsers.length;j++){
+      var us=roomUsers[j];
+      if(us.g==chat.g){
+        us.m=chat.m;
+        console.log(`Chat added: ${chat.m} `);
+        break;
+      }
+    }
+    connectedPlayers.set(chat.r, roomUsers);  
+  }
+
+}
 //Whois
 
 exports.checkRequest = function(req){

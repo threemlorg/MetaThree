@@ -10,17 +10,22 @@
 			
 			<three>
 				<renderer clearColor="0.2 0.5 0.5"></renderer>
-				<orbitcontrols target="0 0 -0.1" reversed="true"></orbitcontrols>
+				<orbitcontrols target="0 0 -0.01" reversed="true"></orbitcontrols>
 				<multiplayer></multiplayer>
 				<group name="chatlocation" position="1.7 0.8 -3" parent="camera"></group>
 				<home>
 					<menu tooltip="View discussion" url="/sub/chat/chatloader.html" target="chatlocation"></menu>
 				</home>
-				<group name="lighttarget" position="0 0 -5"></group>
+				<group name="lighttarget" position="0 0 -5">
+					<troikatext></troikatext>
+				</group>
 				<planegeometry position="0 -1 -4.2" scale="20" rotation="-90 0 0" receiveshadow="true">
 					<meshphongmaterial color="0.8 0.8 0.1"></meshphongmaterial>
 					<walk></walk>
 				</planegeometry>
+				<reflector position="1.8 0 -9" rotation="0 0 0" type="circle" scale="4">
+
+				</reflector>
 				<!-- <gltfLoader name="robot" position="0 0 -3" url="./models/robot.glb" scale="0.3" rotation="0 39 0" castshadow="true">
 					<animate speed="2"></animate>
 				</gltfLoader> -->
@@ -43,7 +48,7 @@
 					</boxgeometry>
 					<group url="/sub/docu/html/choice2.html" position="0 0.7 0" scale="2" margin="4"></group>
 				</group>
-				<directionallight position="0 5 1.6" target="lighttarget" castshadow="true"></directionallight>
+				<directionallight position="0 5 -9" target="lighttarget" castshadow="true"></directionallight>
 			</three>
 
 		</div>

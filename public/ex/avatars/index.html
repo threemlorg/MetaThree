@@ -27,10 +27,17 @@
             <home></home>
             <TextGeometry name="text2" position="0 1.6 -4.3" scale="1.5" text="Avatars loading ..." bevelEnabled="false" height="0.1">
                 <meshphongmaterial id="text" color="#4662bb"></meshphongmaterial>
+               <blink speed="0.01"></blink>
+               <actions>
+                   <action type="pause" speed="0.002"></action>
+                   <action type="transform" scale="0.000001"></action>
+               </actions>
             </TextGeometry>             <group name="main1" position="1.3 -0.5 -4">
                 <group position="1 -0.15 0.4" rotation="0 -45 0">
                     <avatar name="female1" url="/sub/avatars/female1.glb"  castshadow="true" >
                         <animate speed="4"></animate>
+                        <avatarselect></avatarselect>
+                        <hover action="tooltip" text="Hello from box" atmouse="true"></hover>
                     </avatar>
                     <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
                         <meshphongmaterial color="#572f2f"></meshphongmaterial>
@@ -39,6 +46,7 @@
                 <group position="-1 -0.15 0.4" rotation="0 25 0">
                     <avatar name="female2" url="/sub/avatars/female2.glb"  castshadow="true" >
                         <animate speed="4"></animate>
+                        <avatarselect></avatarselect>
                     </avatar>
                     <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
                         <meshphongmaterial color="#466b3e"></meshphongmaterial>
@@ -47,6 +55,7 @@
                 <group position="0 -0.15 -0.4" rotation="0 0 0">
                     <avatar name="female3" url="/sub/avatars/female3.glb"  castshadow="true" >
                         <animate speed="4"></animate>
+                        <avatarselect></avatarselect>
                     </avatar>
                     <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
                         <meshphongmaterial color="#1b1b55"></meshphongmaterial>
@@ -55,6 +64,7 @@
                 <group position="-1.2 -0.15 -0.8" rotation="0 30 0">
                     <avatar name="female4" url="/sub/avatars/female4.glb"  castshadow="true" >
                         <animate speed="4"></animate>
+                        <avatarselect></avatarselect>
                     </avatar>
                     <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
                         <meshphongmaterial color="#68a0a0"></meshphongmaterial>
@@ -66,6 +76,7 @@
                 <group position="0.7 -0.17 0.4" rotation="0 -45 0">
                     <avatar name="male1" url="/sub/avatars/male1.glb"  castshadow="true" >
                         <animate speed="2"></animate>
+                        <avatarselect></avatarselect>
                     </avatar>
                     <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
                         <meshphongmaterial color="#572f2f"></meshphongmaterial>
@@ -74,6 +85,7 @@
                 <group position="-0.73 -0.15 0.4" rotation="0 25 0">
                     <avatar name="male2" url="/sub/avatars/male2.glb"  castshadow="true" >
                         <animate speed="2"></animate>
+                        <avatarselect></avatarselect>
                     </avatar>
                     <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
                         <meshphongmaterial color="#466b3e"></meshphongmaterial>
@@ -82,6 +94,7 @@
                 <group position="0.3 -0.15 -0.75" rotation="0 0 0">
                     <avatar name="male3" url="/sub/avatars/male3.glb"  castshadow="true" >
                         <animate speed="4"></animate>
+                        <avatarselect></avatarselect>
                     </avatar>
                     <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
                         <meshphongmaterial color="#1b1b55"></meshphongmaterial>
@@ -91,6 +104,7 @@
                     <avatar name="male4" url="/sub/avatars/male4.glb"  castshadow="true" >
                         <!-- <avatar name="male4" url="/sub/avatars/preloader.glb"  castshadow="true" > -->
                             <animate speed="4"></animate>
+                            <avatarselect></avatarselect>
                         </avatar>
                     <boxgeometry scale="1 0.3 1" position="0 -0.15 0" receiveshadow="true">
                         <meshphongmaterial color="#68a0a0"></meshphongmaterial>

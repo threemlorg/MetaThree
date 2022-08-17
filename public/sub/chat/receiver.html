@@ -6,7 +6,7 @@
  <style>
      body{
          font-family: Arial, Helvetica, sans-serif;
-         background-color: black;
+         background-color: #6c3232;
          height: 100vh;
          width: 100vw;
          font-size: xx-large;
@@ -106,6 +106,9 @@
  <script>
  const msgBox = document.getElementById("msgBox")
  const usersDiv=document.getElementById("users");
+ var threemlmain = window.top.threeml;
+ var playerGuid='';
+ readUser();
  const socket = io.connect();
  socket.on('connect', function() {
    // Connected, let's sign-up for to receive messages for this room
@@ -130,6 +133,24 @@
         }
     })
 });
+function readUser(){
+    if(threemlmain){
+        var cookies=threemlmain.readCookie();
+
+        if(cookies && cookies.length>0){
+            var cookiesarr=cookies.split('|');
+            var n=document.getElementById('username');
+            var usr='';
+            if(cookiesarr[0] && cookiesarr[0]!='undefined'){
+                usr=cookiesarr[0];
+            }
+            n.value=usr;
+            if(cookiesarr.length>1){
+                playerGuid=cookiesarr[1];
+            }
+        }
+    }
+}
  function getRelativeUrl(){
     var loc = new URL(window.top.location.href); //get the current location
     var rel = loc.pathname; //relative link from dir to loc
@@ -144,9 +165,13 @@ function addChats(chatarr){
 }
 function makeChatBox(chat){
 
+    var user='';
+    if(chat.u && chat.u!="undefined"){
+        user=chat.u;
+    }
     return `<div class='chatbox'>
             <div class='chattitle'>
-                <div class='chatname'>${chat.u}</div>
+                <div class='chatname'>${user}</div>
                 <div class='chatdate'>${chat.d}</div>
             </div>
             <div class='chatmessage'>${chat.m}</div>
@@ -172,11 +197,15 @@ function sendMessage(){
             var j={
                 'm':m.value,
                 'u':n.value, 
-                'r':getRelativeUrl()
+                'r':getRelativeUrl(),
+                'g':playerGuid
             }
             socket.emit('message',j);
             m.value='';
             m.focus();
+            if(threemlmain){
+                threemlmain.writeCookie(n.value);
+            }
        }
     }
 }
