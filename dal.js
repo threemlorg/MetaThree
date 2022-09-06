@@ -337,9 +337,9 @@ exports.saveChat=function(chat, io){
               let sql = `INSERT INTO Chat (IP, Nickname, PlayerGuid, Message, CreateDate, Room, itsCustomer_ID)
               VALUES (
                 '${chat.ip}',
-                '${chat.u}',
+                '${escquote(chat.u)}',
                 '${chat.g}',
-                '${chat.m}',
+                '${escquote(chat.m)}',
                 '${strdateFrom}',
                 '${chat.r}',
                 ${customerId}
@@ -375,6 +375,13 @@ exports.saveChat=function(chat, io){
 
 }
 
+function escquote(txt){
+  if(txt){
+    txt=txt.replace(/'/g, `\``);
+    txt=txt.replace(/"/g, `\`\``);
+  }
+  return txt;
+}
 function updateLastChat(chat){
   let roomUsers = connectedPlayers.get(chat.r);
   if(roomUsers){

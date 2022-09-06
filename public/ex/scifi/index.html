@@ -26,8 +26,33 @@
                         <htmlPlaneGeometry url="planets.html" name="planets" scale='1' homebutton="false" handle="#00808047" custombarcolor="true">
                         </htmlPlaneGeometry>
                         <group name="planet" position="0 -1 1.4" scale="0.3">
-                            <gltfLoader position="3 -2 -3.77" rotation="0 0 0" url="./models/handle_up.glb">
+
+                            <line position="0 0.6 0" rotation="95 20 0" scale="3">
+                                <linebasicmaterial color="1 0 0"></linebasicmaterial>
+                                <actions repeat="true">
+                                    <action typeof="transform" color="0 1 0"></action>
+                                    <action typeof="transform" color="0 0 1"></action>
+                                    <action typeof="transform" color="1 0 0"></action>
+                                </actions>
+                                <blink speed="0.02" random="true"></blink>
+                            </line>
+                            <line position="0.5 0.0 0" rotation="0 -90 0" scale="3">
+                                <linebasicmaterial color="1 0 0"></linebasicmaterial>
+                                <blink speed="0.02" random="true"></blink>
+                            </line>
+                            <line position="0 0.0 -0.5" rotation="-5 30 0" scale="3">
+                                <linebasicmaterial color="1 0 0"></linebasicmaterial>
+                                <blink speed="0.02" random="true"></blink>
+                            </line>
+                            <spheregeometry name="mars" position="0 0 0" scale="1.0" widthSegments="160" heightSegments="160">
+                                <meshphongmaterial color="1 1 1" url="./images/2k_mars.jpg" normalMap="./images/MarsNormal.png"></meshphongmaterial>
+                                <rotate axis="0 0.001 0" />
+                            </spheregeometry>
+                            <gltfLoader position="3 -2 -3.77" rotation="0 0 0" url="./models/handle_down.glb">
+                                <link url="./three/handle.html" target="planet" replace="true" />
                             </gltfLoader>
+                            <directionallight target="mars" intensity="2" position="-2 0 0"></directionallight>
+
                         </group>
                         <gltfLoader url="./models/device.glb" position="0 -1 1.4" rotation="0 90 0" scale="0.8">
                         </gltfLoader>
@@ -93,6 +118,7 @@
                 <group position="0.8 -0.3 -4" scale="0.5" rotation="0 -30 0">
                     <pointlight position="0 0.3 0" intensity="2.8" color="#62e371"></pointlight>
                     <group name="models">
+                        <gltfLoader visible="true" url="./models/sci1.glb" position="0 0 0" rotation="50 40 0" scale="1"><rotate axis="0.03 0.01 0.02"></rotate></gltfLoader>
                     </group>
                     <gltfLoader visible="true" url="./models/barrel.glb" scale="0.6">
                     </gltfLoader>
@@ -122,6 +148,57 @@
                 </group>
                 <gltfLoader url="./models/mesh.glb" position="-6.4 0 -2.5" rotation="90 0 90" scale="1.3">
                 </gltfLoader>
+                <group name="spiralgroup" position="-4.1 -0.5 0" rotation="-10 0 66" scale="0.75">
+                    <gltfLoader name="spiral" url="./models/spiral.glb">
+                        <softbody>
+                            <!-- <constraint type="fixed" index="2 3 7 15 16 20 32 28 29 33 45 41 42 58 54 55 59 71 67 68 72"></constraint>
+                            <constraint type="gravity" factor="-0.5"></constraint>
+                            <constraint type="normal"></constraint> -->
+                            <constraint type="stretch" factor="0.1"></constraint>
+                            <constraint type="wind" factor="0.1" scale="3"></constraint>
+                            <constraint type="structure" factor="1"></constraint>
+                        </softbody>
+                 </gltfLoader>
+                    <group name="pointlightgroup">
+                        <spheregeometry name="redlightsphere" scale="0.05" visible="false">
+                            <meshphongmaterial color="#FF0000" transparancy="0.1"></meshphongmaterial>
+                        </spheregeometry>
+                        <pointlight color="#FF0000" intensity="6" distance="2"></pointlight>
+                        <actions repeat="true">
+
+                           <action typeof="transform" position="0 4 0"></action>
+                            <action typeof="transform" position="0.2 3 0"></action>
+                            <action typeof="transform" position="0 0.5 -1" speed="0.005"></action>
+                            <action typeof="transform" position="0 0 0"></action>
+                        </actions>
+                    </group>
+                </group>
+                <group name="spiralgroup" position="5.1 -0.5 -2.8" rotation="-10 0 66" scale="0.75">
+                    <gltfLoader name="spiral" url="./models/spiral.glb">
+                        <softbody>
+                            <!-- <constraint type="fixed" index="2 3 7 15 16 20 32 28 29 33 45 41 42 58 54 55 59 71 67 68 72"></constraint>
+                            <constraint type="gravity" factor="-0.5"></constraint>
+                            <constraint type="normal"></constraint> -->
+                            <constraint type="stretch" factor="0.1"></constraint>
+                            <constraint type="wind" factor="0.1" scale="3"></constraint>
+                            <constraint type="structure" factor="1"></constraint>
+                        </softbody>
+                 </gltfLoader>
+                    <group name="pointlightgroup">
+                        <spheregeometry name="redlightsphere" scale="0.05" visible="false">
+                            <meshphongmaterial color="#FF0000" transparancy="0.1"></meshphongmaterial>
+                        </spheregeometry>
+                        <pointlight color="#FF0000" intensity="6" distance="2"></pointlight>
+                        <actions repeat="true">
+
+                           <action typeof="transform" position="0 4 0"></action>
+                            <action typeof="transform" position="0.2 3 0"></action>
+                            <action typeof="transform" position="0 0.5 -1" speed="0.005"></action>
+                            <action typeof="transform" position="0 0 0"></action>
+                        </actions>
+                    </group>
+                </group>
+ 
                 <gltfLoader position="0 -1.5 -5" url="./models/floor.glb" scale="0.6">
                     <walk></walk>
                 </gltfLoader>

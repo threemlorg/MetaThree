@@ -24,6 +24,9 @@
                     <group name="custom" position="3.2 -0.5 0" rotation="0 -90 0" scale="2">
 
                     </group>
+                    <gltfLoader position="0 -1.37 -1.32 " scale="0.71" name="matras" url="./models/matras.glb">
+                    </gltfLoader>
+
                     <group position="-0.85 0 -1.17">
                         <group name="chrismas" scale="1" rotation="0 0 40">
                             <gltfLoader scale="0.1" name="branch" url="./models/chrismas.glb">
@@ -207,11 +210,9 @@
                             <actions>
                                 <action type="click"></action>
                                 <action type="pause" speed="0.04"></action>
-                                <action type="code">
-                                    <!--
-                                                moveCamera();
-                        -->
-                                </action>
+
+                                <action type="camera" position="-1 0 -5" lookat="-0.3 0 -6" speed="0.004"></action>
+
                                 <action type="pause" speed="0.04"></action>
                             </actions>
                             <hover action="scale" factor="1.07"></hover>
@@ -250,16 +251,16 @@
                 return getUrlVars()[name.toLowerCase()];
             };
             var cameraMoveInitiated = false;
-            function moveCamera() {
-                if (!cameraMoveInitiated) {
-                    var pos = { 'x': -1, 'y': 0, 'z': -5 }
-                    var target = { 'x': -0.3, 'y': 0, 'z': -8 }
-                    threeml.moveToPosition(camera, pos.x, pos.y, pos.z, 0.003)
-                    threeml.lookAtPosition(target.x, target.y, target.z);
-                    cameraMoveInitiated = true;
-                }
+            // function moveCamera() {
+            //     if (!cameraMoveInitiated) {
+            //         var pos = { 'x': -1, 'y': 0, 'z': -5 }
+            //         var target = { 'x': -0.3, 'y': 0, 'z': -8 }
+            //         threeml.moveToPosition(camera, pos.x, pos.y, pos.z, 0.003)
+            //         threeml.lookAtPosition(target.x, target.y, target.z);
+            //         cameraMoveInitiated = true;
+            //     }
 
-            }
+            // }
 
             function loadInCustomGroup() {
                 var g = getUrlVar('g');
