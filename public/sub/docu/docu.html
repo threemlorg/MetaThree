@@ -19,12 +19,26 @@
  		<div id="container">
 
             <three>
+				<home></home>
                 <group name="screens" position="-0.6 0 -2" rotation="0 45 0">
                     <htmlPlaneGeometry url="snippet.html" name="main" zoom="1" position='0 0.06 0' scale='1.2' rotation="0 0 0">
                         <present cameradistance="1.2" class="handle" speed="0.03" atStart="true"></present>
                     </htmlPlaneGeometry>
                 </group>
 
+				<group name="binoculargroup" scale="0.2" position="0 -0.5 -1.4" rotation="0 40 0">
+					<gltfLoader name="loop" url="/sub/models/magnifier.glb" rotation="-40 -12 -11" scale="1.5" visible="false">
+						<actions>
+							<action type="pause" speed="0.05"></action>
+							<action type="transform" visible="true"></action>
+						</actions>
+					</gltfLoader>
+					<spheregeometry scale="0.3" visible="false">
+						<present target="main"></present>
+						<hover action="tooltip" text="Present window" atmouse="true"></hover>
+					</spheregeometry>
+				</group>
+				<directionallight target="binoculargroup"></directionallight>
                 <group name="mygroup" position="0.6 0 -1"></group>
             </three>
 

@@ -292,8 +292,9 @@ exports.getChats=function(room, io){
       console.error(err.message);
     }
     else {
-    let sql = `SELECT Nickname u, Message m, STRFTIME('%Y-%m-%d %H:%M', CreateDate) d
-    from Chat where (Disabled=0 or Disabled is NULL) and Room='${room}' `;
+    let sql = `SELECT Nickname u, Message m, STRFTIME('%Y-%m-%d %H:%M', CreateDate) d, Sticky s
+    from Chat where (Disabled=0 or Disabled is NULL) and Room='${room}' 
+    order by Sticky asc, CreateDate asc`;
        console.log(sql);
         db.all(sql, [], (err, rows) => {
         if (err) {

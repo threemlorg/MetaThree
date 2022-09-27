@@ -1483,6 +1483,7 @@ function toDg(radials, def = 0) {
 					return handleMultiPlayer(ele, parent);
 				case 'avatar':
 					return handleAvatar(ele, parent);
+
 				default:
 				
 				//return v.checkElements(name.ele.parent);
@@ -1519,6 +1520,17 @@ function toDg(radials, def = 0) {
 				}
 				if (!isplaying) {
 					loadSound(obj, att);
+				}
+				else{
+					switch(audioContext.state){
+						case 'suspended':
+							audioContext.resume();
+							break;
+						case 'running':
+							audioContext.suspend();
+							break;
+							
+					}
 				}
 			}
 		}
@@ -4167,6 +4179,9 @@ function toDg(radials, def = 0) {
 			var fromgroup;
 			if (att.fromgroup) {
 				fromgroup = scene.getObjectByName(att.fromgroup);
+				if(!obj.name || obj.name.length==0){
+					obj.name=getRandowmName();
+				}
 			}
 			obj.presentProp = {};
 
@@ -4489,7 +4504,7 @@ function toDg(radials, def = 0) {
 				target = getTarget(targetName);
 			}
 			var visible = att.visible;
-
+			var value=att.value && att.value.toLowerCase()=='back'?false:true;
 			var t = target ? target : obj;
 			if (att.typeof || att.type) {
 				var ty = att.typeof ? att.typeof : att.type;
@@ -4699,6 +4714,17 @@ function toDg(radials, def = 0) {
 								activateAudio(obj, att);
 								obj.mediastarted=true;
 							return true;
+						}
+						obj.act.actions.push(f);
+						break;
+					case 'present':
+						var f=function(){
+								t.present(value);
+								if (!obj.act.pause || obj.act.pause <= 0) {
+									obj.act.pause = 1;
+								}
+								obj.act.pause -= speed * 0.1;
+								return obj.act.pause < 0;	
 						}
 						obj.act.actions.push(f);
 						break;

@@ -12,7 +12,7 @@
                <renderer clearcolor="#131613"></renderer>
                 <skybox url="./images/kloppenheim_05.jpg"></skybox>
                 <home></home>
-                <orbitcontrols target="-0.3 0 -2" reversed="true" ></orbitcontrols>
+                <orbitcontrols target="-0.3 0 -2" reversed="true" enablepan="false" enablezoom="false"></orbitcontrols>
                 <group name="x" parent="camera" position="0 0 0">
                     <group name="y"  position="0 0 -1"></group>
                     <!-- <spotlight position="0 0 0"  intensity="0.6" decay="0.3" distance="10" target="y"></spotlight> -->
@@ -29,7 +29,7 @@
                     <gltfLoader name="museumfence" url="./models/museumfence.glb"  castshadow="true"  receiveshadow="true">
                     </gltfLoader>
                     <group name="screens" position="16 0 17.4"   rotation="0 -150 0">
-                        <htmlPlaneGeometry url="/sub/chat/receiver.html" name="main" zoom="1" position='0 2 0' scale='3'>
+                        <htmlPlaneGeometry url="/sub/chat/receiver.html" name="main" zoom="1" position='0 2 0' scale='3.1 3.4 3'>
                             <present cameradistance="1.2" class="handle" speed="0.03"></present>
                         </htmlPlaneGeometry>
                         <gltfLoader name="indigenous" position="0 0 0" url="./models/indigenous.glb"  castshadow="true"  receiveshadow="true">
@@ -71,19 +71,60 @@
                             <meshphongmaterial color="0 0 0"></meshphongmaterial>
                         </boxgeometry>
                     </group>
-                    <group name="pianogroup" scale="10" position="-15 0.1 15" rotation="0 -75 0">
-                        <gltfLoader name="piano" url="./models/piano.glb" >
-                            <media volume="0.6" url='./media/november.mp3' loop="true" volumetric="true"></media>
+                    <group name="fire" position="17 5.7 0" scale="2.2">
+                        <gltfLoader name="scale"url="./models/scale.glb"  castshadow="true"  receiveshadow="true">
                         </gltfLoader>
-                        <pointlight position="0 0.3 0"  intensity="0.7" decay="0.3" distance="4"></pointlight>
+                          <fire position="0 0.5 0" scale="0.8" url="./images/fire.png"></fire>
+                    </group>
+                    <group name="water">
+                        <gltfLoader name="scale"url="./models/basin.glb"  castshadow="true"  receiveshadow="true">
+                        </gltfLoader>
+                        <water wavescale="0.0001" speed="0.031" steepness="0.01" color="0.3 0.3 0.3" position="0 0.5 0" scale="0.0013"></water>
+                    </group>
+                    <group name="pianogroup" scale="10" position="-15 0.1 15" rotation="0 -75 0">
+                        <group name="musicsheetgroup">
+                            <gltfLoader name="musicsheet" url="./models/musicsheet.glb" >
+                            </gltfLoader>
+                        </group>
+                        <gltfLoader name="piano" url="./models/piano.glb" >
+                            <media volume="0.6" url='./media/november.mp3' loop="true" volumetric="true" solo="true"></media>
+                            <actions repeat="true">
+                                <action type="click"></action>
+                                <action type="pause" speed="0.2"></action>
+                                <action type="transform" target="musicsheetgroup" rotation="-70 0 0" position="0.15 0.33 0.037"></action>
+                                <action type="click"></action>
+                                <action type="pause" speed="0.6"></action>
+                                <action type="transform" target="musicsheetgroup" rotation="0 0 0" position="0 0 0" speed="0.05"></action>
+                           </actions>
+                        </gltfLoader>
+
+                       <pointlight position="0 0.3 0"  intensity="0.7" decay="0.3" distance="4"></pointlight>
                         <group name="bensoundgroup"position="-0.18 0.21 -0.25" rotation="0 180 0" scale="0.1">
                             <TextGeometry name="textBensound" position="-0.15 0 0"  text="Bensound.com" bevelEnabled="false" height="0.1">
                                 <meshphongmaterial id="btext" color="#a1cfc4"></meshphongmaterial>
                             </TextGeometry> 
                         </group>
-     
+                          
                     </group>
-          
+                    <gltfLoader name="tree" position="-25 -2.7 5.4" url="./models/tree.glb" scale="1.7">
+                    </gltfLoader>
+                    <gltfLoader name="houseground" url="./models/houseground.glb" position="0 -0.26 0">
+                    </gltfLoader>
+                 <group name="michelangio"  scale="1">
+                    <!-- <boxgeometry name="davidSize" scale="1 5.17 0.1" rotation="0 0 0" position="1 2.585 0">
+                        <meshphongmaterial color="red"></meshphongmaterial>
+                    </boxgeometry> -->
+                    <gltfLoader name="david" url="./models/david.glb" scale="1.43" position="14 5.34 14" rotation="0 60 0">
+                        <hover action="tooltip" text="David, 1501 - 1504" atmouse="true"></hover>
+                    </gltfLoader>
+                    <group name="chapelgroup" position="0 20.7 0">
+                        <gltfLoader name="chapel" url="./models/chapel.glb" scale="1">
+                            <hover action="tooltip" text="Sistine Chapel, 1508 - 1512" atmouse="true"></hover>
+                        </gltfLoader>
+                    </group>
+                    <spotlight target="chapelgroup" position="0 2 0" intensity="2"></spotlights>
+           
+                 </group>
                      <group name="rembrandpaintings" position="11 3 19.48" rotation="0 180 0">
                         <pointlight position="5 2.5 4"  intensity="0.7" decay="0.3" distance="10"></pointlight>
                         <TextGeometry name="textRembrand" position="0 1.4 0" scale="10" text="Rembrand van Rijn" bevelEnabled="false" height="0.1">
@@ -91,31 +132,36 @@
                         </TextGeometry>
                         <boxgeometry  name='Het_Joodse_bruidje' position='0 0 0' scale='1.665 1.215 0.02'>
                             <meshphongmaterial url='./images/rembrand/Het_Joodse_bruidje.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="rembrandpaintings"></present>
                             <hover action="tooltip" text="The Jewish Bride 1665-1669
                             oil on canvas 121,5 × 166,5 cm" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='painting1' name='painting1' position='3 0 0' scale='1.11 1.52 0.02'>
                             <meshphongmaterial url='./images/rembrand/painting1.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="rembrandpaintings"></present>
                             <hover action="tooltip" text="Man in Oriental Costume ('The Noble Slav' or 'Man in a Turban') 1632" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Artemisia' name='painting3' position='6 0 0' scale='1.42 1.52 0.02'>
                             <meshphongmaterial url='./images/rembrand/painting3.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="rembrandpaintings"></present>
                             <hover action="tooltip" text="Artemisia, 1634" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Prodigal_Son2' name='Prodigal_Son2' position='9 0 0' scale='2.05 2.62 0.02'>
                             <meshphongmaterial url='./images/rembrand/Prodigal_Son2.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2' presentationangle='-90'></present>
+                            <present speed="0.04" cameradistance='2' presentationangle='-90' fromgroup="rembrandpaintings"></present>
                             <hover action="tooltip" text="The Prodigal Son
                             c. 1669
                             oil on canvas, 262 x 205 cm" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Rembrandt' name='Rembrandt' position='12 0 0' scale='0.85 1.11 0.02'>
                             <meshphongmaterial url='./images/rembrand/rembrandt.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2' presentationangle='-90'></present>
+                            <present speed="0.04" cameradistance='2' presentationangle='-90' fromgroup="rembrandpaintings"></present>
                             <hover action="tooltip" text="Rembrandt 1665" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                     </group>
                     <group name="vermeerpaintings" position="0 3 -19.48" rotation="0 0 0">
@@ -125,28 +171,33 @@
                         </TextGeometry>
                        <boxgeometry tooltip='Delft' name='Delft' position='0 0 0' scale='0.44 0.543 0.02'>
                             <meshphongmaterial url='./images/vermeer/Jan_Vermeer_van_Delft_025.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='0.6'></present>
+                            <present speed="0.04" cameradistance='0.6' fromgroup="vermeerpaintings"></present>
                             <hover action="tooltip" text="The Little Street, 1657–1658" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='painting1' name='Johannes-vermeer-het-meisje-met-de-parel' position='3 0 0' scale='0.40 0.465 0.02'>
                             <meshphongmaterial url='./images/vermeer/Johannes-vermeer-het-meisje-met-de-parel-art-salon-holland.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='0.6'></present>
+                            <present speed="0.04" cameradistance='0.6' fromgroup="vermeerpaintings"></present>
                             <hover action="tooltip" text="Girl with a Pearl Earring, c. 1665" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='painting3' name='painting3' position='6 0 0' scale='0.41 0.455 0.02'>
                             <meshphongmaterial url='./images/vermeer/melkmeisje550x733.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='0.6'></present>
+                            <present speed="0.04" cameradistance='0.6' fromgroup="vermeerpaintings"></present>
                             <hover action="tooltip" text="The Milkmaid, c. 1657–1658" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Prodigal_Son2' name='Prodigal_Son2' position='9 0 0' scale='0.391 0.466 0.02'>
                             <meshphongmaterial url='./images/vermeer/Vermeer_Johannes_-_Woman_reading_a_letter_-_ca._1662-1663-e1470252237912.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='0.6'></present>
+                            <present speed="0.04" cameradistance='0.6' fromgroup="vermeerpaintings"></present>
                             <hover action="tooltip" text="Woman reading a letter - ca. 1662-1663 " atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='view-of-delft' name='view-of-delft' position='12 0 0' scale='1.157 0.965 0.02'>
                             <meshphongmaterial url='./images/vermeer/Vermeer-view-of-delft-e1470252080231.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='1'></present>
+                            <present speed="0.04" cameradistance='1' fromgroup="vermeerpaintings"></present>
                             <hover action="tooltip" text="View of delft, ca. 1659–1661" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                     </group>
                     <group name="picassopaintings" position="-19.48 3 0" rotation="0 90 0">
@@ -156,28 +207,69 @@
                         </TextGeometry>
                        <boxgeometry tooltip='Delft' name='Delft' position='0 0 0' scale='0.54 0.73 0.02'>
                             <meshphongmaterial url='./images/picasso/ABSINTHE DRINKER.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='0.6'></present>
+                            <present speed="0.04" cameradistance='0.6' fromgroup="picassopaintings"></present>
                             <hover action="tooltip" text="Absinte drinker 1901" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='seated woman' name='seated_woman' position='3 0 0' scale='0.65 0.81 0.02'>
                             <meshphongmaterial url='./images/picasso/seated woman.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='0.6'></present>
+                            <present speed="0.04" cameradistance='0.6' fromgroup="picassopaintings"></present>
                             <hover action="tooltip" text="Seated woman 1909" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Science and charity' name='Science_charity' position='6 0 0' scale='2.495 1.97 0.02'>
                             <meshphongmaterial url='./images/picasso/Science and charity.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='1.6'></present>
+                            <present speed="0.04" cameradistance='1.6' fromgroup="picassopaintings"></present>
                             <hover action="tooltip" text="Science and charity 1897" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Les Demoiselles d`Avignon' name='Les-Demoiselles-d`Avignon' position='9 0 0' scale='2.439 2.337 0.02'>
                             <meshphongmaterial url='./images/picasso/avignon.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="picassopaintings"></present>
                             <hover action="tooltip" text="Les Demoiselles d'Avignon, 1907" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='The Old Guitarist, 1903' name='the_old_gutarist' position='12 0 0' scale='0.826 1.229 0.02'>
                             <meshphongmaterial url='./images/picasso/the-old-guitarist.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='1'></present>
+                            <present speed="0.04" cameradistance='1' fromgroup="picassopaintings"></present>
                             <hover action="tooltip" text="The Old Guitarist, 1903" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
+                        </boxgeometry>
+                    </group>
+                    <group name="monetpaintings" position="19.48 3 -14" rotation="0 -90 0">
+                        <pointlight position="5 2.5 4"  intensity="0.7" decay="0.3" distance="10"></pointlight>
+                        <TextGeometry name="textMonet" position="0 1.4 0" scale="10" text="Claude Monet" bevelEnabled="false" height="0.1">
+                            <meshphongmaterial id="text" color="#a1cfc4"></meshphongmaterial>
+                        </TextGeometry>
+                       <boxgeometry name='women-in-the-garden' position='0 0 0' scale='2.05 2.55 0.02'>
+                            <meshphongmaterial url='./images/monet/women-in-the-garden.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='3' fromgroup="monetpaintings"></present>
+                            <hover action="tooltip" text="Women in the garden 1866" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
+                        </boxgeometry>
+                        <boxgeometry  name='Camille_Monet' position='3 0 0' scale='0.647 0.553 0.02'>
+                            <meshphongmaterial url='./images/monet/madame-monet-and-child.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='0.6' fromgroup="monetpaintings"></present>
+                            <hover action="tooltip" text="Camille Monet and a Child in the Artist’s Garden in Argenteuil 1875" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
+                        </boxgeometry>
+                        <boxgeometry  name='Bank_of_the_Seine' position='6 0 0' scale='1.007 0.815 0.02'>
+                            <meshphongmaterial url='./images/monet/woman_at_seine.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='1.4' fromgroup="monetpaintings"></present>
+                            <hover action="tooltip" text="On the Bank of the Seine, Bennecourt, 1868" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
+                        </boxgeometry>
+                        <boxgeometry name='Garden_at_Sainte-Adresse' position='9 0 0' scale='1.299 0.981 0.02'>
+                            <meshphongmaterial url='./images/monet/garden-at-sainte-adresse.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='1.4' fromgroup="monetpaintings"></present>
+                            <hover action="tooltip" text="Garden at Sainte-Adresse, 1867" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
+                        </boxgeometry>
+                        <boxgeometry name='Spring_Flowers' position='12 0 0' scale='0.91 1.168 0.02'>
+                            <meshphongmaterial url='./images/monet/spring-flowers-1864.jpg'></meshphongmaterial>
+                            <present speed="0.04" cameradistance='1.4' fromgroup="monetpaintings"></present>
+                            <hover action="tooltip" text="Spring Flowers, 1864" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                     </group>
                     <group name="dalipaintings" position="-19.48 7.5 0" rotation="0 90 0">
@@ -189,25 +281,30 @@
                             <meshphongmaterial url='./images/dali/the-discovery-of-america-by-christopher-columbus.jpg'></meshphongmaterial>
                             <present speed="0.04" cameradistance='3'></present>
                             <hover action="tooltip" text="The Discovery of America by Christopher Columbus, 1958 - 1959" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry  name='The-persistence-of-memory' position='3 0 0' scale='0.33 0.241 0.02'>
                             <meshphongmaterial url='./images/dali/the-persistence-of-memory-1931.jpg'></meshphongmaterial>
                             <present speed="0.04" cameradistance='0.6'></present>
                             <hover action="tooltip" text="The-persistence-of-memory-1931" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                           <boxgeometry name=' tooltip='The Hallucinogenic Toreador'' position='6 0 0' scale='3 4 0.02'>
                             <meshphongmaterial url='./images/dali/hallucinogenic-toreador-1970.jpg'></meshphongmaterial>
                             <present speed="0.04" cameradistance='3'></present>
                             <hover action="tooltip" text="The Hallucinogenic Toreador, 1968 - 1970" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <htmlplanegeometry url="https://www.youtube.com/embed/cB7gd_t6WMQ" name='Un Chien Andalou (film still)' position='9.3 0 0' scale='2 1.6 0.02'>
 
                             <hover action="tooltip" text="Un Chien Andalou (film still) 1928" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </htmlplanegeometry>
                         <boxgeometry tooltip='The Old Guitarist, 1903' name='portrait-of-lucia' position='12 0 0' scale='0.334 0.441 0.02'>
                             <meshphongmaterial url='./images/dali/portrait-of-lucia.jpg'></meshphongmaterial>
                             <present speed="0.04" cameradistance='1'></present>
                             <hover action="tooltip" text="Portrait of Lucia, c. 1918" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                     </group>
                     <group name="davincipaintings" position="-15 7.5 -19.48" rotation="0 0 0">
@@ -215,75 +312,89 @@
                         <TextGeometry name="textDavinci" position="0 1.4 0" scale="10" text="Leonardo Davinci" bevelEnabled="false" height="0.1">
                             <meshphongmaterial id="text" color="#a1cfc4"></meshphongmaterial>
                         </TextGeometry>
+
                        <boxgeometry  name='MonaLisa' position='-3 0 0' scale='0.53 0.77 0.02'>
                             <meshphongmaterial url='./images/davinci/the-mona-lisa.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='1'></present>
+                            <present speed="0.04" cameradistance='1' fromgroup="davincipaintings"></present>
                             <hover action="tooltip" text="The Mona Lisa 1503-1506" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry name='LastSupper' position='3 0 0' scale='8.8 4.6 0.02'>
                             <meshphongmaterial url='./images/davinci/last-supper.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='4'></present>
+                            <present speed="0.04" cameradistance='4' fromgroup="davincipaintings"></present>
                             <hover action="tooltip" text="The last supper, 1495–1498" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry name='the-vitruvian-man' position='9 0 0' scale='0.245 0.344 0.02'>
                             <meshphongmaterial url='./images/davinci/the-vitruvian-man.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='0.4'></present>
+                            <present speed="0.04" cameradistance='0.4' fromgroup="davincipaintings"></present>
                             <hover action="tooltip" text="The vitruvian man, 1487" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry  name='the-annunciation' position='11 0 0' scale='2.17 0.98 0.02'>
                             <meshphongmaterial url='./images/davinci/the-annunciation.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='1.5'></present>
+                            <present speed="0.04" cameradistance='1.5' fromgroup="davincipaintings"></present>
                             <hover action="tooltip" text="The annunciation, 1472–1476" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry name='salvator-mundi' position='13 0 0' scale='0.454 0.656 0.02'>
                             <meshphongmaterial url='./images/davinci/salvator-mundi.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='0.7'></present>
+                            <present speed="0.04" cameradistance='0.7' fromgroup="davincipaintings"></present>
                             <hover action="tooltip" text="Salvator Mundi, 1499-1510" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                     </group>
  
                     <group name="painters1" position="-7 8 19.48" rotation="0 180 0">
                         <boxgeometry tooltip='Dali' name='dali' position='0 0 0' scale='1.2 1.2 0.02'>
                             <meshphongmaterial url='./images/painters/dali.png'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="painters1"></present>
                             <hover action="tooltip" text="Dali" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Davinci' name='davinci' position='3 0 0' scale='1.2 1.2 0.02'>
                             <meshphongmaterial url='./images/painters/davinci.png'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="painters1"></present>
                             <hover action="tooltip" text="Davinci" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Michelangelo' name='michelangelo' position='6 0 0' scale='1.2 1.2 0.02'>
                             <meshphongmaterial url='./images/painters/michelangelo.png'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="painters1"></present>
                             <hover action="tooltip" text="Michelangelo" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Monet' name='monet' position='9 0 0' scale='1.2 1.2 0.02'>
                             <meshphongmaterial url='./images/painters/monet.png'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2' presentationangle='-90'></present>
+                            <present speed="0.04" cameradistance='2' presentationangle='-90' fromgroup="painters1"></present>
                             <hover action="tooltip" text="Monet" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         </group>
                        <group name="painters2" position="-19.48 8 28" rotation="0 90 0">
                         <boxgeometry tooltip='Picasso' name='picasso' position='12 0 0' scale='1.2 1.2 0.02'>
                             <meshphongmaterial url='./images/painters/picasso.png'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="painters2"></present>
                             <hover action="tooltip" text="Picasso" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Rembrandt' name='rembrandt' position='15 0 0' scale='1.2 1.2 0.02'>
                             <meshphongmaterial url='./images/painters/rembrandt.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="painters2"></present>
                             <hover action="tooltip" text="Rembrandt" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Van Gogh' name='vangogh' position='18 0 0' scale='1.2 1.2 0.02'>
                             <meshphongmaterial url='./images/painters/vangogh.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="painters2"></present>
                             <hover action="tooltip" text="Van Gogh" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         <boxgeometry tooltip='Vermeer' name='vermeer' position='21 0 0' scale='1.2 1.2 0.02'>
                             <meshphongmaterial url='./images/painters/vermeer.jpg'></meshphongmaterial>
-                            <present speed="0.04" cameradistance='2'></present>
+                            <present speed="0.04" cameradistance='2' fromgroup="painters2"></present>
                             <hover action="tooltip" text="Vermeer" atmouse="true"></hover>
+                            <hover action="scale" factor="1.07"></hover>
                         </boxgeometry>
                         </group>     
                     <group name="stairs" position="-3.8 0.3 -7" rotation="0 -90 0">

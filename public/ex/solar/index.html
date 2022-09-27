@@ -1,0 +1,57 @@
+﻿<html>
+<head>
+    <title>MetaThree</title>
+</head>
+<body>
+    <div id="container">
+        <three>
+            <stat></stat>
+            <loader maxtime="10"></loader>
+            <skybox url="./images/clouds.jpeg"></skybox>
+            <home></home>
+            <orbitcontrols target="0 0 -14" reversed="true"  maxPolarAngle="90"></orbitcontrols>
+            <group parent="camera">
+                <group name="pictures1" position='-3.55 1.7 -4.3' url="./html/serie1.html">
+                    
+                </group>
+
+            </group>          
+
+            <group name="total" position="0 -1.5 -14" rotation="0 60 0">
+                <TextGeometry name="text2" position="7 5.4 0" rotation="0 -30 0" scale="8" text="Design in Blender" bevelEnabled="false" height="0.01">
+                    <meshphongmaterial id="text" color="#145f36"></meshphongmaterial>
+                    <lookat/>
+                </TextGeometry>
+                <TextGeometry name="textshed" position="0 4.4 -2" scale="6" text="Existing shed" bevelEnabled="false" height="0.01">
+                    <meshphongmaterial id="text2" color="#ac7437"></meshphongmaterial>
+                </TextGeometry>
+                <TextGeometry name="textnew" position="2.8 3.4 5" rotation="0 -90 0" scale="6" text="To build new" bevelEnabled="false" height="0.01">
+                    <meshphongmaterial id="text2" color="#ac7437"></meshphongmaterial>
+                </TextGeometry>
+                 <group name="terrain" scale="1">
+                    <gltfLoader name="ground"  url="models/ground.glb" receiveshadow="true" castshadow="true">
+                    </gltfLoader>
+                    <gltfLoader name="path" url="models/shedandpanels.glb" receiveshadow="true" castshadow="true">
+                    </gltfLoader>
+                </group>
+                <group name="actionsgroup"></group>
+           <!-- <spheregeometry>
+                <link url="./html/actions.html" target="actionsgroup" replace="true"/>
+           </spheregeometry> -->
+            </group>
+            <directionallight position="10 40 -2" color="1 1 1" intensity="1" target="total" >
+            </directionallight>
+            <ambientlight intensity="0.6"></ambientlight>
+            <!-- <hemispherelight></hemispherelight> -->
+        </three>
+    </div>
+    <script>
+      var threeml;
+    </script>
+    <script type="module">
+      import { ThreeML } from '/threeml/threeml.js'
+      threeml = new ThreeML();
+      threeml.parseThree();
+    </script>
+</body>
+</html>

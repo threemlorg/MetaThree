@@ -83,6 +83,10 @@
          display: block;
          width: 100%;
      }
+     .stickyclass{
+        background-color: white;
+        color: black;
+     }
  </style>
 </head>
 <body>
@@ -169,7 +173,8 @@ function makeChatBox(chat){
     if(chat.u && chat.u!="undefined"){
         user=chat.u;
     }
-    return `<div class='chatbox'>
+    var stickyclass=(chat.s && chat.s==1)?'stickyclass':''
+    return `<div class='chatbox ${stickyclass}'>
             <div class='chattitle'>
                 <div class='chatname'>${user}</div>
                 <div class='chatdate'>${chat.d}</div>
