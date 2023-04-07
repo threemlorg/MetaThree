@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>70s Disco</title>
+		<meta charset="utf-8">
+
+	</head>
+	<body>
+		<div id="container" >
+			
+            <three>
+                <scene checkzoom="false"></scene>
+                <loader></loader>
+                <home></home>
+                <renderer clearcolor="#000000"></renderer>
+                <orbitcontrols target="0 0 -3" reversed="true"  maxPolarAngle="90"></orbitcontrols>
+                <!-- <home></home> -->
+                <fog color="0.1" density="0.1"></fog>
+                <group name="music" parent="camera"position='0 1.7 -4.5' scale="0.5">
+                    <htmlPlaneGeometry url="https://www.youtube.com/embed/RcZn2-bGXqQ" name="angie" zoom="1"  >
+                        </htmlPlaneGeometry> 
+                        <htmlPlaneGeometry url="https://www.youtube.com/embed/cw5S-uqmwuU" name="canobeans" zoom="1"  position="-1.75 0 0" >
+                            </htmlPlaneGeometry> 
+                        <htmlPlaneGeometry url="https://www.youtube.com/embed/IXdNnw99-Ic" name="wishyouwherehere" zoom="1"  position="1.75 0 0" >
+                        </htmlPlaneGeometry> 
+                        <htmlPlaneGeometry url="https://www.youtube.com/embed/fJ9rUzIMcZQ" name="bohemian" zoom="1"  position="-3.5 0 0" ></htmlPlaneGeometry> 
+                                 
+                </group>
+
+                <group name="main" position="0 -1 -3">
+                    <gltfLoader name="hall" url="./models/hall.glb" position="0 0.6 0"  receiveshadow="true"> 
+                    </gltfLoader>
+                    <gltfLoader name="floor" url="./models/floor.glb" position="0 0.6 0"  receiveshadow="true"> 
+                        <walk></walk>
+                    </gltfLoader>
+                    <!-- <gltfLoader name="ball" url="./models/ball.glb" position="0 1 -2"> 
+                    </gltfLoader> -->
+
+                                      <group name="playpanel" scale="0.5"  position="0 0.22 0">
+ 
+                        <gltfLoader name="player" url="./models/player.glb" castshadow="true"  receiveshadow="true"> 
+                        </gltfLoader>
+                        <group name="recordplayer" position="0.3 0.22 0.53">
+                            <gltfLoader name="record" url="./models/record.glb"> 
+                            </gltfLoader>
+                            <gltfLoader name="record" url="./models/recordplate.glb"> 
+                            </gltfLoader>
+                            <rotate axis="0 -0.02 0"></rotate>
+                        </group>
+                        <group name="vuNeedleL" position="-0.63 0.36 -0.51" scale="0.15">
+                            <line position="0 0.3 0" rotation="45 0 0">
+                                <linebasicmaterial color="1 0 0"></linebasicmaterial>
+                             </line>
+                            <actions repeat="true">
+                                <action type="transform" rotation="0 0 6" speed="0.1"></action>
+                                <action type="transform" rotation="0 0 -19" speed="0.5"></action>
+                                <action type="transform" rotation="0 0 -23" speed="0.4"></action>
+                                <action type="transform" rotation="0 0 0" speed="0.2"></action>
+                            </actions>
+                        </group>
+                        <group name="vuNeedleR" position="-0.26 0.36 -0.51" scale="0.15">
+                            <line position="0 0.3 0" rotation="45 0 0">
+                                <linebasicmaterial color="1 0 0"></linebasicmaterial>
+                             </line>
+                            <actions repeat="true">
+                                <action type="transform" rotation="0 0 30" speed="0.1"></action>
+                                <action type="transform" rotation="0 0 -15" speed="0.5"></action>
+                                <action type="transform" rotation="0 0 -25" speed="0.1"></action>
+                                <action type="transform" rotation="0 0 -0" speed="0.4"></action>
+                            </actions>
+                        </group>
+                        <pointlight  position="0.2 0.77 -0.15" intensity="1" distance="1"></pointlight>
+                        <pointlight  position="-1.2 0.77 -0.15" intensity="1" distance="1"></pointlight>
+  
+  
+                    </group>
+                    <group bame="boxL" position="-3 0 -2" scale="0.5" rotation="0 80 0">
+                        <gltfLoader name="boxLModel" url="./models/box.glb"> 
+
+                        </gltfLoader>
+
+                        <gltfLoader name="smallboxLModel" url="./models/smallbox.glb" position="0 1.99 0"> 
+                        </gltfLoader>
+                       <group name="lightbox1"  position="0 2.95 0.28" scale="1.2">
+                            <gltfLoader name="lighbox" url="./models/lightbox.glb"> 
+    
+                            </gltfLoader>
+                            <group>
+                                <gltfLoader name="redon" url="./models/redon.glb"> 
+                                </gltfLoader>
+                                <spotlight color="#FF0000" intensity="1" position="-0.4 0 0" castshadow="true"></spotlight>
+                                <blink random="true"></blink>
+                            </group>
+                            <group>
+                                <gltfLoader name="greenon" url="./models/greenon.glb"> 
+                                </gltfLoader>
+                                <spotlight color="#00FF00" intensity="1" position="-0.1 0 0" castshadow="true"></spotlight>
+                                <blink random="true"></blink>
+                            </group>
+                            <group>
+                                <gltfLoader name="yellowon" url="./models/yellowon.glb"> 
+                                </gltfLoader>
+                                <spotlight color="#00FFFF" intensity="1" position="0.1 0 0" castshadow="true"></spotlight>
+                                <blink random="true"></blink>
+                            </group>
+                            <group>
+                                <gltfLoader name="blueon" url="./models/blueon.glb"> 
+                                </gltfLoader>
+                                <spotlight color="#0000FF" intensity="1" position="0.4 0 0" castshadow="true"></spotlight>
+                                <blink random="true"></blink>
+                            </group>
+    
+                        
+                        </group>
+                     </group>
+  
+                     <group bame="boxR" position="3 0 -2" scale="0.5" rotation="0 -130 0">
+                        <gltfLoader name="boxLModel" url="./models/box.glb"> 
+
+                        </gltfLoader>
+
+                        <group name="lightbox2"  position="0 1.41 0" scale="1.2">
+                            <gltfLoader name="lighbox" url="./models/lightbox.glb"> 
+    
+                            </gltfLoader>
+                            <group>
+                                <gltfLoader name="redon" url="./models/redon.glb"> 
+                                </gltfLoader>
+                                <spotlight color="#FF0000" intensity="1"></spotlight>
+                                <blink random="true"></blink>
+                            </group>
+                            <group>
+                                <gltfLoader name="greenon" url="./models/greenon.glb"> 
+                                </gltfLoader>
+                                <spotlight color="#00FF00" intensity="1"></spotlight>
+                                <blink random="true"></blink>
+                            </group>
+                            <group>
+                                <gltfLoader name="yellowon" url="./models/yellowon.glb"> 
+                                </gltfLoader>
+                                <spotlight color="#00FFFF" intensity="1"></spotlight>
+                                <blink random="true"></blink>
+                            </group>
+                            <group>
+                                <gltfLoader name="blueon" url="./models/blueon.glb"> 
+                                </gltfLoader>
+                                <spotlight color="#0000FF" intensity="1"></spotlight>
+                                <blink random="true"></blink>
+                            </group>
+    
+                        
+                        </group>
+                     </group>
+                <!-- <directionallight position="-2 1 -3.6" intensity="1" target="main"></directionallight> -->
+                <!-- <ambientlight></ambientlight> -->
+            </three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

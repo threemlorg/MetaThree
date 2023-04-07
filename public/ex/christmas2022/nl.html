@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Kerst 2022</title>
+		<meta charset="utf-8">
+		<style>
+
+            #container {
+                pointer-events: none;
+				background-color:white;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div id="container" >
+			
+            <three>
+                <scene checkzoom="false"></scene>
+                <loader></loader>
+                <renderer clearcolor="#000000"></renderer>
+                <orbitcontrols target="0 0 -3" reversed="true"  maxPolarAngle="90"></orbitcontrols>
+                <!-- <home></home> -->
+                <group name="main" position="0 -1 -3">
+
+                    <group name="extratext" urlvar="g" url="/api_getscenepart"></group>
+                    <group name="firetot" scale="0.2" rotation="0 70 0">
+                        <gltfLoader name="wood" url="./models/wood.glb" scale="0.5"  castshadow="true"  receiveshadow="true"> 
+                        </gltfLoader>
+                        <fire name="fire" scale="3.7 8 3.7" position="0 4 0"></fire>
+                        <group name="p" position="0 2 0">
+                            <pointlight intensity="4" decay="18" distance="20" >
+                                <actions repeat="true">
+                                    <action type="transform" intensity="1" speed="0.03"></action>
+                                    <action type="transform" intensity="4" speed="0.01"></action>
+                                    <action type="transform" intensity="2" speed="0.003"></action>
+                                    <action type="transform" intensity="4" speed="0.07"></action>
+                                    <action type="transform" intensity="0.3" speed="0.001"></action>
+                                    <action type="transform" intensity="0.1" speed="0.001"></action>
+                                </actions>
+                            </pointlight>
+                            <!-- <spheregeometry scale="0.1"/>
+   -->
+                        </group>
+                        <!-- <pointlight intensity="1" decay="18" distance="20"  position="1 2 -2">
+                        </pointlight> -->
+                     
+                        
+                    </group>
+                    <group name="pendulumroot" position="0 1 0">
+                        <group name="image1" position="-2 0 0" scale="0.5" rotation="0 70 0">
+                            <planegeometry rotation="0 0 0">
+                                <meshphongmaterial url="./images/emmakay.jpg" side="doubleside"></meshphongmaterial>
+                                <hover action="tooltip" text="Emma and Kay" atmouse="true"></hover>
+                                <rotate axis="0 0.0005 0" ></rotate>
+                                <present></present>
+                            </planegeometry>
+                            <present></present>
+                        </group>
+                        <group name="image2" position="2 0 -1" scale="0.5" rotation="0 -170 0">
+                            <planegeometry rotation="0 -30 0">
+                                <meshphongmaterial url="./images/wilmaaj.jpg" side="doubleside"></meshphongmaterial>
+                                <hover action="tooltip" text="Wilma and Albert Jan" atmouse="true"></hover>
+                                <rotate axis="0 0.0007 0" ></rotate>
+                                <present></present>
+                            </planegeometry>
+                            <present></present>
+                        </group>
+                        <group name="image3" position="0 -0.7 -1.5" scale="0.5" rotation="0 0 0">
+                            <planegeometry rotation="0 0 0">
+                                <meshphongmaterial url="./images/anadani.png" side="doubleside"></meshphongmaterial>
+                                <hover action="tooltip" text="Daniel and Ana" atmouse="true"></hover>
+                                <rotate axis="0 -0.0003 0" ></rotate>
+                                <present></present>
+                            </planegeometry>
+                            <present></present>
+                        </group>
+                         <group name="pendulumarm1" position="0.4 0 -0.7" scale="0.6">
+                            <group position="0.7 1.6 0" scale="0.8" rotation="0 55 0">
+                                <gltfLoader scale="0.1" name="ballhanger" position="0 0.56 0" rotation="90 0 0" url="./models/ballhanger.glb">
+                                </gltfLoader>
+                                <spheregeometry name="sphere" scale="0.2" widthSegments="100" heightSegments="100">
+                                    <meshphongmaterial color="#000948" shininess="100" ></meshphongmaterial>
+                                     <rotate></rotate>
+                                 </spheregeometry>
+                            </group>
+                            <group position="-0.4 1.2 0" scale="0.8" rotation="0 55 0">
+                                <gltfLoader scale="0.1" name="ballhanger" position="0 0.56 0" rotation="90 0 0" url="./models/ballhanger.glb">
+                                </gltfLoader>
+                                <spheregeometry name="sphere" scale="0.2" widthSegments="100" heightSegments="100">
+                                    <meshphongmaterial color="#980b26" shininess="100" ></meshphongmaterial>
+                                     <rotate></rotate>
+                                 </spheregeometry>
+                            </group>
+                            <group name="image4" position="2 0.6 -1" scale="1" rotation="0 -130 0">
+                                <planegeometry rotation="0 -30 0">
+                                    <meshphongmaterial url="./images/flex.jpg" side="doubleside"></meshphongmaterial>
+                                    <hover action="tooltip" text="Flex" atmouse="true"></hover>
+                                    <rotate axis="0 0.0014 0" ></rotate>
+                                    <present></present>
+                                </planegeometry>
+                                <present></present>
+                            </group>
+                                <rotate axis="0 0.0008 0"></rotate>
+                        </group>
+                        <rotate axis="0 -0.0004 0"></rotate>
+                    </group>
+
+                    <gltfLoader scale="0.45" name="wewish" position="-1.2 2 -1" rotation="0 40 0" url="./models/wewensen.glb">
+                        <actions repeat="true">
+                            <action type="pause" speed="0.05"></action>
+                            <action typeof="present" target="image1" speed="0.05"></action>
+                            <action typeof="present" target="image1" speed="0.1" value="back"></action>
+                            <action typeof="present" target="image2" speed="0.05"></action>
+                            <action typeof="present" target="image2" speed="0.1" value="back"></action>
+                            <action typeof="present" target="image3" speed="0.05"></action>
+                            <action typeof="present" target="image3" speed="0.1" value="back"></action>
+                            <action typeof="present" target="image4" speed="0.05"></action>
+                            <action typeof="present" target="image4" speed="0.1" value="back"></action>
+                            <action type="pause" speed="0.003"></action>
+                        </actions>
+                    </gltfLoader>
+                    <gltfLoader scale="0.2" name="balg" position="1.2 0 -0.2" rotation="0 180 0" url="./models/balg.glb">
+                    </gltfLoader>
+                    <gltfLoader scale="0.2" name="swipe" position="-0.5 0 0.4" rotation="-20 -20 0" url="./models/swipe.glb">
+                    </gltfLoader>
+                  <!-- <reflector type="plane" scale="3"  position="2.14 1 -2" rotation="0 -42 0">
+
+                    </reflector>
+                    <ambientlight></ambientlight>  -->
+                    <!-- <htmlPlaneGeometry url="https://www.youtube.com/embed/Zadl8UPaHrU?rel=0&enablejsapi=1&disablekb=1&autoplay=1&controls=0&fs=0&modestbranding=1" name="musix" position='1.2 1 -1.1' scale='1' rotation="0 -5 0" homebutton="false" handle="#00808047" custombarcolor="true">
+                        </htmlPlaneGeometry>
+     -->
+                  </group>
+                 <directionallight position="0.1 2 -0.1" intensity="1" target="firetot"></directionallight>
+                <directionallight position="-2 1 -3.6" intensity="1" target="firetot"></directionallight>
+
+            </three>
+
+		</div>
+		<script>
+			var threeml;
+		</script>
+		<script type="module">
+            import { ThreeML } from '../../threeml/threeml.js';
+            threeml = new  ThreeML();
+			threeml.parseThree();
+		</script>
+	</body>
+</html>

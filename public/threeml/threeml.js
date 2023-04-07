@@ -1233,9 +1233,9 @@ function toDg(radials, def = 0) {
 			lasttime = time;
 			if (tdelta > 0) {
 				tdelta = tdelta / 7;
-				if (Math.abs(tdelta - delta) < 0.1) {
+				//if (Math.abs(tdelta - delta) < 0.1) {
 					delta = (99 * delta + tdelta) / 100;
-				}
+				//}
 			}
 			//console.log(delta);
 
@@ -2030,10 +2030,11 @@ function toDg(radials, def = 0) {
 				}
 				obj.margin=toN(att.margin, 0);
 				obj.replace=toB(att.replace, false);
+				obj.targetName=att.target?att.target:obj.name;
 				var f = function () {
 					if (!obj.loaded) {
 						if(obj.margin==0 || obj.getWorldPosition(new THREE.Vector3()).distanceTo(camera.getWorldPosition(new THREE.Vector3()))<obj.margin){
-							self.loadInGroup(obj.name, obj.url, obj.replace);
+							self.loadInGroup(obj.targetName, obj.url, obj.replace);
 							obj.loaded = true;
 						}
 					}
@@ -2914,7 +2915,6 @@ function toDg(radials, def = 0) {
 			checkevents(ele, light);
 			parent.add(light);
 			return light;
-
 		}
 		function handleAmbientLight(ele, parent) {
 			var att = getAttributes(ele);
@@ -4167,6 +4167,11 @@ function toDg(radials, def = 0) {
 
 		}
 
+		function ajustSpeed(speed){
+
+			return speed;
+		}
+
 		function handlePresent(obj, ele) {
 			var att = getAttributes(ele);
 			checkObjectUpdateArray(obj);
@@ -4251,7 +4256,7 @@ function toDg(radials, def = 0) {
 				}
 				obj.presentProp.isPresenting = doPresent;
 				obj.presentProp.isRunning = true;
-				if (obj.children.length > 0) {
+				if (obj.children.length > 0 && obj.children[0].element) {
 					obj.children[0].element.style.zIndex = obj.presentProp.isPresenting ? 10 : canvaszindex - 1;
 				}
 
@@ -4525,7 +4530,7 @@ function toDg(radials, def = 0) {
 
 						var f = function () {
 							//visible
-							if (visible) {
+							if (visible!=undefined) {
 								var v = toB(visible);
 								setVisible(t, v);
 							}

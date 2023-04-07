@@ -13,7 +13,7 @@
 			<skybox url="./images/canary_wharf.jpg"></skybox>
 			<home></home>
 			<!--<camera mode="scan"></camera>-->
-			<orbitcontrols target="0 0 -2" reversed="true" enableZoom="false" enablePan="false"></orbitcontrols>
+			<orbitcontrols target="0 0 -0.1" reversed="true" enableZoom="false" enablePan="false"></orbitcontrols>
 
 			<group position="0 0 0" rotation="0 0 0">
 				<group name="officegroup" position="0 0.03 0" scale="1.3 1 1.5">
@@ -84,15 +84,15 @@
 					<gltfLoader name="table2b" url="./models/table.glb" position="1.1 0 0.22" scale="4 4 6" rotation="0 0 0" castshadow="true" receiveshadow="true">
 					</gltfLoader>
 					<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
-						<gltfLoader url="./models/monitor.glb" scale="2"></gltfLoader>
-						<group name="programparentgroup" position="0 0.09 0.535" scale="0.9 0.5 0.01">
+						<gltfLoader name="futurescreen" url="./models/futurescreen.glb" scale="0.8" position="0 -1.3 0.7"></gltfLoader>
+						<!-- <group name="programparentgroup" position="0 0.09 0.535" scale="0.9 0.5 0.01">
 							<group name="programgroup">
 								<boxgeometry name="program">
 									<meshphongmaterial url="./images/windows.png"></meshphongmaterial>
 									<hover action="tooltip" text="Program running" atmouse="true"></hover>
 								</boxgeometry>
 							</group>
-						</group>
+						</group> -->
 					</group>
 					<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
 					</gltfLoader>
@@ -168,15 +168,7 @@
 					</gltfLoader>
 					<group name="burostuff" position="-0.4 0 0" rotation="0 -30 0">
 						<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
-							<gltfLoader url="./models/monitor.glb" scale="2"></gltfLoader>
-							<group name="programparentgroup" position="0 0.09 0.535" scale="0.9 0.5 0.01">
-								<group name="programgroup">
-									<boxgeometry name="program">
-										<meshphongmaterial url="./images/ubuntuunlock.png"></meshphongmaterial>
-										<hover action="tooltip" text="Program running" atmouse="true"></hover>
-									</boxgeometry>
-								</group>
-							</group>
+							<gltfLoader name="futurescreen" url="./models/futurescreen2.glb" scale="0.8" position="0 -1.3 0.7"></gltfLoader>
 						</group>
 
 						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
@@ -219,8 +211,9 @@
 						</gltfLoader>
 						<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0" castshadow="true" receiveshadow="true">
 						</gltfLoader>
-						<gltfLoader url="./models/monitor.glb" scale="2" rotation="0 -90 0" position="2.3 0.85 0" castshadow="true">
-						</gltfLoader>
+						<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
+							<gltfLoader name="futurescreen" url="./models/futurescreen4.glb" scale="0.8" position="0 -1.3 0.7"></gltfLoader>
+						</group>
 						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
 						</gltfLoader>
 						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
@@ -258,8 +251,9 @@
 					<group name="middle2" position="0 0 0" rotation="0 -90 0">
 						<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0" castshadow="true" receiveshadow="true">
 						</gltfLoader>
-						<gltfLoader url="./models/monitor.glb" scale="2" rotation="0 -90 0" position="2.3 0.85 0">
-						</gltfLoader>
+						<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
+							<gltfLoader name="futurescreen" url="./models/futurescreen5.glb" scale="0.8" position="0 -1.3 0.7"></gltfLoader>
+						</group>
 						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
 						</gltfLoader>
 						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
@@ -311,23 +305,23 @@
 					</gltfLoader>
 					<gltfLoader name="table2b" url="./models/table.glb" position="1.1 0 0.22" scale="4 4 6" rotation="0 0 0" castshadow="true" receiveshadow="true">
 					</gltfLoader>
-					<group name="deskstuff" position="0 0 0.85" rotation="0 -25 0">
+					<group name="deskstuff" position="-0.3 0  0.28" rotation="0 -25 0">
 						<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
-							<gltfLoader url="./models/monitor.glb" scale="2"></gltfLoader>
-							<group name="programparentgroup" position="0 0.09 0.535" scale="0.9 0.5 0.01">
-								<group name="programgroup">
-									<boxgeometry name="program">
-										<meshphongmaterial url="./images/ubuntu.png"></meshphongmaterial>
-										<hover action="tooltip" text="Program running" atmouse="true"></hover>
-									</boxgeometry>
-								</group>
-							</group>
+							<gltfLoader name="futurescreen" url="./models/futurescreen3.glb" scale="0.8" position="0 -1.3 0.7"></gltfLoader>
 						</group>
-						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
+						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="2.05 0.5 0">
 						</gltfLoader>
-						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
+						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.6 0.5 0.5">
 						</gltfLoader>
 					</group>
+					<gltfLoader name="tea" url="./models/tea.glb" scale="0.4" position="1.1 0.47 -0.6" rotation="0 -143 0">
+						<actions repeat="true">
+							<action type="click"></action>
+							<action type="transform" position="1.0 0.7 -0.6" rotation="0 -79 -40" speed="0.01"></action>
+							<action type="click"></action>
+							<action type="transform" position="1.1 0.47 -0.6" rotation="0 -143 0" speed="0.04"></action>
+						</actions>
+					</gltfLoader>
 					<gltfLoader name="chair" url="./models/chair.glb" scale="2.7" position="-0.1 0.2 0" rotation="0 70 0" castshadow="true" receiveshadow="true">
 						<actions repeat="true">
 							<action type="click"></action>
@@ -367,8 +361,9 @@
 						</gltfLoader>
 						<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0" castshadow="true" receiveshadow="true">
 						</gltfLoader>
-						<gltfLoader url="./models/monitor.glb" scale="2" rotation="0 -90 0" position="2.3 0.85 0">
-						</gltfLoader>
+						<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
+							<gltfLoader name="futurescreen" url="./models/futurescreen4.glb" scale="0.8" position="0 -1.3 0.7"></gltfLoader>
+						</group>
 						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
 						</gltfLoader>
 						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
@@ -415,8 +410,9 @@
 						</gltfLoader>
 						<gltfLoader url="./models/table.glb" scale="4 4 6" rotation="0 90 0" castshadow="true" receiveshadow="true">
 						</gltfLoader>
-						<gltfLoader url="./models/monitor.glb" scale="2" rotation="0 -90 0" position="2.3 0.85 0">
-						</gltfLoader>
+						<group name="monitorgroup" rotation="0 -90 0" position="2.3 0.85 0">
+							<gltfLoader name="futurescreen" url="./models/futurescreen.glb" scale="0.8" position="0 -1.3 0.7"></gltfLoader>
+						</group>
 						<gltfLoader url="./models/keyboard.glb" scale="1.4" rotation="0 -96 0" position="1.7 0.5 0">
 						</gltfLoader>
 						<gltfLoader url="./models/mouse.glb" scale="0.15" rotation="0 66 0" position="1.3 0.5 0.6">
